@@ -11,6 +11,64 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style>
+			.fade-text {
+				opacity: 0;
+			}
+			
+			/* Paragraph animation styles */
+			.paragraph-fade-in {
+				opacity: 0;
+			}
+			
+			/* Image animation styles */
+			.image-fade-in {
+				opacity: 0;
+			}
+			
+			/* Scroll animation styles */
+			.scroll-fade-in {
+				opacity: 0;
+				transform: translateY(30px);
+				transition: all 0.6s ease-out;
+			}
+			
+			.scroll-fade-in.visible {
+				opacity: 1;
+				transform: translateY(0);
+			}
+			
+			/* Use animation keyframes instead of transition to bypass preload restrictions */
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(10px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			
+			@keyframes paragraphFadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			
+			.fade-text.animate {
+				animation: fadeInUp 0.8s ease-out forwards;
+			}
+			
+			.paragraph-fade-in.visible {
+				animation: paragraphFadeIn 1.2s ease-out forwards;
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 
@@ -51,26 +109,37 @@
 						<div class="container">
 
 							<header>
-								<h2 class="alt">Hi! My name is Michel Domenella.</h2>
+								<h2 class="alt" id="animated-text-container">
+									<!-- Text will be dynamically generated here -->
+								</h2>
 								
 							</header>
-							<div style="width: 50%; float:left">
-								<p align="left"> 
-I am a product development engineer who has industry and academic experience at all stages of the product design process - from ideation and prototyping to manufacturing and post-launch support. My passion for design lies in creating intentional, meaningful, and tactile interactions that help to improve the quality of people's lives. Most recently I accomplished this during my time at Clippard, more on that below, but it has been something that I have pursued throughout my years at work and school. I am currently looking for an internship for the summer of 2026 and would love to chat more about that if you have a position in mind for me!
-</p>
+							<div style="width: 50%; float:left" id="intro-content">
+								<p align="left" class="paragraph-fade-in"> 
+
+									I’m a product designer who obsesses over the details - because when people’s lives depend on them, you have to. Whether I’m developing new medical devices or summiting peaks, <strong style="font-weight: bold;">persistence </strong> and <strong style="font-weight: bold;">diligence </strong> have become staples in my design language. Backed by a strong understanding of <strong style="font-weight: bold;">interview-driven research</strong>, I know how to fight for the user at every step of the product design cycle.
+								</p>
+
+								<p align="left" class="paragraph-fade-in"> 
+
+									
+									
+									I am currently a student at Northwestern University obtaining my Masters in Engineering Design Innovation. Prior to my time at Northwestern I graduated from Notre Dame with a degree in mechanical engineering, after which I spent two years designing and manufacturing new products for medical devices. As you can see by the pictures on the right, I love to reach new heights (literally) outside of work too! Today, I’m pushing my understanding of how to blend qualitative and quantitative data to pull out research insights and inform design requirements.
+								</p>
 							</div>
 
-							<div class="photo-gallery", style="width: 48%; float:right">
+							<div class="photo-gallery" id="intro-images" style="width: 48%; float:right">
 
 							<div class="column">
 							<div class="photo">
 								
-								<img src="images/film.jpg", width="100%", alt="Michel Portrait" /></a>
+								<img src="images/kilimanjaro.jpg", width="100%", alt="Michel Kilimanjaro" class="image-fade-in" data-order="1" /></a>
+								
 
 							</div>
 							<div class="photo">
 
-								<img src="images/kilimanjaro.jpg", width="100%", alt="Michel Kilimanjaro" /></a>
+								<img src="images/film.jpg", width="100%", alt="Michel Portrait" class="image-fade-in" data-order="2" /></a>
 
 							</div>
 							</div>
@@ -79,12 +148,13 @@ I am a product development engineer who has industry and academic experience at 
 							<div class="column">
 							<div class="photo">
 								
-								<img src="images/graduation.JPG", width="100%", alt="Michel Graduation" /></a>									
+								<img src="images/Michel_presentation_2.jpg", width="25%", alt="Michel Presentation" class="image-fade-in" data-order="4" /></a>									
 
 							</div>
 
 							<div class="photo">							
-								<img src="images/rock climbing.jpg", width="100%", alt="Michel Rock Climbing" /></a>
+								<img src="images/rock climbing.jpg", width="25%", alt="Michel Rock Climbing" class="image-fade-in" data-order="3" /></a>
+					
 
 							</div>
 
@@ -103,9 +173,9 @@ I am a product development engineer who has industry and academic experience at 
 						<div class="container">
 
 							<header>
-								<h2>New Product Development at Clippard Inc.</h2>
+								<h2 class="scroll-fade-in">New Product Development at Clippard Inc.</h2>
 							</header>
-							<p align="left"> 
+							<p align="left" class="scroll-fade-in"> 
 
 My time at <a href="https://www.clippard.com">Clippard </a> has led to a marked improvement in my skills as an engineer and my understanding of myself as a designer. The following projects best exemplify my work during my time at Clippard:
 							</p>
@@ -116,7 +186,7 @@ My time at <a href="https://www.clippard.com">Clippard </a> has led to a marked 
 							<div class="photo">
 								<figure>
 								<center>
-								<img src="images/xiogenix.jpg", width="100%", alt="Oxygen Blender for Baby Open Care Warmer" /></a>
+								<img src="images/xiogenix.jpg", width="100%", alt="Oxygen Blender for Baby Open Care Warmer" class="scroll-fade-in" /></a>
 								<figcaption>Panel mounted pinch valves for cell and gene therapy</figcaption>
 								</center>
 								</figure>
@@ -127,7 +197,7 @@ My time at <a href="https://www.clippard.com">Clippard </a> has led to a marked 
 							<div class="photo">
 								<figure>
 								<center>
-								<img src="images/drager.jpg", width="100%", alt="Xiogenix" /></a>
+								<img src="images/drager.jpg", width="100%", alt="Xiogenix" class="scroll-fade-in" /></a>
 								<figcaption>Oxygen blender for open care baby warmer</figcaption>
 								</center>
 								</figure>
@@ -139,7 +209,7 @@ My time at <a href="https://www.clippard.com">Clippard </a> has led to a marked 
 							<div class="photo">
 								<figure>
 								<center>
-								<img src="images/nxstage.jpg", width="100%", alt="Oxygen Blender for Baby Open Care Warmer" /></a>
+								<img src="images/nxstage.jpg", width="100%", alt="Oxygen Blender for Baby Open Care Warmer" class="scroll-fade-in" /></a>
 								<figcaption>Long stroke pinch valves for at home kidney dialysis machine</figcaption>
 								</center>
 								</figure>
@@ -152,20 +222,20 @@ My time at <a href="https://www.clippard.com">Clippard </a> has led to a marked 
 							
 							</p>
 
-							<p align="left">
+							<p align="left" class="scroll-fade-in">
 The panel mounted pinch valve was one of the first projects that I worked on and was a great first step into the learning how to design for manufacturing. While not technically challenging, the project was a great exercise in redesigning a product to deliver the same specifications while improving ease of use for a majority of customers. The oxygen blender for an open care baby warmer was a much more technically challenging as a result of the many moving parts and the strict safety regulations. Since the product was intended for infants it also helped me to realize how much I valued being a part of a project that truly makes a difference in people's lives. Working on the long stroke pinch valve was a fantastic opportunity to gain experience with the post-launch support of a project. With changing customer requirements and other issues, the importance of rigorous testing and extensive record keeping was made very clear.							</p>
 					</section>
 						<section id="Other_Experience" class="three">
 						<div class="container">
 
 							<header>
-								<h2>Other Experience</h2>
+								<h2 class="scroll-fade-in">Other Experience</h2>
 							</header>
 							
 
 
 
-							<div style="width: 60%; float:left">
+							<div style="width: 60%; float:left" class="scroll-fade-in">
 								 
 Before joining Clippard I previously interned at Yaskawa as a product engineer. While there I worked on their Semistar Gekko robot (pictured on the right) which autonomously handles silicone wafers throughout their manufacturing process. This experience was one of the more technically challenging projects I have worked on and helped me to understand that it is essential to take the time to get things right from the start. 
 							</div>
@@ -175,7 +245,7 @@ Before joining Clippard I previously interned at Yaskawa as a product engineer. 
 							<div class="column">
 							<div class="photo">
 								
-								<img src="images/gekko.jpg", width="100%", alt="Gekko Semistar" /></a>
+								<img src="images/gekko.jpg", width="100%", alt="Gekko Semistar" class="scroll-fade-in" /></a>
 
 							</div>
 							</div>
@@ -183,7 +253,7 @@ Before joining Clippard I previously interned at Yaskawa as a product engineer. 
 							</div>
 							
 
-							<div style="width: 70%; float:right">
+							<div style="width: 70%; float:right" class="scroll-fade-in">
 <br />								 
 Throughout my undergrad degree at Notre Dame I worked as a fabricator for the Notre Dame Innovation Lab. My time here gave me much greater exposure to tools such as a laser cutter and 3D printer as well as the various stages of the design process. While there I interacted with local business owners to help them bring their ideas to life which was essential to my development as a designer.
 							</div>
@@ -193,7 +263,7 @@ Throughout my undergrad degree at Notre Dame I worked as a fabricator for the No
 							<div class="column">
 							<div class="photo">
 								<br />
-								<img src="images/innovationlab.jpg", width="100%", alt="Gekko Semistar" /></a>
+								<img src="images/innovationlab.jpg", width="100%", alt="Gekko Semistar" class="scroll-fade-in" /></a>
 
 							</div>
 							</div>
@@ -210,47 +280,66 @@ Throughout my undergrad degree at Notre Dame I worked as a fabricator for the No
 						<div class="container">
 
 							<header>
-								<h2>About Me</h2>
+								<h2 class="scroll-fade-in">About</h2>
 							</header>
 
-							<p>
-							Outside of work I have found a ton of joy in staying creative, volunteering at dog shelters, and pushing myself to be the best that I can be. After finding my dad's old film camera in 2023, I quickly fell in love with it and it has been a great source of creative expression for me (see photos below). In 2024 I started an Instagram account (@domenella_film) where I posted once a week for a year, documenting the architecture and landscape of Cincinnati. Another one of my hobbies I recently discovered was volunteering at a dog shelter. Since November of 2024 I have been spending a night or two a week taking care of all different types of dogs at dog shelters - whether it has given more joy to me or the dogs is still up in the air. Finally, one of my favorite ways to spend my time is by pushing myself physically - specifically through hiking, rock climbing, and playing ultimate frisbee.	
-							</p>
+							<div style="display: flex; gap: 3em; align-items: flex-start;">
+								<!-- Left Column - Text Content -->
+								<div style="flex: 1;">
+									<p class="scroll-fade-in">
+									I'm a product designer and engineer focused on creating thoughtful physical experiences. With a background in both mechanical engineering and design, I bridge the gap between <strong style="font-weight: bold;">empathy</strong> and <strong style="font-weight: bold;">functionality</strong>.
+									</p>
+									<br />
+									<p class="scroll-fade-in">
+									Currently pursuing my Masters in Engineering Design Innovation at Northwestern University, learning to blend qualitative and quantitative data for research insights.
+									</p>
+									<br />
+									<p class="scroll-fade-in">
+									When I'm not designing or engineering, you'll find me hiking, rock climbing, capturing landscapes through film photography, or volunteering at dog shelters.
+									</p>
+									<br />
+									<h3 class="scroll-fade-in" style="font-weight: bold; margin-bottom: 0.5em;">Skills & Expertise</h3>
+									<div class="scroll-fade-in" style="display: flex; flex-wrap: wrap; gap: 0.5em;">
+										<span style="background: #f5f5f5; border: 1px solid #ddd; border-radius: 20px; padding: 0.4em 0.8em; font-size: 0.85em;">Product Design</span>
+										<span style="background: #f5f5f5; border: 1px solid #ddd; border-radius: 20px; padding: 0.4em 0.8em; font-size: 0.85em;">Mechanical Engineering</span>
+										<span style="background: #f5f5f5; border: 1px solid #ddd; border-radius: 20px; padding: 0.4em 0.8em; font-size: 0.85em;">User Research</span>
+									</div>
+								</div>
 
-
-
-<div class="photo-gallery", style="width: 100%; float:middle">
-
-							<div class="column">
-							<div class="photo">
-								
-								<img src="images/reds.JPG", width="100%", alt="Reds Stadium" /></a>
-							</div>	
+								<!-- Right Column - Main Image -->
+								<div style="flex: 1;">
+									<div class="scroll-fade-in" style="text-align: center;">
+										<img src="images/graduation.JPG" style="width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" alt="Michel Graduation" />
+									</div>
+								</div>
 							</div>
 
-							<div class="column">
-							<div class="photo">
+							<!-- Photo Gallery Below -->
+							<div class="photo-gallery" style="width: 100%; margin-top: 3em;">
 
-								<img src="images/halfdome2.JPG", width="100%", alt="Halfdome" /></a>
+								<div class="column">
+									<div class="photo">
+										<img src="images/reds.JPG" width="100%" alt="Reds Stadium" class="scroll-fade-in" />
+									</div>	
+								</div>
 
-							</div>
-							</div>
+								<div class="column">
+									<div class="photo">
+										<img src="images/halfdome2.JPG" width="100%" alt="Halfdome" class="scroll-fade-in" />
+									</div>
+								</div>
 
+								<div class="column">
+									<div class="photo">
+										<img src="images/cub.jpg" width="100%" alt="Lion Cub" class="scroll-fade-in" />
+									</div>
+								</div>
 
-							<div class="column">
-							<div class="photo">
-								
-								<img src="images/cub.jpg", width="100%", alt="Lion Cub" /></a>									
-							</div>
-							</div>
-
-							<div class="column">
-							<div class="photo">							
-								<img src="images/cloud lake2.JPG", width="100%", alt="Cloud Lake" /></a>
-
-							</div>
-
-							</div>
+								<div class="column">
+									<div class="photo">							
+										<img src="images/cloud lake2.JPG" width="100%" alt="Cloud Lake" class="scroll-fade-in" />
+									</div>
+								</div>
 
 							</div>
 
@@ -263,10 +352,10 @@ Throughout my undergrad degree at Notre Dame I worked as a fabricator for the No
 						<div class="container">
 
 							<header>
-								<h2>Contact Me</h2>
+								<h2 class="scroll-fade-in">Contact Me</h2>
 							</header>
 
-							<p align='center'>Please reach out with any opportunities or questions you might have. I have also included my resumé below for a more concise view of my skills and experiences.</p>
+							<p align='center' class="scroll-fade-in">Please reach out with any opportunities or questions you might have. I have also included my resumé below for a more concise view of my skills and experiences.</p>
 
 							<p align='center'> <a href= "mailto:domenellamichel@gmail.com"><i style="font-size:24px" class="fa">&#xf0e0;</i> Email</a></p>
 							<p align='center'> <a href= "https://www.linkedin.com/in/michel-domenella/"><i style="font-size:24px" class="fa">&#xf08c;</i> LinkedIn</a></p>
@@ -295,6 +384,428 @@ Throughout my undergrad degree at Notre Dame I worked as a fabricator for the No
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			
+			<script>
+				// ============== CONFIGURATION SECTION ==============
+				// Change these values to customize your animation
+				const ANIMATION_CONFIG = {
+					// Text to animate (change this to whatever you want!)
+					text: "Hi! My name is Michel Domenella.",
+					
+					// Timing controls (all values in milliseconds)
+					timing: {
+						// Base delay before animation starts (after preload finishes)
+						startDelay: 400,
+						
+						// Default delay between words (if not overridden below)
+						wordDelay: 200,
+						
+						// Duration of individual word fade-in animation
+						animationDuration: 800,
+						
+						// Custom delays for specific words after they appear
+						// Format: "word": delay_ms
+						// Leave empty {} for default wordDelay for all words
+						customDelays: {
+							"Hi!": 800,    // Longer pause after "design"
+	
+						},
+						
+						// Should it animate word by word (true) or character by character (false)
+						animateByWords: true
+					},
+					
+					// Animation style
+					style: {
+						// Start opacity (0-1)
+						startOpacity: 0,
+						
+						// End opacity (0-1)  
+						endOpacity: 1,
+						
+						// Vertical movement during fade-in (in pixels)
+						transformY: 10,
+						
+						// Optional: animation curve (ease-out, ease-in, ease-in-out, linear, etc.)
+						easing: 'ease-out'
+					},
+					
+					// Paragraph animation settings
+					paragraph: {
+						// Delay before first paragraph appears (after header animation finishes)
+						delayAfterHeader: 300,
+						
+						// Delay between each paragraph (for sequential animation)
+						delayBetweenParagraphs: 1600,
+						
+						// Duration of each paragraph fade-in
+						animationDuration: 1200,
+						
+						// Paragraph animation curve
+						easing: 'ease-out',
+						
+						// Vertical movement during fade-in (in pixels)
+						transformY: 20,
+						
+						// Should paragraphs animate sequentially (true) or all at once (false)
+						animateSequentially: true
+					},
+					
+					// Image animation settings
+					images: {
+						// Delay before first image appears (after paragraphs finish)
+						delayAfterParagraphs: 200,
+						
+						// Delay between each image (for sequential animation)
+						delayBetweenImages: 300,
+						
+						// Duration of each image fade-in
+						animationDuration: 800,
+						
+						// Image animation curve
+						easing: 'ease-out',
+						
+						// Scale effect during fade-in (1.0 = no scaling, 0.9 = starts smaller)
+						scaleEffect: 0.9,
+						
+						// Should images animate sequentially (true) or all at once (false)
+						animateSequentially: true,
+						
+						// Animation order: 1=bottom left, 2=bottom right, 3=top right, 4=top left
+						animationOrder: [1, 2, 3, 4]
+					}
+				};
+				
+				// ============== ANIMATION ENGINE ==============
+				
+				class TextAnimator {
+					constructor(config) {
+						this.config = config;
+						this.container = document.getElementById('animated-text-container');
+					}
+					
+					// Generate HTML with fade spans
+					generateTextHTML() {
+						const { text, style } = this.config;
+						const segments = this.config.timing.animateByWords ? 
+							text.split(/(\s+)/) : // Split by spaces (keeping spaces)
+							text.split(''); // Split by character
+						
+						let html = '';
+						segments.forEach((segment, index) => {
+							if (segment.trim() === '' || segment === ' ') {
+								// Preserve spaces
+								html += `<span>${segment}</span>`;
+							} else {
+								// Add fade-animate class
+								html += `<span class="fade-text animate-word" style="opacity: ${style.startOpacity}; animation-duration: ${this.config.timing.animationDuration}ms; animation-timing-function: ${style.easing};" data-word-index="${index}">${segment}</span>`;
+							}
+						});
+						
+						return html;
+					}
+					
+					// Initialize the container with text HTML
+					initializeText() {
+						if (!this.container) {
+							console.error('Container element not found!');
+							return false;
+						}
+						
+						this.container.innerHTML = this.generateTextHTML();
+						console.log(`Generated ${this.container.querySelectorAll('.fade-text').length} animated segments from text: "${this.config.text}"`);
+						return true;
+					}
+					
+					// Calculate total delay up to each word
+					calculateDelayTiming() {
+						const elements = this.container.querySelectorAll('.fade-text');
+						const customDelays = this.config.timing.customDelays;
+						const defaultDelay = this.config.timing.wordDelay;
+						
+						let cumulativeDelay = this.config.timing.startDelay;
+						const timingArray = [];
+						
+						elements.forEach((element, index) => {
+							const word = element.textContent.trim();
+							const customDelay = customDelays[word];
+							const delayToUse = customDelay !== undefined ? customDelay : defaultDelay;
+							
+							timingArray.push({
+								element: element,
+								delay: cumulativeDelay,
+								customDelay: customDelay,
+								word: word
+							});
+							
+							// Add delay AFTER this word appears, for the next word
+							cumulativeDelay += delayToUse;
+						});
+						
+						return timingArray;
+					}
+					
+					// Start the animation with custom timing
+					startAnimation() {
+						const timingArray = this.calculateDelayTiming();
+						const customDelayCount = timingArray.filter(t => t.customDelay !== undefined).length;
+						
+						console.log(`Starting animation with ${timingArray.length} segments`);
+						console.log(`Custom delays applied to ${customDelayCount} words`);
+						
+						timingArray.forEach((timing, index) => {
+							setTimeout(() => {
+								timing.element.classList.add('animate');
+								const delayInfo = timing.customDelay ? ` (custom: ${timing.customDelay}ms)` : '';
+								console.log(`Animating segment ${index + 1}: "${timing.word}"${delayInfo}`);
+							}, timing.delay);
+						});
+						
+						// Schedule paragraph animation after header finishes
+						this.scheduleParagraphAnimation(timingArray);
+					}
+					
+					// Schedule paragraph animations
+					scheduleParagraphAnimation(timingArray) {
+						if (!timingArray.length) return;
+						
+						// Get the end time of the header animation
+						const lastTiming = timingArray[timingArray.length - 1];
+						const headerEndTime = lastTiming.delay + this.config.timing.animationDuration;
+						
+						// Find all paragraphs to animate
+						const introContainer = document.getElementById('intro-content');
+						if (!introContainer) {
+							console.log('Intro content container not found');
+							return;
+						}
+						
+						const paragraphs = introContainer.querySelectorAll('.paragraph-fade-in');
+						console.log(`Found ${paragraphs.length} paragraphs to animate`);
+						
+						if (paragraphs.length === 0) {
+							console.log('No paragraphs found to animate');
+							return;
+						}
+						
+						// Schedule paragraph animations
+						this.animateParagraphs(paragraphs, headerEndTime);
+					}
+					
+					// Animate multiple paragraphs
+					animateParagraphs(paragraphs, headerEndTime) {
+						const config = this.config.paragraph;
+						
+						// Create dynamic CSS animation
+						const styleElement = document.createElement('style');
+						styleElement.textContent = `
+							@keyframes paragraphFadeIn {
+								from {
+									opacity: 0;
+									transform: translateY(${config.transformY}px);
+								}
+								to {
+									opacity: 1;
+									transform: translateY(0);
+								}
+							}
+						`;
+						document.head.appendChild(styleElement);
+						
+						let lastParagraphEndTime = 0;
+						
+						paragraphs.forEach((paragraph, index) => {
+							const actualText = paragraph.textContent.trim();
+							console.log(`Paragraph ${index + 1} content:`, actualText.substring(0, 50) + '...');
+							
+							let delayTime;
+							
+							if (config.animateSequentially) {
+								// Calculate timing for sequential animation
+								const baseDelay = headerEndTime + config.delayAfterHeader;
+								const betweenDelay = config.delayBetweenParagraphs;
+								delayTime = baseDelay + (index * betweenDelay);
+							} else {
+								// All paragraphs start at the same time
+								delayTime = headerEndTime + config.delayAfterHeader;
+							}
+							
+							setTimeout(() => {
+								const paragraphStyle = `
+									animation: paragraphFadeIn ${config.animationDuration}ms ${config.easing} forwards;
+								`;
+								paragraph.style.cssText = paragraphStyle;
+								console.log(`Starting animation for paragraph ${index + 1}`);
+							}, delayTime);
+							
+							// Track when this ends for image scheduling
+							const endTime = delayTime + config.animationDuration;
+							if (endTime > lastParagraphEndTime) {
+								lastParagraphEndTime = endTime;
+							}
+						});
+						
+						const firstParagraphDelay = headerEndTime + config.delayAfterHeader;
+						console.log(`Paragraph animations scheduled: first at ${firstParagraphDelay}ms, ${config.animateSequentially ? 'sequential' : 'simultaneous'} timing`);
+						
+						// Schedule image animations after paragraphs finish
+						setTimeout(() => {
+							this.animateImages();
+						}, lastParagraphEndTime + config.delayAfterHeader);
+					}
+					
+					// Animate images in specified order
+					animateImages() {
+						const imageContainer = document.getElementById('intro-images');
+						if (!imageContainer) {
+							console.log('Image container not found');
+							return;
+						}
+						
+						const images = imageContainer.querySelectorAll('.image-fade-in');
+						console.log(`Found ${images.length} images to animate`);
+						
+						if (images.length === 0) {
+							console.log('No images found to animate');
+							return;
+						}
+						
+						const config = this.config.images;
+						
+						// Create dynamic CSS animation
+						const styleElement = document.createElement('style');
+						styleElement.textContent = `
+							@keyframes imageFadeIn {
+								from {
+									opacity: 0;
+									transform: scale(${config.scaleEffect});
+								}
+								to {
+									opacity: 1;
+									transform: scale(1);
+								}
+							}
+						`;
+						document.head.appendChild(styleElement);
+						
+						// Sort images by animation order
+						const sortedImages = Array.from(images).sort((a, b) => {
+							const orderA = parseInt(a.getAttribute('data-order'));
+							const orderB = parseInt(b.getAttribute('data-order'));
+							return orderA - orderB;
+						});
+						
+						sortedImages.forEach((image, index) => {
+							const order = image.getAttribute('data-order');
+							const alt = image.getAttribute('alt');
+							
+							let delayTime;
+							
+							if (config.animateSequentially) {
+								delayTime = config.delayAfterParagraphs + (index * config.delayBetweenImages);
+							} else {
+								delayTime = config.delayAfterParagraphs;
+							}
+							
+							const position = order === '1' ? 'bottom left' : 
+											order === '2' ? 'bottom right' : 
+											order === '3' ? 'top right' : 'top left';
+							
+							setTimeout(() => {
+								const imageStyle = `
+									animation: imageFadeIn ${config.animationDuration}ms ${config.easing} forwards;
+								`;
+								image.style.cssText = imageStyle;
+								console.log(`Starting animation for ${position} image: ${alt}`);
+							}, delayTime);
+						});
+						
+						console.log(`Image animations scheduled: first at ${config.delayAfterParagraphs}ms, ${config.animateSequentially ? 'sequential' : 'simultaneous'} timing`);
+					}
+					
+					// Wait for preloader to finish
+					waitForPreload() {
+						const checkPreload = () => {
+							if (!document.body.classList.contains('is-preload')) {
+								console.log('Preload finished, starting animation sequence');
+								setTimeout(() => this.startAnimation(), 200);
+							} else {
+								console.log('Still in preload, waiting...');
+								setTimeout(checkPreload, 100);
+							}
+						};
+						checkPreload();
+					}
+					
+					// Initialize everything
+					init() {
+						if (this.initializeText()) {
+							this.waitForPreload();
+							
+							// Fallback after 5 seconds
+							setTimeout(() => {
+								const remaining = this.container.querySelectorAll('.fade-text:not(.animate)');
+								if (remaining.length > 0) {
+									console.log(`Fallback: Starting animation for ${remaining.length} remaining segments`);
+									const timingArray = this.calculateDelayTiming();
+									const remainingTimings = timingArray.filter(t => !t.element.classList.contains('animate'));
+									
+									remainingTimings.forEach((timing, index) => {
+										setTimeout(() => timing.element.classList.add('animate'), timing.delay);
+									});
+								}
+							}, 5000);
+						}
+					}
+				}
+				
+				// ============== INITIALIZATION ==============
+				
+				// Start when DOM is ready
+				document.addEventListener('DOMContentLoaded', () => {
+					const animator = new TextAnimator(ANIMATION_CONFIG);
+					animator.init();
+				});
+			</script>
+			
+			<!-- Scroll Animation Script -->
+			<script>
+				// Scroll-triggered animation function
+				function handleScrollAnimations() {
+					const elements = document.querySelectorAll('.scroll-fade-in');
+					
+					elements.forEach(element => {
+						const elementTop = element.getBoundingClientRect().top;
+						const elementVisible = 150; // Trigger when element is 150px from viewport top
+						
+						if (elementTop < window.innerHeight - elementVisible) {
+							element.classList.add('visible');
+						}
+					});
+				}
+				
+				// Throttle function to improve performance
+				function throttle(func, wait) {
+					let timeout;
+					return function executedFunction(...args) {
+						const later = () => {
+							clearTimeout(timeout);
+							func(...args);
+						};
+						clearTimeout(timeout);
+						timeout = setTimeout(later, wait);
+					};
+				}
+				
+				// Initialize scroll animations when DOM is ready
+				document.addEventListener('DOMContentLoaded', () => {
+					// Run once on load to check for elements already in view
+					handleScrollAnimations();
+					
+					// Add scroll event listener with throttling
+					window.addEventListener('scroll', throttle(handleScrollAnimations, 100));
+				});
+			</script>
 
 	</body>
 </html>
