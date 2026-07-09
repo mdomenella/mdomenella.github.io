@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Michel Domenella — Portfolio Refresh in Progress</title>
+	<meta name="description" content="Michel Domenella's portfolio is being redesigned. Grab my résumé or connect on LinkedIn in the meantime." />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+	<style>
+		:root {
+			--ink: #14181f;
+			--muted: #5b6472;
+			--accent: #1f2a44;
+			--accent-hover: #2b3a5e;
+			--card-bg: rgba(255, 255, 255, 0.72);
+			--card-border: rgba(255, 255, 255, 0.65);
+			--radius: 22px;
+			--shadow: 0 30px 80px -30px rgba(12, 18, 33, 0.55);
+		}
+
+		* { box-sizing: border-box; }
+
+		html, body {
+			margin: 0;
+			padding: 0;
+			min-height: 100%;
+		}
+
+		body {
+			font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+			color: var(--ink);
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			padding: 6vw 5vw;
+			position: relative;
+			overflow: hidden;
+			background: #0c1220;
+		}
+
+		/* Blurred backdrop = the current live site, made unreadable */
+		.backdrop {
+			position: fixed;
+			inset: -60px; /* overscan so blur edges never show */
+			background-image: url("live-site-backdrop.png");
+			background-size: cover;
+			background-position: top center;
+			filter: blur(16px) saturate(1.05) brightness(0.96);
+			transform: scale(1.06);
+			z-index: 0;
+		}
+
+		/* Soft wash to lift the card off the backdrop and improve contrast */
+		.backdrop-veil {
+			position: fixed;
+			inset: 0;
+			background:
+				radial-gradient(120% 90% at 50% 40%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 60%),
+				linear-gradient(180deg, rgba(12, 18, 33, 0.28), rgba(12, 18, 33, 0.42));
+			z-index: 1;
+		}
+
+		.card {
+			position: relative;
+			z-index: 2;
+			width: min(560px, 100%);
+			background: var(--card-bg);
+			-webkit-backdrop-filter: blur(18px) saturate(1.4);
+			backdrop-filter: blur(18px) saturate(1.4);
+			border: 1px solid var(--card-border);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			padding: clamp(28px, 5vw, 48px);
+			text-align: center;
+		}
+
+		h1 {
+			margin: 0 0 6px;
+			font-size: clamp(2rem, 6vw, 2.9rem);
+			font-weight: 700;
+			letter-spacing: -0.02em;
+			line-height: 1.05;
+		}
+
+		.subhead {
+			margin: 0 auto;
+			max-width: 40ch;
+			color: var(--muted);
+			font-size: clamp(1rem, 2.4vw, 1.08rem);
+			line-height: 1.6;
+		}
+
+		.actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			justify-content: center;
+			margin-top: 30px;
+		}
+
+		.btn {
+			flex: 1 1 200px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			padding: 14px 22px;
+			border-radius: 14px;
+			font-size: 1rem;
+			font-weight: 600;
+			text-decoration: none;
+			cursor: pointer;
+			transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+		}
+
+		.btn svg { width: 20px; height: 20px; flex: none; }
+
+		.btn--primary {
+			background: var(--accent);
+			color: #fff;
+			box-shadow: 0 14px 30px -12px rgba(31, 42, 68, 0.7);
+		}
+		.btn--primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+
+		.btn--secondary {
+			background: rgba(255, 255, 255, 0.7);
+			color: var(--accent);
+			border: 1px solid rgba(31, 42, 68, 0.22);
+		}
+		.btn--secondary:hover { background: #fff; transform: translateY(-2px); border-color: rgba(31, 42, 68, 0.4); }
+
+		.email-line {
+			margin-top: 22px;
+			font-size: 0.92rem;
+			color: var(--muted);
+		}
+		.email-line a {
+			color: var(--accent);
+			font-weight: 600;
+			text-decoration: none;
+			border-bottom: 1px solid rgba(31, 42, 68, 0.25);
+		}
+		.email-line a:hover { border-color: var(--accent); }
+
+		@media (max-width: 420px) {
+			.btn { flex-basis: 100%; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.btn:hover { transform: none; }
+		}
+	</style>
+</head>
+<body>
+	<div class="backdrop" aria-hidden="true"></div>
+	<div class="backdrop-veil" aria-hidden="true"></div>
+
+	<main class="card">
+		<h1>Michel Domenella</h1>
+		<p class="subhead">
+			My portfolio is getting a full redesign. It'll be back soon, refreshed
+			and worth the wait. In the meantime, here's the important stuff:
+		</p>
+
+		<div class="actions">
+			<!-- Update this path to wherever your resume PDF lives on the live site -->
+			<a class="btn btn--primary" href="Domenella_Resume.pdf" target="_blank" rel="noopener" download>
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+				Download Résumé
+			</a>
+			<a class="btn btn--secondary" href="https://www.linkedin.com/in/michel-domenella/" target="_blank" rel="noopener">
+				<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+				Connect on LinkedIn
+			</a>
+		</div>
+
+		<p class="email-line">
+			Or reach me directly at
+			<a href="mailto:domenellamichel@gmail.com">domenellamichel@gmail.com</a>
+		</p>
+	</main>
+</body>
+</html>
