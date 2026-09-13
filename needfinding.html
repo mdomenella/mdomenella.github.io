@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Needfinding in Clinical Environments — Michel Domenella</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body>
+	<a class="skip-link" href="#main">Skip to Content</a>
+
+	<header class="site-header" id="header">
+		<div class="site-header__inner">
+			<a class="site-logo" href="../index.html">Michel Domenella</a>
+			<nav class="site-nav" aria-label="Primary">
+				<ul>
+					<li><a href="../index.html#work">Work</a></li>
+					<li><a href="../index.html#bio">Bio</a></li>
+					<li><a href="../images/Domenella Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+				</ul>
+			</nav>
+			<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+				<span></span>
+				<span></span>
+			</button>
+		</div>
+		<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+			<ul>
+				<li><a href="../index.html#work">Work</a></li>
+				<li><a href="../index.html#bio">Bio</a></li>
+				<li><a href="../images/Domenella Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main id="main" class="project-page">
+		<section class="project-hero">
+			<img class="project-hero__img" src="../images/northwestern-medicine-title.jpg?v=1" alt="Northwestern Medicine campus building" />
+		</section>
+
+		<a class="project-back" href="../index.html#work">&larr; Back</a>
+
+		<section class="project-intro">
+			<div>
+				<h1 class="project-intro__title">Needfinding in Clinical Environments</h1>
+				<p class="project-intro__subtitle">Partnering with: Northwestern Medicine</p>
+			</div>
+			<div class="project-intro__body">
+				<p>Esophageal Adenocarcinoma, or Esophageal cancer (EAC), is deadly when caught late but highly survivable when caught early. Despite this, very few cases are currently caught early.</p>
+				<p>Northwestern Medicine, in an effort led by Dr. Sri Komanduri, partnered with Northwestern's EDI and Biomedical graduate programs to further their understanding of the issue. We spent the quarter interviewing stakeholders, observing a high-risk GI clinic, and conducting secondary research to define where the opportunities were to increase the denominator: finding more of the high-risk patients who currently go unidentified.</p>
+			</div>
+		</section>
+
+		<section class="project-equation-section" aria-label="Treatment vs Identification Equation">
+			<h2 class="project-equation__title--top">Our Ability to Treat is Greater than our Ability to Identify Patients</h2>
+			<div class="project-equation-grid">
+				<div class="project-equation__graphic">
+					<svg class="project-equation-svg" viewBox="0 0 680 200" width="100%" height="auto" role="img" aria-label="Equation: high-risk patients successfully treated divided by total high-risk patients identified equals successful treatment rate of high-risk population">
+						<!-- Left Looping Arrow -->
+						<g fill="none" stroke="#111827" stroke-width="4.5" stroke-linecap="round">
+							<path d="M 60 145 C 5 145, 5 45, 50 45" />
+						</g>
+						<!-- Arrowhead -->
+						<polygon points="62,45 46,34 48,56" fill="#111827"/>
+
+						<!-- Numerator: high-risk patients successfully treated -->
+						<rect x="75" y="18" width="280" height="52" rx="8" ry="8" fill="#d9d5f5"/>
+						<text x="215" y="50" text-anchor="middle" font-size="14" font-weight="600" fill="#3f3377" font-family="'DM Sans', -apple-system, sans-serif">high-risk patients successfully treated</text>
+
+						<!-- Fraction Bar -->
+						<line x1="70" y1="95" x2="360" y2="95" stroke="#111827" stroke-width="3" stroke-linecap="round"/>
+
+						<!-- Denominator: total high-risk patients identified -->
+						<rect x="85" y="120" width="260" height="52" rx="8" ry="8" fill="#4d3284"/>
+						<text x="215" y="152" text-anchor="middle" font-size="14.5" font-weight="600" fill="#ffffff" font-family="'DM Sans', -apple-system, sans-serif">total high-risk patients identified</text>
+
+						<!-- Equals Sign -->
+						<text x="382" y="103" text-anchor="middle" font-size="34" font-weight="700" fill="#111827" font-family="'DM Sans', sans-serif">=</text>
+
+						<!-- Result Box -->
+						<rect x="420" y="62" width="245" height="66" rx="8" ry="8" fill="#d9d5f5"/>
+						<text x="542" y="91" text-anchor="middle" font-size="14" font-weight="600" fill="#3f3377" font-family="'DM Sans', -apple-system, sans-serif">successful treatment rate of</text>
+						<text x="542" y="112" text-anchor="middle" font-size="14" font-weight="600" fill="#3f3377" font-family="'DM Sans', -apple-system, sans-serif">high-risk population</text>
+					</svg>
+				</div>
+				<div class="project-equation__content">
+					<p class="project-equation__text">Before we could understand how to identify these patients, we had to understand where they were being lost. To do that, we created the &ldquo;leaky funnel,&rdquo; which maps a patient&rsquo;s journey and the points where they might drop out of the system.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="project-funnel-section" aria-label="Patient Loss Funnel Diagram">
+			<div class="project-funnel-wrapper">
+				<svg class="project-funnel-svg" viewBox="0 0 1500 730" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Where Patients are Lost funnel graphic showing four stages: 100% of at-risk patients, 50% identified as at-risk by PCP, 17% referred by PCP, and 7% total at-risk patients screened">
+					<defs>
+						<!-- Gradients -->
+						<linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#f6daf0"/>
+							<stop offset="60%" stop-color="#e9bfe5"/>
+							<stop offset="100%" stop-color="#d99ecc"/>
+						</linearGradient>
+						<linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#dbe0f8"/>
+							<stop offset="60%" stop-color="#bcc4ee"/>
+							<stop offset="100%" stop-color="#9ea9df"/>
+						</linearGradient>
+						<linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#cde8f8"/>
+							<stop offset="60%" stop-color="#a4d3ed"/>
+							<stop offset="100%" stop-color="#80bbe0"/>
+						</linearGradient>
+						<linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#d2f3dc"/>
+							<stop offset="60%" stop-color="#a6e3ba"/>
+							<stop offset="100%" stop-color="#7ecf97"/>
+						</linearGradient>
+
+						<!-- Drop Shadows -->
+						<filter id="shadow" x="-5%" y="-5%" width="115%" height="120%" filterUnits="userSpaceOnUse">
+							<feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
+						</filter>
+						<filter id="bubbleShadow" x="-10%" y="-10%" width="125%" height="130%">
+							<feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.05"/>
+						</filter>
+						
+						<!-- Arrow Markers -->
+						<marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+							<path d="M 0 0 L 6 3 L 0 6 z" fill="#111111" />
+						</marker>
+					</defs>
+
+					<!-- Left Trajectory Flow: 4 Separate Curved Arrows with Gaps -->
+					<g class="funnel-left-flow" stroke="#71717a" stroke-width="1.8" stroke-linecap="round" fill="none">
+						<!-- Arrow 1 (Pink Tier) -->
+						<g class="funnel-left-arrow funnel-left-arrow--1">
+							<path d="M 280 70 Q 325 160 375 240" />
+							<polygon points="378,245 366,236 376,230" fill="#71717a" stroke="none"/>
+						</g>
+
+						<!-- Arrow 2 (Purple Tier) -->
+						<g class="funnel-left-arrow funnel-left-arrow--2">
+							<path d="M 390 275 Q 430 340 468 398" />
+							<polygon points="471,403 459,395 469,389" fill="#71717a" stroke="none"/>
+						</g>
+
+						<!-- Arrow 3 (Blue Tier) -->
+						<g class="funnel-left-arrow funnel-left-arrow--3">
+							<path d="M 480 435 Q 510 490 538 538" />
+							<polygon points="541,543 530,535 539,529" fill="#71717a" stroke="none"/>
+						</g>
+
+						<!-- Arrow 4 (Green Tier) -->
+						<g class="funnel-left-arrow funnel-left-arrow--4">
+							<path d="M 548 572 Q 552 620 555 662" />
+							<polygon points="556,669 549,656 563,656" fill="#71717a" stroke="none"/>
+						</g>
+					</g>
+
+					<!-- STAGE 1: Pink (100% of at-risk patients) -->
+					<g class="funnel-tier funnel-tier--1">
+						<path d="M 320 60 Q 750 150 1180 60 L 1090 230 Q 750 265 410 230 Z" fill="url(#pinkGrad)" stroke="#cca0bf" stroke-width="1.2" filter="url(#shadow)"/>
+						
+						<!-- Tier 1 Divider -->
+						<line x1="880" y1="110" x2="880" y2="205" stroke="#cca0bf" stroke-width="1.2" opacity="0.65"/>
+
+						<!-- Left Content -->
+						<text x="595" y="168" fill="#111827" font-size="28" font-weight="700" font-family="'DM Sans', sans-serif" text-anchor="end">100%</text>
+						<text x="610" y="168" fill="#111827" font-size="20" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">of at-risk patients</text>
+
+						<!-- Right Content (Centered Icon & Count Stack) -->
+						<g transform="translate(987, 115)" stroke="#111827" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="18" cy="10" r="5"/>
+							<path d="M 9 26 C 9 20, 27 20, 27 26"/>
+							<circle cx="7" cy="12" r="4"/>
+							<path d="M 1 26 C 1 21, 13 21, 13 26"/>
+							<circle cx="29" cy="12" r="4"/>
+							<path d="M 23 26 C 23 21, 35 21, 35 26"/>
+						</g>
+						<text x="1005" y="172" text-anchor="middle" fill="#1f2937" font-size="16" font-weight="500" font-family="'DM Sans', sans-serif">~120 million people</text>
+					</g>
+
+					<!-- CALLOUT 1: asymptomatic patients -->
+					<g class="funnel-callout funnel-callout--1">
+						<!-- Connector Line -->
+						<line x1="1105" y1="235" x2="1200" y2="235" stroke="#cbd5e1" stroke-width="1.5"/>
+						<!-- Bubble -->
+						<rect x="1200" y="210" width="240" height="48" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" filter="url(#bubbleShadow)"/>
+						<text x="1320" y="240" text-anchor="middle" font-size="15" font-style="italic" fill="#334155" font-weight="400" font-family="'DM Sans', sans-serif">asymptomatic patients</text>
+					</g>
+
+					<!-- STAGE 2: Purple (50% identified by PCP) -->
+					<g class="funnel-tier funnel-tier--2">
+						<path d="M 420 270 Q 750 295 1080 270 L 1000 395 Q 750 415 500 395 Z" fill="url(#purpleGrad)" stroke="#9ba7db" stroke-width="1.2" filter="url(#shadow)"/>
+						
+						<!-- Tier 2 Divider -->
+						<line x1="860" y1="295" x2="860" y2="370" stroke="#9ba7db" stroke-width="1.2" opacity="0.65"/>
+
+						<!-- Left Content -->
+						<text x="605" y="345" fill="#111827" font-size="26" font-weight="700" font-family="'DM Sans', sans-serif" text-anchor="end">50%</text>
+						<text x="618" y="336" fill="#111827" font-size="16.5" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">identified as &ldquo;at-risk&rdquo;</text>
+						<text x="618" y="358" fill="#111827" font-size="16.5" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">by PCP</text>
+
+						<!-- Right Content (Doctor Icon & Label Stack) -->
+						<g transform="translate(934, 295)" stroke="#111827" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="14" cy="8" r="5.5"/>
+							<path d="M 4 25 C 4 18, 24 18, 24 25"/>
+							<path d="M 9 17 C 9 22, 19 22, 19 17"/>
+							<path d="M 14 22 L 14 24"/>
+						</g>
+						<text x="948" y="344" text-anchor="middle" fill="#1f2937" font-size="13.5" font-weight="500" font-family="'DM Sans', sans-serif">Primary Care</text>
+						<text x="948" y="361" text-anchor="middle" fill="#1f2937" font-size="13.5" font-weight="500" font-family="'DM Sans', sans-serif">Identification</text>
+					</g>
+
+					<!-- CALLOUT 2: PCP attention constraints -->
+					<g class="funnel-callout funnel-callout--2">
+						<!-- Connector Line -->
+						<path d="M 1015 400 L 1090 400 L 1160 385" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+						<!-- Bubble -->
+						<rect x="1160" y="342" width="275" height="82" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" filter="url(#bubbleShadow)"/>
+						<text x="1297" y="369" text-anchor="middle" font-size="14.5" font-weight="500" fill="#1e293b" font-family="'DM Sans', sans-serif">PCP attention constraints</text>
+						<text x="1297" y="390" text-anchor="middle" font-size="13.5" font-style="italic" fill="#64748b" font-family="'DM Sans', sans-serif">(broad criteria, competing</text>
+						<text x="1297" y="408" text-anchor="middle" font-size="13.5" font-style="italic" fill="#64748b" font-family="'DM Sans', sans-serif">comorbidities)</text>
+					</g>
+
+					<!-- STAGE 3: Blue (17% referred by PCP) -->
+					<g class="funnel-tier funnel-tier--3">
+						<path d="M 510 430 Q 750 448 990 430 L 930 535 Q 750 550 570 535 Z" fill="url(#blueGrad)" stroke="#85b9d7" stroke-width="1.2" filter="url(#shadow)"/>
+						
+						<!-- Tier 3 Divider -->
+						<line x1="825" y1="450" x2="825" y2="515" stroke="#85b9d7" stroke-width="1.2" opacity="0.65"/>
+
+						<!-- Left Content -->
+						<text x="645" y="490" fill="#111827" font-size="25" font-weight="700" font-family="'DM Sans', sans-serif" text-anchor="end">17%</text>
+						<text x="658" y="490" fill="#111827" font-size="16.5" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">referred by PCP</text>
+
+						<!-- Right Content (PCP-Specialist Gap Stack) -->
+						<g transform="translate(878, 445)" stroke="#111827" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="7" cy="7" r="4.5"/>
+							<path d="M 1 20 C 1 15, 13 15, 13 20"/>
+							<circle cx="23" cy="7" r="4.5"/>
+							<path d="M 17 20 C 17 15, 29 15, 29 20"/>
+							<path d="M 10 12 L 20 12" stroke-dasharray="2.5,2.5"/>
+						</g>
+						<text x="892" y="492" text-anchor="middle" fill="#1f2937" font-size="13" font-weight="500" font-family="'DM Sans', sans-serif">PCP-Specialist</text>
+						<text x="892" y="508" text-anchor="middle" fill="#1f2937" font-size="13" font-weight="500" font-family="'DM Sans', sans-serif">Gap</text>
+					</g>
+
+					<!-- CALLOUT 3: Patient scheduling, transportation... -->
+					<g class="funnel-callout funnel-callout--3">
+						<!-- Connector Line -->
+						<path d="M 940 540 L 1010 540 L 1080 555" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+						<!-- Bubble -->
+						<rect x="1080" y="505" width="345" height="110" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" filter="url(#bubbleShadow)"/>
+						<text x="1252" y="532" text-anchor="middle" font-size="13" font-style="italic" fill="#475569" font-family="'DM Sans', sans-serif">Patient scheduling,</text>
+						<text x="1252" y="551" text-anchor="middle" font-size="13" font-style="italic" fill="#475569" font-family="'DM Sans', sans-serif">transportation, sedation burden,</text>
+						<text x="1252" y="570" text-anchor="middle" font-size="13" font-style="italic" fill="#475569" font-family="'DM Sans', sans-serif">anxiety, clinic capacity constraints,</text>
+						<text x="1252" y="589" text-anchor="middle" font-size="13" font-style="italic" fill="#475569" font-family="'DM Sans', sans-serif">workflow bottlenecks</text>
+					</g>
+
+					<!-- STAGE 4: Green (7% total at-risk patients screened) -->
+					<g class="funnel-tier funnel-tier--4">
+						<path d="M 580 565 Q 750 578 920 565 L 910 665 Q 750 678 590 665 Z" fill="url(#greenGrad)" stroke="#60b57a" stroke-width="1.5" filter="url(#shadow)"/>
+						
+						<!-- Tier 4 Divider -->
+						<line x1="795" y1="582" x2="795" y2="648" stroke="#60b57a" stroke-width="1.2" opacity="0.65"/>
+
+						<!-- Left Content -->
+						<text x="645" y="622" fill="#111827" font-size="24" font-weight="700" font-family="'DM Sans', sans-serif" text-anchor="end">7%</text>
+						<text x="656" y="612" fill="#111827" font-size="13" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">total at-risk</text>
+						<text x="656" y="629" fill="#111827" font-size="13" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">patients screened</text>
+
+						<!-- Right Content (Calendar + Clock Icon & Label Stack) -->
+						<g transform="translate(843, 582)" stroke="#111827" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="2" y="4" width="20" height="17" rx="2"/>
+							<line x1="2" y1="9" x2="22" y2="9"/>
+							<line x1="6" y1="2" x2="6" y2="6"/>
+							<line x1="18" y1="2" x2="18" y2="6"/>
+							<circle cx="17" cy="17" r="5" fill="#a6e3ba"/>
+							<polyline points="17,14.5 17,17 19,17"/>
+						</g>
+						<text x="855" y="624" text-anchor="middle" fill="#1f2937" font-size="12" font-weight="500" font-family="'DM Sans', sans-serif">Procedural +</text>
+						<text x="855" y="639" text-anchor="middle" fill="#1f2937" font-size="12" font-weight="500" font-family="'DM Sans', sans-serif">Access Gap</text>
+					</g>
+				</svg>
+			</div>
+		</section>
+
+		<section class="project-matrix-section" aria-label="Opportunity Landscape Matrix">
+			<div class="project-matrix-grid">
+				<div class="project-matrix__graphic">
+					<svg class="project-matrix-svg" viewBox="0 0 720 540" width="100%" height="auto" role="img" aria-label="Opportunity Landscape 2x2 Matrix showing 11 opportunities plotted by Impact and Implementation Difficulty">
+						<defs>
+							<!-- Diagonal Hatch Pattern for Avoid Quadrant -->
+							<pattern id="avoidHatch" width="12" height="12" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+								<line x1="0" y1="0" x2="0" y2="12" stroke="#d1d5db" stroke-width="1.5" />
+							</pattern>
+
+							<!-- Arrow Marker -->
+							<marker id="axisArrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+								<path d="M 0 0 L 6 3 L 0 6 z" fill="#111111" />
+							</marker>
+
+							<!-- Purple Glow for Highlighted Bubble -->
+							<filter id="purpleGlow" x="-100%" y="-100%" width="300%" height="300%">
+								<feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#8b5cf6" flood-opacity="0.9"/>
+							</filter>
+
+							<!-- Tooltip Drop Shadow -->
+							<filter id="tooltipShadow" x="-20%" y="-20%" width="140%" height="140%">
+								<feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.12"/>
+							</filter>
+						</defs>
+
+						<!-- Background Box (400x400 from X=160..560, Y=60..460) -->
+						<rect x="160" y="60" width="400" height="400" fill="#f4f4f6" />
+
+						<!-- Avoid Quadrant Hatching (X=360..560, Y=260..460) -->
+						<rect x="360" y="260" width="200" height="200" fill="url(#avoidHatch)" />
+
+						<!-- Quadrant Labels -->
+						<text x="172" y="86" font-size="14" font-weight="700" fill="#111827" font-family="'DM Sans', sans-serif">Quick Wins</text>
+						<text x="548" y="86" text-anchor="end" font-size="14" font-weight="700" fill="#111827" font-family="'DM Sans', sans-serif">Major Projects</text>
+						<text x="172" y="448" font-size="14" font-weight="700" fill="#111827" font-family="'DM Sans', sans-serif">Incremental Improvements</text>
+						<text x="548" y="448" text-anchor="end" font-size="14" font-weight="700" fill="#111827" font-family="'DM Sans', sans-serif">Avoid</text>
+
+						<!-- Axis Lines (Horizontal & Vertical) -->
+						<!-- Horizontal Axis: X=148..572, Y=260 -->
+						<line x1="160" y1="260" x2="560" y2="260" stroke="#111111" stroke-width="1.4" />
+						<line x1="160" y1="260" x2="148" y2="260" stroke="#111111" stroke-width="1.4" marker-end="url(#axisArrow)" />
+						<line x1="560" y1="260" x2="572" y2="260" stroke="#111111" stroke-width="1.4" marker-end="url(#axisArrow)" />
+
+						<!-- Vertical Axis: X=360, Y=48..472 -->
+						<line x1="360" y1="60" x2="360" y2="460" stroke="#111111" stroke-width="1.4" />
+						<line x1="360" y1="60" x2="360" y2="48" stroke="#111111" stroke-width="1.4" marker-end="url(#axisArrow)" />
+						<line x1="360" y1="460" x2="360" y2="472" stroke="#111111" stroke-width="1.4" marker-end="url(#axisArrow)" />
+
+						<!-- Outer Boundary Frame -->
+						<rect x="160" y="60" width="400" height="400" fill="none" stroke="#e5e7eb" stroke-width="1" />
+
+						<!-- Axis Outer Labels -->
+						<!-- Top: HIGH IMPACT -->
+						<text x="360" y="32" text-anchor="middle" font-size="11" font-weight="600" fill="#111827" letter-spacing="0.05em" font-family="'DM Sans', sans-serif">HIGH IMPACT</text>
+						<!-- Bottom: LOW IMPACT -->
+						<text x="360" y="498" text-anchor="middle" font-size="11" font-weight="600" fill="#111827" letter-spacing="0.05em" font-family="'DM Sans', sans-serif">LOW IMPACT</text>
+						<!-- Left: EASY IMPLEMENTATION -->
+						<text x="136" y="256" text-anchor="end" font-size="10.5" font-weight="600" fill="#111827" letter-spacing="0.03em" font-family="'DM Sans', sans-serif">EASY</text>
+						<text x="136" y="270" text-anchor="end" font-size="10.5" font-weight="600" fill="#111827" letter-spacing="0.03em" font-family="'DM Sans', sans-serif">IMPLEMENTATION</text>
+						<!-- Right: DIFFICULT IMPLEMENTATION -->
+						<text x="584" y="256" text-anchor="start" font-size="10.5" font-weight="600" fill="#111827" letter-spacing="0.03em" font-family="'DM Sans', sans-serif">DIFFICULT</text>
+						<text x="584" y="270" text-anchor="start" font-size="10.5" font-weight="600" fill="#111827" letter-spacing="0.03em" font-family="'DM Sans', sans-serif">IMPLEMENTATION</text>
+
+						<!-- Animated Opportunity Bubbles (1 to 11) -->
+						<g class="matrix-bubbles">
+							<!-- Bubble 1 -->
+							<g transform="translate(295, 182)">
+								<g class="matrix-bubble matrix-bubble--1" data-opportunity="1" tabindex="0" role="button" aria-label="Opportunity 1: Aggregating Fragmented Patient Information">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="13.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">1</text>
+								</g>
+							</g>
+
+							<!-- Bubble 2 -->
+							<g transform="translate(458, 196)">
+								<g class="matrix-bubble matrix-bubble--2" data-opportunity="2" tabindex="0" role="button" aria-label="Opportunity 2: Expanding Digital Entry Points for Broader BE Screening">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="13.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">2</text>
+								</g>
+							</g>
+
+							<!-- Bubble 3 -->
+							<g transform="translate(196, 290)">
+								<g class="matrix-bubble matrix-bubble--3" data-opportunity="3" tabindex="0" role="button" aria-label="Opportunity 3: Enhancing Patient Confidence and Preparation">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="13.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">3</text>
+								</g>
+							</g>
+
+							<!-- Bubble 4 -->
+							<g transform="translate(234, 236)">
+								<g class="matrix-bubble matrix-bubble--4" data-opportunity="4" tabindex="0" role="button" aria-label="Opportunity 4: Optimizing Information Flow During Appointment">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="13.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">4</text>
+								</g>
+							</g>
+
+							<!-- Bubble 5 -->
+							<g transform="translate(492, 228)">
+								<g class="matrix-bubble matrix-bubble--5" data-opportunity="5" tabindex="0" role="button" aria-label="Opportunity 5: Reframing the Visual Assessment in Screening">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="13.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">5</text>
+								</g>
+							</g>
+
+							<!-- Bubble 6 -->
+							<g transform="translate(408, 156)">
+								<g class="matrix-bubble matrix-bubble--6" data-opportunity="6" tabindex="0" role="button" aria-label="Opportunity 6: Validating Minimally Invasive Upstream Screening Tools">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="13.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">6</text>
+								</g>
+							</g>
+
+							<!-- Bubble 7 -->
+							<g transform="translate(388, 218)">
+								<g class="matrix-bubble matrix-bubble--7" data-opportunity="7" tabindex="0" role="button" aria-label="Opportunity 7: Quantifying Mechanical Markers">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="13.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">7</text>
+								</g>
+							</g>
+
+							<!-- Bubble 8 -->
+							<g transform="translate(530, 108)">
+								<g class="matrix-bubble matrix-bubble--8" data-opportunity="8" tabindex="0" role="button" aria-label="Opportunity 8: Integrating Siloed Tools">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="13.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">8</text>
+								</g>
+							</g>
+
+							<!-- Bubble 9 (Highlighted: Purple with Glow & Pulse) -->
+							<g transform="translate(360, 126)">
+								<g class="matrix-bubble matrix-bubble--9 matrix-bubble--highlight" data-opportunity="9" tabindex="0" role="button" aria-label="Opportunity 9: Building Clinical Clarity and Capacity">
+									<circle class="matrix-bubble__glow-ring" cx="0" cy="0" r="16" fill="none" stroke="#8b5cf6" stroke-width="3" opacity="0.6"/>
+									<circle cx="0" cy="0" r="16.5" fill="#583d8a" stroke="#4a2e80" stroke-width="1.4" filter="url(#purpleGlow)"/>
+									<text x="0" y="5" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff" font-family="'DM Sans', sans-serif">9</text>
+								</g>
+							</g>
+
+							<!-- Bubble 10 -->
+							<g transform="translate(436, 116)">
+								<g class="matrix-bubble matrix-bubble--10" data-opportunity="10" tabindex="0" role="button" aria-label="Opportunity 10: Closing the Adoptability Gap">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">10</text>
+								</g>
+							</g>
+
+							<!-- Bubble 11 -->
+							<g transform="translate(494, 128)">
+								<g class="matrix-bubble matrix-bubble--11" data-opportunity="11" tabindex="0" role="button" aria-label="Opportunity 11: Repositioning EGD as Treatment">
+									<circle cx="0" cy="0" r="16" fill="#ffffff" stroke="#111827" stroke-width="1.3" />
+									<text x="0" y="5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">11</text>
+								</g>
+							</g>
+						</g>
+
+						<!-- Dedicated Top-Level Tooltips Layer (Always renders visually above all bubbles) -->
+						<g class="matrix-tooltips-layer">
+							<!-- Opportunity 1 Tooltip -->
+							<g transform="translate(295, 182)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--1" filter="url(#tooltipShadow)">
+									<path d="M -85 -76 H 85 A 8 8 0 0 1 93 -68 V -34 A 8 8 0 0 1 85 -26 H 6 L 0 -18 L -6 -26 H -85 A 8 8 0 0 1 -93 -34 V -68 A 8 8 0 0 1 -85 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Aggregating Fragmented</tspan><tspan x="0" dy="17">Patient Information</tspan></text>
+								</g>
+							</g>
+							<!-- Opportunity 2 Tooltip -->
+							<g transform="translate(458, 196)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--2" filter="url(#tooltipShadow)">
+									<path d="M -114 -76 H 114 A 8 8 0 0 1 122 -68 V -34 A 8 8 0 0 1 114 -26 H 6 L 0 -18 L -6 -26 H -114 A 8 8 0 0 1 -122 -34 V -68 A 8 8 0 0 1 -114 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Expanding Digital Entry Points</tspan><tspan x="0" dy="17">for Broader BE Screening</tspan></text>
+								</g>
+							</g>
+							<!-- Opportunity 3 Tooltip -->
+							<g transform="translate(196, 290)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--3" filter="url(#tooltipShadow)">
+									<path d="M -100 -76 H 100 A 8 8 0 0 1 108 -68 V -34 A 8 8 0 0 1 100 -26 H 6 L 0 -18 L -6 -26 H -100 A 8 8 0 0 1 -108 -34 V -68 A 8 8 0 0 1 -100 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Enhancing Patient</tspan><tspan x="0" dy="17">Confidence and Preparation</tspan></text>
+								</g>
+							</g>
+							<!-- Opportunity 4 Tooltip -->
+							<g transform="translate(234, 236)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--4" filter="url(#tooltipShadow)">
+									<path d="M -103 -76 H 103 A 8 8 0 0 1 111 -68 V -34 A 8 8 0 0 1 103 -26 H 6 L 0 -18 L -6 -26 H -103 A 8 8 0 0 1 -111 -34 V -68 A 8 8 0 0 1 -103 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Optimizing Information Flow</tspan><tspan x="0" dy="17">During Appointment</tspan></text>
+								</g>
+							</g>
+							<!-- Opportunity 5 Tooltip -->
+							<g transform="translate(492, 228)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--5" filter="url(#tooltipShadow)">
+									<path d="M -89 -76 H 89 A 8 8 0 0 1 97 -68 V -34 A 8 8 0 0 1 89 -26 H 6 L 0 -18 L -6 -26 H -89 A 8 8 0 0 1 -97 -34 V -68 A 8 8 0 0 1 -89 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Reframing the Visual</tspan><tspan x="0" dy="17">Assessment in Screening</tspan></text>
+								</g>
+							</g>
+							<!-- Opportunity 6 Tooltip -->
+							<g transform="translate(408, 156)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--6" filter="url(#tooltipShadow)">
+									<path d="M -110 -76 H 110 A 8 8 0 0 1 118 -68 V -34 A 8 8 0 0 1 110 -26 H 6 L 0 -18 L -6 -26 H -110 A 8 8 0 0 1 -118 -34 V -68 A 8 8 0 0 1 -110 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Validating Minimally Invasive</tspan><tspan x="0" dy="17">Upstream Screening Tools</tspan></text>
+								</g>
+							</g>
+							<!-- Opportunity 7 Tooltip -->
+							<g transform="translate(388, 218)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--7" filter="url(#tooltipShadow)">
+									<path d="M -85 -76 H 85 A 8 8 0 0 1 93 -68 V -34 A 8 8 0 0 1 85 -26 H 6 L 0 -18 L -6 -26 H -85 A 8 8 0 0 1 -93 -34 V -68 A 8 8 0 0 1 -85 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Quantifying Mechanical</tspan><tspan x="0" dy="17">Markers</tspan></text>
+								</g>
+							</g>
+							<!-- Opportunity 8 Tooltip -->
+							<g transform="translate(530, 108)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--8" filter="url(#tooltipShadow)">
+									<path d="M -96 -62 H 96 A 8 8 0 0 1 104 -54 V -34 A 8 8 0 0 1 96 -26 H 6 L 0 -18 L -6 -26 H -96 A 8 8 0 0 1 -104 -34 V -54 A 8 8 0 0 1 -96 -62 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-40" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif">Integrating Siloed Tools</text>
+								</g>
+							</g>
+							<!-- Opportunity 9 Tooltip -->
+							<g transform="translate(360, 126)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--9" filter="url(#tooltipShadow)">
+									<path d="M -78 -76 H 78 A 8 8 0 0 1 86 -68 V -34 A 8 8 0 0 1 78 -26 H 6 L 0 -18 L -6 -26 H -78 A 8 8 0 0 1 -86 -34 V -68 A 8 8 0 0 1 -78 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Building Clinical</tspan><tspan x="0" dy="17">Clarity and Capacity</tspan></text>
+								</g>
+							</g>
+							<!-- Opportunity 10 Tooltip -->
+							<g transform="translate(436, 116)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--10" filter="url(#tooltipShadow)">
+									<path d="M -75 -76 H 75 A 8 8 0 0 1 83 -68 V -34 A 8 8 0 0 1 75 -26 H 6 L 0 -18 L -6 -26 H -75 A 8 8 0 0 1 -83 -34 V -68 A 8 8 0 0 1 -75 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Closing the</tspan><tspan x="0" dy="17">Adoptability Gap</tspan></text>
+								</g>
+							</g>
+							<!-- Opportunity 11 Tooltip -->
+							<g transform="translate(494, 128)">
+								<g class="matrix-opportunity-tooltip matrix-opportunity-tooltip--11" filter="url(#tooltipShadow)">
+									<path d="M -75 -76 H 75 A 8 8 0 0 1 83 -68 V -34 A 8 8 0 0 1 75 -26 H 6 L 0 -18 L -6 -26 H -75 A 8 8 0 0 1 -83 -34 V -68 A 8 8 0 0 1 -75 -76 Z" fill="#ffffff" stroke="#583d8a" stroke-width="1.6" />
+									<text x="0" y="-55" text-anchor="middle" font-size="12" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif"><tspan x="0" dy="0">Repositioning EGD</tspan><tspan x="0" dy="17">as Treatment</tspan></text>
+								</g>
+							</g>
+						</g>
+					</svg>
+				</div>
+				<div class="project-matrix__content">
+					<h2 class="project-matrix__title">Opportunity Landscape</h2>
+					<p class="project-matrix__text">The eleven opportunities the class found within this funnel can be seen on the left &ndash; plotted by impact and difficulty of implementation. I surfaced Opportunity 9, Building Clinical Clarity and Capacity, where I examined &ldquo;who owns what&rdquo; within the clinic to understand how the clinic&rsquo;s role definitions were impacting the patient experience.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="project-split-section" aria-label="Building Clinical Clarity and Capacity">
+			<div class="project-split-grid">
+				<div class="project-split__left">
+					<h2 class="project-split__title">Building Clinical Clarity and Capacity</h2>
+					<p class="project-split__text">What I found was that Advanced Practice Providers (APPs) are stretched across many roles within the high-risk clinic without ownership of their most critical task. Onsite, we observed APPs struggling to recall procedural steps after long gaps between performing them, and in interviews heard that there wasn&rsquo;t enough time to pre-chart every patient. We dug into why.</p>
+				</div>
+				<div class="project-split__right">
+					<div class="project-app-venn" role="img" aria-label="Animated Venn Diagram showing the APP role transition between Independent Practices and Novel Clinic">
+						<svg class="project-app-venn-svg" viewBox="0 0 600 320" width="100%" height="auto">
+							<defs>
+								<!-- Clip path for true intersection in Novel Clinic -->
+								<clipPath id="rnClip">
+									<ellipse cx="225" cy="170" rx="140" ry="100" />
+								</clipPath>
+							</defs>
+
+							<!-- Titles -->
+							<g class="app-venn-titles">
+								<text class="app-venn-title app-venn-title--independent" x="300" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#111827" font-family="'DM Sans', sans-serif">APP Role in Independent Practices</text>
+								<text class="app-venn-title app-venn-title--novel" x="300" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#111827" font-family="'DM Sans', sans-serif">APP Role in Novel Clinic</text>
+							</g>
+
+							<!-- Diagram Graphics -->
+							<g class="app-venn-body">
+								<!-- Registered Nurse Group (Novel: cx=225, Independent: cx=160 via -65px) -->
+								<g class="app-venn-group--rn">
+									<ellipse cx="225" cy="170" rx="140" ry="100" fill="#f0ebf8" />
+									<text class="app-venn-label--rn" x="165" y="176" text-anchor="middle" font-size="14.5" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif">Registered Nurse</text>
+								</g>
+
+								<!-- Physician Group (Novel: cx=375, Independent: cx=440 via +65px) -->
+								<g class="app-venn-group--physician">
+									<ellipse cx="375" cy="170" rx="140" ry="100" fill="#eae9eb" />
+									<text class="app-venn-label--physician" x="435" y="176" text-anchor="middle" font-size="14.5" font-weight="600" fill="#374151" font-family="'DM Sans', sans-serif">Physician</text>
+								</g>
+
+								<!-- State A: APP in Independent Practices (Inside Physician, X=380) -->
+								<g class="app-venn-app--independent">
+									<ellipse cx="380" cy="170" rx="74" ry="58" fill="#d7c7f7" fill-opacity="0.95" />
+									<text x="380" y="176" text-anchor="middle" font-size="14.5" font-weight="700" fill="#111827" font-family="'DM Sans', sans-serif">APP</text>
+								</g>
+
+								<!-- State B: APP in Novel Clinic (True Overlap Intersection Lens, X=300) -->
+								<g class="app-venn-app--novel">
+									<ellipse cx="375" cy="170" rx="140" ry="100" clip-path="url(#rnClip)" fill="#d7c7f7" />
+									<text x="300" y="176" text-anchor="middle" font-size="14.5" font-weight="700" fill="#111827" font-family="'DM Sans', sans-serif">APP</text>
+								</g>
+							</g>
+						</svg>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="project-matrix-sticky-section" id="matrixStickySection" data-stage="0" aria-label="Clinical Responsibilities Matrix Experience">
+			<div class="project-matrix-sticky-track">
+				<div class="project-matrix-sticky-frame">
+					<h2 class="project-matrix-sticky-title">Responsibilities Matrix &ndash; Who Owns What</h2>
+					<div class="project-responsibilities-wrapper">						<svg class="project-matrix-chart-svg" viewBox="0 40 1306 620" width="100%" height="auto" role="img" aria-label="Clinical Responsibilities Matrix Chart showing task allocations across all clinic roles">
+							<!-- Phase Backgrounds (Body: 7 Blue, 7 Green, 3 Tan) -->
+							<rect x="180.0" y="210.0" width="392.0" height="400.0" fill="#e6f2fd" />
+							<rect x="572.0" y="210.0" width="392.0" height="400.0" fill="#dbf2da" />
+							<rect x="964.0" y="210.0" width="168.0" height="400.0" fill="#f4ebd6" />
+							<rect x="40.0" y="210.0" width="140.0" height="400.0" fill="#d8dce2" />
+							<!-- Stage 2 Highlight Column (Yellow Col 12: Perform Procedure) -->
+							<rect class="matrix-highlight-col" x="852.0" y="210.0" width="56.0" height="400.0" fill="#fff275" />
+							<!-- Top Angled Leaders -->
+							<line x1="180.0" y1="210.0" x2="314.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="236.0" y1="210.0" x2="370.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="292.0" y1="210.0" x2="426.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="348.0" y1="210.0" x2="482.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="404.0" y1="210.0" x2="538.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="460.0" y1="210.0" x2="594.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="516.0" y1="210.0" x2="650.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="572.0" y1="210.0" x2="706.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="628.0" y1="210.0" x2="762.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="684.0" y1="210.0" x2="818.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="740.0" y1="210.0" x2="874.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="796.0" y1="210.0" x2="930.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="852.0" y1="210.0" x2="986.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="908.0" y1="210.0" x2="1042.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="964.0" y1="210.0" x2="1098.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="1020.0" y1="210.0" x2="1154.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="1076.0" y1="210.0" x2="1210.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="1132.0" y1="210.0" x2="1266.4" y2="75.6" stroke="#9aa6b2" stroke-width="1.3" />
+							<!-- Top Column Headers -->
+							<g class="matrix-col-header" transform="translate(216.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Order Clinic Supplies</text>
+							</g>
+							<g class="matrix-col-header" transform="translate(272.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Room Scheduling</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(328.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Intake Referral</text>
+							</g>
+							<g class="matrix-col-header" transform="translate(384.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Schedule Patient</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(440.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Determine Procedure</text>
+							</g>
+							<g class="matrix-col-header" transform="translate(496.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Submit Prior-Authorization</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(552.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Pre-chart patient</text>
+							</g>
+							<g class="matrix-col-header" transform="translate(608.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Take patient vitals</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col" transform="translate(664.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Record Patient Updates</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(720.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Brief Case to Attending</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(776.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Consult Patient</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(832.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Prep Procedure</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(888.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Perform Procedure</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(944.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Clean Up Procedure</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(1000.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Determine Follow-up</text>
+							</g>
+							<g class="matrix-col-header is-stage1-col is-stage2-col" transform="translate(1056.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Follow-up with Patient</text>
+							</g>
+							<g class="matrix-col-header" transform="translate(1112.5, 201.5) rotate(-45.0)">
+								<text x="0" y="4.5" text-anchor="start" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Schedule Follow-up</text>
+							</g>
+							<!-- Body Grid Lines -->
+							<line x1="40.0" y1="210.0" x2="1132.0" y2="210.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="40.0" y1="260.0" x2="1132.0" y2="260.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="40.0" y1="310.0" x2="1132.0" y2="310.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="40.0" y1="360.0" x2="1132.0" y2="360.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="40.0" y1="410.0" x2="1132.0" y2="410.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="40.0" y1="460.0" x2="1132.0" y2="460.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="40.0" y1="510.0" x2="1132.0" y2="510.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="40.0" y1="560.0" x2="1132.0" y2="560.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="40.0" y1="610.0" x2="1132.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="180.0" y1="210.0" x2="180.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="236.0" y1="210.0" x2="236.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="292.0" y1="210.0" x2="292.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="348.0" y1="210.0" x2="348.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="404.0" y1="210.0" x2="404.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="460.0" y1="210.0" x2="460.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="516.0" y1="210.0" x2="516.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="572.0" y1="210.0" x2="572.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="628.0" y1="210.0" x2="628.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="684.0" y1="210.0" x2="684.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="740.0" y1="210.0" x2="740.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="796.0" y1="210.0" x2="796.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="852.0" y1="210.0" x2="852.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="908.0" y1="210.0" x2="908.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="964.0" y1="210.0" x2="964.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="1020.0" y1="210.0" x2="1020.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="1076.0" y1="210.0" x2="1076.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="1132.0" y1="210.0" x2="1132.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<line x1="40.0" y1="210.0" x2="40.0" y2="610.0" stroke="#9aa6b2" stroke-width="1.3" />
+							<!-- Role Labels -->
+							<g class="matrix-role-row">
+								<text x="110.0" y="231.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Operations</text>
+								<text x="110.0" y="246.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Coordinator</text>
+							</g>
+							<g class="matrix-role-row">
+								<text x="110.0" y="289.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Patient Liaison</text>
+							</g>
+							<g class="matrix-role-row">
+								<text x="110.0" y="331.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Registered</text>
+								<text x="110.0" y="346.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Nurse (RN)</text>
+							</g>
+							<g class="matrix-role-row">
+								<text x="110.0" y="381.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Medical</text>
+								<text x="110.0" y="396.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Assistant (MA)</text>
+							</g>
+							<g class="matrix-role-row is-stage1-role is-stage2-role">
+								<text x="110.0" y="431.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Advanced Practice</text>
+								<text x="110.0" y="446.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Provider (APP)</text>
+							</g>
+							<g class="matrix-role-row is-stage1-role">
+								<text x="110.0" y="489.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Fellow</text>
+							</g>
+							<g class="matrix-role-row is-stage2-role">
+								<text x="110.0" y="531.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Attending</text>
+								<text x="110.0" y="546.5" text-anchor="middle" font-size="12" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Physician</text>
+							</g>
+							<g class="matrix-role-row">
+								<text x="110.0" y="589.5" text-anchor="middle" font-size="12.5" font-weight="600" fill="#111827" font-family="'DM Sans', sans-serif">Sales Rep</text>
+							</g>
+							<!-- Stage 1 Red Gap Lines -->
+							<g class="matrix-gap-lines">
+								<line class="matrix-gap-line" x1="329.0" y1="435.0" x2="535.0" y2="435.0" />
+								<line class="matrix-gap-line" x1="553.0" y1="435.0" x2="815.0" y2="435.0" />
+								<line class="matrix-gap-line" x1="945.0" y1="435.0" x2="1039.0" y2="435.0" />
+								<line class="matrix-gap-line" x1="441.0" y1="485.0" x2="535.0" y2="485.0" />
+								<line class="matrix-gap-line" x1="553.0" y1="485.0" x2="647.0" y2="485.0" />
+								<line class="matrix-gap-line" x1="833.0" y1="485.0" x2="983.0" y2="485.0" />
+							</g>
+							<!-- Markers -->
+							<g class="matrix-marker-group">
+								<circle cx="208.0" cy="235.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="264.0" cy="235.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="320.0" cy="285.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="376.0" cy="285.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="488.0" cy="285.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="1104.0" cy="285.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="320.0" cy="335.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="376.0" cy="335.0" r="8.5" fill="#d7c7f7" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="488.0" cy="335.0" r="8.5" fill="#d7c7f7" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="544.0" cy="335.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="544.0" cy="385.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker is-stage2-marker">
+								<circle cx="320.0" cy="435.0" r="8.5" fill="#d7c7f7" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker is-stage2-marker">
+								<circle cx="544.0" cy="435.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker is-stage2-marker">
+								<circle cx="824.0" cy="435.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker is-stage2-marker">
+								<circle cx="880.0" cy="435.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker is-stage2-marker">
+								<circle cx="936.0" cy="435.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker is-stage2-marker">
+								<circle cx="1048.0" cy="435.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker">
+								<circle cx="432.0" cy="485.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker">
+								<circle cx="544.0" cy="485.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker">
+								<circle cx="656.0" cy="485.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker">
+								<circle cx="712.0" cy="485.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker">
+								<circle cx="768.0" cy="485.0" r="7.5" fill="none" stroke="#c4b1e8" stroke-width="2.6" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker">
+								<circle cx="824.0" cy="485.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage1-marker">
+								<circle cx="992.0" cy="485.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage2-marker">
+								<circle cx="320.0" cy="535.0" r="8.5" fill="#d7c7f7" />
+							</g>
+							<g class="matrix-marker-group is-stage2-marker">
+								<circle cx="432.0" cy="535.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage2-marker">
+								<circle cx="712.0" cy="535.0" r="7.5" fill="none" stroke="#583d8a" stroke-width="2.6" />
+							</g>
+							<g class="matrix-marker-group is-stage2-marker">
+								<circle cx="768.0" cy="535.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group is-stage2-marker">
+								<circle cx="880.0" cy="535.0" r="7.5" fill="none" stroke="#583d8a" stroke-width="2.6" />
+							</g>
+							<g class="matrix-marker-group is-stage2-marker">
+								<circle cx="992.0" cy="535.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="768.0" cy="585.0" r="8.5" fill="#583d8a" />
+							</g>
+							<g class="matrix-marker-group">
+								<circle cx="880.0" cy="585.0" r="8.5" fill="#583d8a" />
+							</g>
+							<!-- Bottom Phase Labels -->
+							<text x="376.0" y="640.0" text-anchor="middle" font-size="16" font-weight="700" fill="#4ea5f7" font-family="'DM Sans', sans-serif">Pre-Visit</text>
+							<text x="768.0" y="640.0" text-anchor="middle" font-size="16" font-weight="700" fill="#5ebd5b" font-family="'DM Sans', sans-serif">During Visit</text>
+							<text x="1048.0" y="640.0" text-anchor="middle" font-size="16" font-weight="700" fill="#cbb06d" font-family="'DM Sans', sans-serif">Post-Visit</text>
+						</svg>
+
+						<!-- Floating Narrative Card for Stage 1: Context Switching -->
+						<div class="matrix-narrative-card matrix-narrative-card--context-switching">
+							<h3 class="matrix-narrative-card__title">Context Switching</h3>
+							<p class="matrix-narrative-card__text">APP responsibilities are scattered across the patient journey, forcing constant context switching. Pre-charting isn't built into their schedule, so as patient volume grows, it's often the first thing skipped.</p>
+						</div>
+
+						<!-- Floating Narrative Card for Stage 2: Lack of Ownership -->
+						<div class="matrix-narrative-card matrix-narrative-card--lack-of-ownership">
+							<h3 class="matrix-narrative-card__title">Lack of Ownership</h3>
+							<p class="matrix-narrative-card__text">APPs lack ownership of their most critical task, performing the procedure itself. The attending must be in the room every time, which caps how many procedures the clinic can run in a day.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="project-split-section project-split-section--conclusion" aria-label="Closing the Loop">
+			<div class="project-split-grid project-split-grid--centered">
+				<div class="project-split__left">
+					<h2 class="project-split__title">Closing the Loop</h2>
+					<p class="project-split__text">What we found is that without a clearer scope of practice for APPs, supported by the right tools, the clinic couldn't handle a higher patient volume. Even if every upstream issue in the funnel were resolved, this bottleneck would still cap how many high-risk patients could be found and treated. Acting on Opportunity 9, alongside the other ten throughout the patient's journey, is what it takes to increase the denominator. We presented these findings to Dr. Komanduri and other key stakeholders to help set that work in motion.</p>
+				</div>
+				<div class="project-split__right">
+					<div class="project-split-media project-split-media--cropped">
+						<img src="../images/needfinding-presentation.jpg" alt="Needfinding presentation to Dr. Komanduri and clinical stakeholders at Northwestern Medicine" loading="lazy" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<nav class="project-pager">
+			<a href="clippard.html">&larr; Clippard</a>
+			<a href="pg.html">Procter &amp; Gamble &rarr;</a>
+		</nav>
+	</main>
+
+	<footer class="site-footer">
+		<div class="site-footer__links">
+			<a href="mailto:domenellamichel@gmail.com" aria-label="Email">
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+			</a>
+			<a href="https://www.linkedin.com/in/michel-domenella/" target="_blank" rel="noopener" aria-label="LinkedIn">
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69A1.69 1.69 0 0 0 5.2 6.88a1.69 1.69 0 0 0 1.68 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+			</a>
+		</div>
+		<p class="site-footer__copy">&copy; 2026 Michel Domenella — All Rights Reserved</p>
+	</footer>
+
+	<script src="../assets/js/main.js"></script>
+</body>
+</html>
