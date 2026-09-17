@@ -470,6 +470,10 @@
       padding: 1.5rem;
     }
 
+    .gate-overlay.is-hidden {
+      display: none !important;
+    }
+
     .gate-box {
       background: var(--surface);
       border: 1px solid var(--surface-border);
@@ -514,7 +518,8 @@
 
     .gate-error {
       color: #f85149;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 600;
       margin-bottom: 1rem;
       display: none;
     }
@@ -579,9 +584,11 @@
       <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔒</div>
       <h2>Private Analytics Gate</h2>
       <p>Enter your master password to access the analytics dashboard.</p>
-      <input type="password" class="gate-input" id="gatePinInput" maxlength="64" placeholder="••••••••" autofocus />
-      <div class="gate-error" id="gateError" style="display: none;">Incorrect Password. Please try again.</div>
-      <button class="btn btn--accent" style="width: 100%; justify-content: center;" id="btnUnlock">Unlock Dashboard</button>
+      <form id="gateForm" onsubmit="event.preventDefault(); attemptUnlock();">
+        <input type="password" class="gate-input" id="gatePinInput" maxlength="64" placeholder="••••••••" autofocus required />
+        <div class="gate-error" id="gateError">Incorrect Password. Please try again.</div>
+        <button type="submit" class="btn btn--accent" style="width: 100%; justify-content: center;" id="btnUnlock">Unlock Dashboard</button>
+      </form>
     </div>
   </div>
 
@@ -744,45 +751,56 @@
       charts: {}
     };
 
-    // Initialize Security Gate
-    function initSecurity() {
-      const gateModal = document.getElementById('gateModal');
+    // Global Unlock Function
+    window.attemptUnlock = function () {
       const pinInput = document.getElementById('gatePinInput');
-      const btnUnlock = document.getElementById('btnUnlock');
+      const gateModal = document.getElementById('gateModal');
       const gateError = document.getElementById('gateError');
+      const entered = (pinInput ? pinInput.value : '').trim();
 
-      if (state.isUnlocked) {
-        gateModal.style.display = 'none';
-      }
-
-      function attemptUnlock() {
-        const entered = (pinInput.value || '').trim();
-
-        if (entered === '3212') {
-          state.isUnlocked = true;
-          sessionStorage.setItem('va_dash_unlocked', 'true');
-          gateModal.style.display = 'none';
-          gateError.style.display = 'none';
-          pinInput.value = '';
-          initDashboard();
-        } else {
+      if (entered === '3212') {
+        state.isUnlocked = true;
+        sessionStorage.setItem('va_dash_unlocked', 'true');
+        if (gateModal) {
+          gateModal.classList.add('is-hidden');
+          gateModal.style.setProperty('display', 'none', 'important');
+        }
+        if (gateError) gateError.style.display = 'none';
+        if (pinInput) pinInput.value = '';
+        initDashboard();
+      } else {
+        if (gateError) {
           gateError.textContent = 'Incorrect Password. Please try again.';
           gateError.style.display = 'block';
+        }
+        if (pinInput) {
           pinInput.value = '';
           pinInput.focus();
         }
       }
+    };
 
-      btnUnlock.addEventListener('click', attemptUnlock);
-      pinInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') attemptUnlock();
-      });
+    // Initialize Security Gate
+    function initSecurity() {
+      const gateModal = document.getElementById('gateModal');
+      const pinInput = document.getElementById('gatePinInput');
 
-      document.getElementById('btnLock').addEventListener('click', () => {
+      if (sessionStorage.getItem('va_dash_unlocked') === 'true') {
+        state.isUnlocked = true;
+        if (gateModal) {
+          gateModal.classList.add('is-hidden');
+          gateModal.style.setProperty('display', 'none', 'important');
+        }
+      }
+
+      document.getElementById('btnLock')?.addEventListener('click', () => {
         state.isUnlocked = false;
         sessionStorage.removeItem('va_dash_unlocked');
-        gateModal.style.display = 'flex';
-        pinInput.focus();
+        if (gateModal) {
+          gateModal.classList.remove('is-hidden');
+          gateModal.style.setProperty('display', 'flex', 'important');
+        }
+        if (pinInput) pinInput.focus();
       });
     }
 
