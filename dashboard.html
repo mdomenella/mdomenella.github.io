@@ -585,10 +585,10 @@
       <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔒</div>
       <h2>Private Analytics Gate</h2>
       <p>Enter your master PIN to access the analytics dashboard.</p>
-      <form id="gateForm">
-        <input type="text" class="gate-input" id="gatePinInput" name="pin_code" maxlength="64" placeholder="••••" autofocus required />
+      <form id="gateForm" action="javascript:void(0);" onsubmit="attemptUnlock(); return false;">
+        <input type="password" class="gate-input" id="gatePinInput" name="pin_code" maxlength="64" placeholder="••••" autocomplete="current-password" autofocus required />
         <div class="gate-error" id="gateError">Incorrect PIN. Please try again.</div>
-        <button type="submit" class="btn btn--accent" style="width: 100%; justify-content: center;" id="btnUnlock">Unlock Dashboard</button>
+        <button type="button" class="btn btn--accent" style="width: 100%; justify-content: center;" id="btnUnlock" onclick="attemptUnlock()">Unlock Dashboard</button>
       </form>
     </div>
   </div>
@@ -749,19 +749,19 @@
       isUnlocked: sessionStorage.getItem('va_dash_unlocked') === 'true',
       supabaseUrl: localStorage.getItem('va_supabase_url') || 'https://xeysfzxizzdftwzjbirp.supabase.co',
       supabaseAnonKey: localStorage.getItem('va_supabase_key') || 'sb_publishable_U4i9nnuj-Sa09NEZU_ufmA_YbQl3YnN',
-      charts: {}
+      charts: {},
+      dashboardInitialized: false
     };
 
     // Global Unlock Function
     window.attemptUnlock = function () {
-      if (state.isUnlocked) return;
       const pinInput = document.getElementById('gatePinInput');
       const gateModal = document.getElementById('gateModal');
       const gateError = document.getElementById('gateError');
       const entered = (pinInput ? pinInput.value : '').trim();
       const cleanDigits = entered.replace(/[^0-9]/g, '');
 
-      if (entered === '3212' || cleanDigits === '3212' || entered.includes('3212') || cleanDigits.includes('3212')) {
+      if (state.isUnlocked || entered === '3212' || cleanDigits === '3212' || entered.includes('3212') || cleanDigits.includes('3212')) {
         state.isUnlocked = true;
         sessionStorage.setItem('va_dash_unlocked', 'true');
         if (gateModal) {
@@ -790,7 +790,19 @@
       const pinInput = document.getElementById('gatePinInput');
       const btnUnlock = document.getElementById('btnUnlock');
 
-      if (sessionStorage.getItem('va_dash_unlocked') === 'true') {
+      // Check URL parameters for pin e.g. ?pin_code=3212
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const pinParam = urlParams.get('pin_code') || urlParams.get('pin') || urlParams.get('pwd') || urlParams.get('pass');
+        if (pinParam && (pinParam === '3212' || pinParam.includes('3212'))) {
+          state.isUnlocked = true;
+          sessionStorage.setItem('va_dash_unlocked', 'true');
+          const cleanUrl = window.location.pathname;
+          window.history.replaceState({}, document.title, cleanUrl);
+        }
+      } catch (e) {}
+
+      if (state.isUnlocked || sessionStorage.getItem('va_dash_unlocked') === 'true') {
         state.isUnlocked = true;
         if (gateModal) {
           gateModal.classList.add('is-hidden');
@@ -800,17 +812,21 @@
 
       gateForm?.addEventListener('submit', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         attemptUnlock();
+        return false;
       });
 
       btnUnlock?.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         attemptUnlock();
       });
 
       pinInput?.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
+          e.stopPropagation();
           attemptUnlock();
         }
       });
@@ -820,7 +836,7 @@
         sessionStorage.removeItem('va_dash_unlocked');
         if (gateModal) {
           gateModal.classList.remove('is-hidden');
-          gateModal.style.setProperty('display', 'flex', 'important');
+          gateModal.style.removeProperty('display');
         }
         if (pinInput) {
           pinInput.value = '';
@@ -1220,22 +1236,33 @@
 
     // Main Dashboard Initializer
     function initDashboard() {
+      if (state.dashboardInitialized) {
+        loadLiveAnalytics();
+        return;
+      }
+      state.dashboardInitialized = true;
       initRecruiterTool();
       initSettings();
       loadLiveAnalytics();
 
-      document.getElementById('btnRefresh').addEventListener('click', () => {
+      document.getElementById('btnRefresh')?.addEventListener('click', () => {
         loadLiveAnalytics();
       });
     }
 
-    // On Load
-    document.addEventListener('DOMContentLoaded', () => {
+    // Boot Sequence
+    function bootDashboard() {
       initSecurity();
       if (state.isUnlocked) {
         initDashboard();
       }
-    });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootDashboard);
+    } else {
+      bootDashboard();
+    }
   </script>
 </body>
 </html>
