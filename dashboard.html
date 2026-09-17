@@ -637,28 +637,28 @@
     <section class="stats-grid">
       <div class="stat-card stat-card--blue">
         <div class="stat-card__label">Total Visitors</div>
-        <div class="stat-card__val" id="statVisitors">184</div>
-        <div class="stat-card__sub"><span class="trend--up">↑ 24%</span> past 14 days</div>
+        <div class="stat-card__val" id="statVisitors">--</div>
+        <div class="stat-card__sub" id="statVisitorsSub"><span class="trend--up">●</span> 0 today</div>
       </div>
       <div class="stat-card stat-card--green">
         <div class="stat-card__label">Pageviews</div>
-        <div class="stat-card__val" id="statPageviews">612</div>
-        <div class="stat-card__sub">~3.3 pages / session</div>
+        <div class="stat-card__val" id="statPageviews">--</div>
+        <div class="stat-card__sub" id="statPageviewsSub">~0.0 pages / session</div>
       </div>
       <div class="stat-card stat-card--orange">
         <div class="stat-card__label">Recruiter Hits</div>
-        <div class="stat-card__val" id="statRecruiterHits">42</div>
-        <div class="stat-card__sub">From tagged campaigns</div>
+        <div class="stat-card__val" id="statRecruiterHits">--</div>
+        <div class="stat-card__sub" id="statRecruiterHitsSub">From tagged links</div>
       </div>
       <div class="stat-card stat-card--purple">
         <div class="stat-card__label">High-Intent Actions</div>
-        <div class="stat-card__val" id="statConversions">28</div>
-        <div class="stat-card__sub">19 Resumes • 9 Emails</div>
+        <div class="stat-card__val" id="statConversions">--</div>
+        <div class="stat-card__sub" id="statConversionsSub">0 Resumes • 0 Emails</div>
       </div>
       <div class="stat-card stat-card--blue">
         <div class="stat-card__label">Avg Time on Site</div>
-        <div class="stat-card__val" id="statAvgTime">3m 42s</div>
-        <div class="stat-card__sub">Clippard lead: 4m 10s</div>
+        <div class="stat-card__val" id="statAvgTime">--</div>
+        <div class="stat-card__sub" id="statAvgTimeSub">Per active session</div>
       </div>
     </section>
 
@@ -1011,6 +1011,11 @@
         document.getElementById('statRecruiterHits').textContent = '0';
         document.getElementById('statConversions').textContent = '0';
         document.getElementById('statAvgTime').textContent = '--';
+        if (document.getElementById('statVisitorsSub')) document.getElementById('statVisitorsSub').textContent = '0 today';
+        if (document.getElementById('statPageviewsSub')) document.getElementById('statPageviewsSub').textContent = '~0.0 pages / session';
+        if (document.getElementById('statRecruiterHitsSub')) document.getElementById('statRecruiterHitsSub').textContent = 'From tagged links';
+        if (document.getElementById('statConversionsSub')) document.getElementById('statConversionsSub').textContent = '0 Resumes • 0 Emails';
+        if (document.getElementById('statAvgTimeSub')) document.getElementById('statAvgTimeSub').textContent = 'No session data';
 
         const feedContainer = document.getElementById('visitorFeed');
         feedContainer.innerHTML = `
@@ -1062,6 +1067,16 @@
         const contactClicks = events.filter(e => e.event_type === 'contact_click').length;
         const totalConversions = resumeDownloads + contactClicks;
 
+        // Today's visitors calculation
+        const todayStr = new Date().toISOString().split('T')[0];
+        const todayVisitors = sessions.filter(s => (s.created_at || '').startsWith(todayStr)).length;
+
+        // Pages per session
+        const pagesPerSession = totalVisitors > 0 ? (totalPageviews / totalVisitors).toFixed(1) : '0.0';
+
+        // Tagged recruiter sources
+        const recruiterTags = [...new Set(sessions.map(s => s.ref_tag?.trim()).filter(Boolean))];
+
         // Dwell Time calculation
         const dwellEvents = events.filter(e => e.event_type === 'page_dwell' && e.event_data?.duration_seconds);
         let avgDwellStr = '--';
@@ -1073,11 +1088,42 @@
           avgDwellStr = m > 0 ? `${m}m ${s}s` : `${s}s`;
         }
 
+        // Populate Main Stat Values
         document.getElementById('statVisitors').textContent = totalVisitors;
         document.getElementById('statPageviews').textContent = totalPageviews;
         document.getElementById('statRecruiterHits').textContent = recruiterHits;
         document.getElementById('statConversions').textContent = totalConversions;
         document.getElementById('statAvgTime').textContent = avgDwellStr;
+
+        // Populate Dynamic Subtitles
+        const visitorsSubEl = document.getElementById('statVisitorsSub');
+        if (visitorsSubEl) {
+          visitorsSubEl.innerHTML = `<span class="trend--up">●</span> ${todayVisitors} new today`;
+        }
+
+        const pageviewsSubEl = document.getElementById('statPageviewsSub');
+        if (pageviewsSubEl) {
+          pageviewsSubEl.textContent = `~${pagesPerSession} pages / session`;
+        }
+
+        const recruiterHitsSubEl = document.getElementById('statRecruiterHitsSub');
+        if (recruiterHitsSubEl) {
+          recruiterHitsSubEl.textContent = recruiterHits > 0 
+            ? `${recruiterTags.length} tagged source${recruiterTags.length === 1 ? '' : 's'}` 
+            : 'From tagged links';
+        }
+
+        const conversionsSubEl = document.getElementById('statConversionsSub');
+        if (conversionsSubEl) {
+          conversionsSubEl.textContent = `${resumeDownloads} Resume${resumeDownloads === 1 ? '' : 's'} • ${contactClicks} Email${contactClicks === 1 ? '' : 's'}`;
+        }
+
+        const avgTimeSubEl = document.getElementById('statAvgTimeSub');
+        if (avgTimeSubEl) {
+          avgTimeSubEl.textContent = dwellEvents.length > 0 
+            ? `Across ${dwellEvents.length} recorded session${dwellEvents.length === 1 ? '' : 's'}` 
+            : 'Awaiting session dwell';
+        }
 
         // 2. Build Traffic Over Time (Last 7 Days)
         const dateMap = {};
