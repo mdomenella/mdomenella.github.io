@@ -510,6 +510,7 @@
       outline: none;
       margin-bottom: 1rem;
       font-family: monospace;
+      -webkit-text-security: disc;
     }
 
     .gate-input:focus {
@@ -583,10 +584,10 @@
     <div class="gate-box">
       <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔒</div>
       <h2>Private Analytics Gate</h2>
-      <p>Enter your master password to access the analytics dashboard.</p>
+      <p>Enter your master PIN to access the analytics dashboard.</p>
       <form id="gateForm">
-        <input type="password" class="gate-input" id="gatePinInput" maxlength="64" placeholder="••••••••" autofocus required />
-        <div class="gate-error" id="gateError">Incorrect Password. Please try again.</div>
+        <input type="text" class="gate-input" id="gatePinInput" name="pin_code" maxlength="64" placeholder="••••" autofocus required />
+        <div class="gate-error" id="gateError">Incorrect PIN. Please try again.</div>
         <button type="submit" class="btn btn--accent" style="width: 100%; justify-content: center;" id="btnUnlock">Unlock Dashboard</button>
       </form>
     </div>
@@ -758,8 +759,9 @@
       const gateModal = document.getElementById('gateModal');
       const gateError = document.getElementById('gateError');
       const entered = (pinInput ? pinInput.value : '').trim();
+      const cleanDigits = entered.replace(/[^0-9]/g, '');
 
-      if (entered === '3212') {
+      if (entered === '3212' || cleanDigits === '3212' || entered.includes('3212') || cleanDigits.includes('3212')) {
         state.isUnlocked = true;
         sessionStorage.setItem('va_dash_unlocked', 'true');
         if (gateModal) {
@@ -786,6 +788,7 @@
       const gateModal = document.getElementById('gateModal');
       const gateForm = document.getElementById('gateForm');
       const pinInput = document.getElementById('gatePinInput');
+      const btnUnlock = document.getElementById('btnUnlock');
 
       if (sessionStorage.getItem('va_dash_unlocked') === 'true') {
         state.isUnlocked = true;
@@ -800,6 +803,18 @@
         attemptUnlock();
       });
 
+      btnUnlock?.addEventListener('click', (e) => {
+        e.preventDefault();
+        attemptUnlock();
+      });
+
+      pinInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          attemptUnlock();
+        }
+      });
+
       document.getElementById('btnLock')?.addEventListener('click', () => {
         state.isUnlocked = false;
         sessionStorage.removeItem('va_dash_unlocked');
@@ -807,7 +822,10 @@
           gateModal.classList.remove('is-hidden');
           gateModal.style.setProperty('display', 'flex', 'important');
         }
-        if (pinInput) pinInput.focus();
+        if (pinInput) {
+          pinInput.value = '';
+          pinInput.focus();
+        }
       });
     }
 
@@ -1021,7 +1039,8 @@
 
         // 1. Calculate Summary Metrics
         const totalVisitors = sessions.length;
-        const totalPageviews = events.filter(e => e.event_type === 'pageview').length;
+        const rawViews = events.filter(e => e.event_type === 'pageview').length;
+        const totalPageviews = rawViews > 0 ? rawViews : totalVisitors;
         const recruiterHits = sessions.filter(s => s.ref_tag && s.ref_tag.trim() !== '').length;
         const resumeDownloads = events.filter(e => e.event_type === 'resume_click').length;
         const contactClicks = events.filter(e => e.event_type === 'contact_click').length;
@@ -1037,9 +1056,6 @@
           const s = avgSec % 60;
           avgDwellStr = m > 0 ? `${m}m ${s}s` : `${s}s`;
         }
-
-        const rawViews = events.filter(e => e.event_type === 'pageview').length;
-        const totalPageviews = rawViews > 0 ? rawViews : totalVisitors;
 
         document.getElementById('statVisitors').textContent = totalVisitors;
         document.getElementById('statPageviews').textContent = totalPageviews;
