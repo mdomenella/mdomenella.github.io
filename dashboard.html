@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Analytics Dashboard — Michel Domenella</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-border: #30363d;
+      --surface-hover: #21262d;
+      --text: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent: #2f81f7;
+      --accent-glow: rgba(47, 129, 247, 0.15);
+      --green: #238636;
+      --green-light: #3fb950;
+      --purple: #8957e5;
+      --orange: #d29922;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation */
+    .nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .nav__badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+    }
+
+    .nav__actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--surface-border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: var(--surface-hover);
+      border-color: #8b949e;
+    }
+
+    .btn--primary {
+      background: #238636;
+      border-color: rgba(240, 246, 252, 0.1);
+      color: #fff;
+    }
+
+    .btn--primary:hover {
+      background: #2ea043;
+    }
+
+    .btn--accent {
+      background: var(--accent);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .btn--accent:hover {
+      background: #1f6feb;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1360px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem;
+      flex: 1;
+    }
+
+    /* Header section */
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-bar__title h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .header-bar__title p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .mode-switch {
+      display: flex;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      padding: 0.25rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .mode-switch button {
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .mode-switch button.active {
+      background: var(--surface-hover);
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* Stat Cards Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+    }
+
+    .stat-card--blue::before { background: var(--accent); }
+    .stat-card--green::before { background: var(--green-light); }
+    .stat-card--purple::before { background: var(--purple); }
+    .stat-card--orange::before { background: var(--orange); }
+
+    .stat-card__label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .stat-card__val {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .stat-card__sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .trend--up {
+      color: var(--green-light);
+      font-weight: 600;
+    }
+
+    /* Layout Grids */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .panel__title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .panel__sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Chart wrappers */
+    .chart-container {
+      position: relative;
+      height: 280px;
+      width: 100%;
+    }
+
+    /* Live Feed */
+    .visitor-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      max-height: 580px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .visitor-feed::-webkit-scrollbar {
+      width: 6px;
+    }
+    .visitor-feed::-webkit-scrollbar-thumb {
+      background: var(--surface-border);
+      border-radius: 999px;
+    }
+
+    .visitor-card {
+      background: var(--surface-hover);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.15rem;
+      transition: border-color 0.2s;
+    }
+
+    .visitor-card:hover {
+      border-color: #58a6ff;
+    }
+
+    .visitor-card__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .visitor-card__id {
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .recruiter-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(210, 153, 34, 0.2);
+      color: #e3b341;
+      border: 1px solid #d29922;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .visitor-card__time {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .visitor-card__meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .visitor-card__timeline {
+      border-left: 2px solid var(--surface-border);
+      margin-left: 0.5rem;
+      padding-left: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .timeline-step {
+      font-size: 0.78rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      position: relative;
+    }
+
+    .timeline-step::before {
+      content: '';
+      position: absolute;
+      left: -1.1rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .timeline-step--highlight::before {
+      background: var(--green-light);
+      box-shadow: 0 0 6px var(--green-light);
+    }
+
+    .timeline-step--cad::before {
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent);
+    }
+
+    /* Recruiter Tool Panel */
+    .recruiter-tool {
+      background: linear-gradient(135deg, rgba(22, 27, 34, 0.95), rgba(33, 38, 45, 0.85));
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .recruiter-tool__info h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .recruiter-tool__info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 520px;
+    }
+
+    .recruiter-tool__form {
+      display: flex;
+      gap: 0.5rem;
+      flex: 1;
+      max-width: 480px;
+      min-width: 280px;
+    }
+
+    .recruiter-tool__input {
+      flex: 1;
+      background: var(--bg);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 1rem;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .recruiter-tool__input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Security Gate Modal */
+    .gate-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 17, 23, 0.96);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1.5rem;
+    }
+
+    .gate-box {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+    }
+
+    .gate-box h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .gate-box p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .gate-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      color: var(--text);
+      font-size: 1.1rem;
+      text-align: center;
+      letter-spacing: 0.3em;
+      outline: none;
+      margin-bottom: 1rem;
+      font-family: monospace;
+    }
+
+    .gate-input:focus {
+      border-color: var(--accent);
+    }
+
+    .gate-error {
+      color: #f85149;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    /* Settings Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+      padding: 1.5rem;
+    }
+
+    .modal-box {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .modal-box h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+    }
+
+    .form-group input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.85rem;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Security Gate Screen -->
+  <div class="gate-overlay" id="gateModal">
+    <div class="gate-box">
+      <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔒</div>
+      <h2>Private Analytics Gate</h2>
+      <p>Enter your 4-digit PIN to access the Michel Domenella visitor analytics dashboard.</p>
+      <input type="password" class="gate-input" id="gatePinInput" maxlength="6" placeholder="••••" autofocus />
+      <div class="gate-error" id="gateError">Incorrect PIN. Try default: 1234</div>
+      <button class="btn btn--accent" style="width: 100%; justify-content: center;" id="btnUnlock">Unlock Dashboard</button>
+      <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted);">
+        (Default PIN: <code>1234</code> — customizable in settings)
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Navigation -->
+  <header class="nav">
+    <div class="nav__brand">
+      <span>Michel Domenella</span>
+      <span class="nav__badge">Private Analytics</span>
+    </div>
+    <div class="nav__actions">
+      <a href="index.html" class="btn">← View Live Portfolio</a>
+      <button class="btn" id="btnSettings">⚙️ Settings</button>
+      <button class="btn btn--primary" id="btnRefresh">🔄 Refresh</button>
+      <button class="btn" id="btnLock">🔒 Lock</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Header Controls -->
+    <div class="header-bar">
+      <div class="header-bar__title">
+        <h1>Visitor Intelligence & Recruiter Feed</h1>
+        <p>Real-time analytics, dwell metrics, and individual session journey tracking.</p>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span class="nav__badge" id="liveBadge" style="display: flex; align-items: center; gap: 0.35rem;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #3fb950; display: inline-block;"></span> Live Cloud
+        </span>
+      </div>
+    </div>
+
+    <!-- Recruiter Custom Link Tool -->
+    <section class="recruiter-tool">
+      <div class="recruiter-tool__info">
+        <h3>🎯 Recruiter Link Generator</h3>
+        <p>Creating job applications? Generate custom tagged links (e.g. <code>?ref=apple</code>) to get instant alerts whenever hiring managers open your portfolio.</p>
+      </div>
+      <div class="recruiter-tool__form">
+        <input type="text" class="recruiter-tool__input" id="recruiterInput" placeholder="Company name (e.g. Tesla, Apple, IDEO)" />
+        <button class="btn btn--accent" id="btnGenerateLink">Generate & Copy</button>
+      </div>
+    </section>
+
+    <!-- Key Stats -->
+    <section class="stats-grid">
+      <div class="stat-card stat-card--blue">
+        <div class="stat-card__label">Total Visitors</div>
+        <div class="stat-card__val" id="statVisitors">184</div>
+        <div class="stat-card__sub"><span class="trend--up">↑ 24%</span> past 14 days</div>
+      </div>
+      <div class="stat-card stat-card--green">
+        <div class="stat-card__label">Pageviews</div>
+        <div class="stat-card__val" id="statPageviews">612</div>
+        <div class="stat-card__sub">~3.3 pages / session</div>
+      </div>
+      <div class="stat-card stat-card--orange">
+        <div class="stat-card__label">Recruiter Hits</div>
+        <div class="stat-card__val" id="statRecruiterHits">42</div>
+        <div class="stat-card__sub">From tagged campaigns</div>
+      </div>
+      <div class="stat-card stat-card--purple">
+        <div class="stat-card__label">High-Intent Actions</div>
+        <div class="stat-card__val" id="statConversions">28</div>
+        <div class="stat-card__sub">19 Resumes • 9 Emails</div>
+      </div>
+      <div class="stat-card stat-card--blue">
+        <div class="stat-card__label">Avg Time on Site</div>
+        <div class="stat-card__val" id="statAvgTime">3m 42s</div>
+        <div class="stat-card__sub">Clippard lead: 4m 10s</div>
+      </div>
+    </section>
+
+    <!-- Dashboard Layout: Charts + Live Stream -->
+    <div class="dashboard-layout">
+      <!-- Left Column: Visual Analytics -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Traffic Chart -->
+        <div class="panel">
+          <div class="panel__head">
+            <div>
+              <div class="panel__title">Visitor Traffic & Engagement Over Time</div>
+              <div class="panel__sub">Daily unique visitors and overall pageviews</div>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="trafficChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Secondary Charts Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+          <!-- Top Pages -->
+          <div class="panel">
+            <div class="panel__head">
+              <div class="panel__title">Top Viewed Projects</div>
+            </div>
+            <div class="chart-container" style="height: 220px;">
+              <canvas id="pagesChart"></canvas>
+            </div>
+          </div>
+          <!-- Referral Channels -->
+          <div class="panel">
+            <div class="panel__head">
+              <div class="panel__title">Referral Channels</div>
+            </div>
+            <div class="chart-container" style="height: 220px;">
+              <canvas id="sourcesChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Live Recruiter & Visitor Journey Feed -->
+      <div class="panel">
+        <div class="panel__head">
+          <div>
+            <div class="panel__title">Live Visitor Journey Stream</div>
+            <div class="panel__sub">Step-by-step paths of recent visitors</div>
+          </div>
+          <span class="nav__badge" id="liveBadge">Active</span>
+        </div>
+        <div class="visitor-feed" id="visitorFeed">
+          <!-- Visitor Cards rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box">
+      <h3>Dashboard & Database Settings</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+        Configure your private PIN and connect your free Supabase database project for live cloud tracking.
+      </p>
+
+      <div class="form-group">
+        <label>Dashboard Gate PIN</label>
+        <input type="password" id="cfgPin" value="1234" placeholder="Enter PIN" />
+      </div>
+
+      <div class="form-group">
+        <label>Supabase Project URL</label>
+        <input type="text" id="cfgSupabaseUrl" placeholder="https://xyzcompany.supabase.co" />
+      </div>
+
+      <div class="form-group">
+        <label>Supabase Anon Public API Key</label>
+        <input type="text" id="cfgSupabaseKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpX..." />
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button class="btn" id="btnCancelSettings">Cancel</button>
+        <button class="btn btn--primary" id="btnSaveSettings">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuration & State
+    const state = {
+      isUnlocked: sessionStorage.getItem('va_dash_unlocked') === 'true',
+      pin: localStorage.getItem('va_dash_pin') || '1234',
+      supabaseUrl: localStorage.getItem('va_supabase_url') || 'https://xeysfzxizzdftwzjbirp.supabase.co',
+      supabaseAnonKey: localStorage.getItem('va_supabase_key') || 'sb_publishable_U4i9nnuj-Sa09NEZU_ufmA_YbQl3YnN',
+      charts: {}
+    };
+
+    // Initialize Security Gate
+    function initSecurity() {
+      const gateModal = document.getElementById('gateModal');
+      const pinInput = document.getElementById('gatePinInput');
+      const btnUnlock = document.getElementById('btnUnlock');
+      const gateError = document.getElementById('gateError');
+
+      if (state.isUnlocked) {
+        gateModal.style.display = 'none';
+      }
+
+      function attemptUnlock() {
+        if (pinInput.value === state.pin) {
+          state.isUnlocked = true;
+          sessionStorage.setItem('va_dash_unlocked', 'true');
+          gateModal.style.display = 'none';
+          gateError.style.display = 'none';
+          pinInput.value = '';
+          initDashboard();
+        } else {
+          gateError.style.display = 'block';
+          pinInput.value = '';
+          pinInput.focus();
+        }
+      }
+
+      btnUnlock.addEventListener('click', attemptUnlock);
+      pinInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') attemptUnlock();
+      });
+
+      document.getElementById('btnLock').addEventListener('click', () => {
+        state.isUnlocked = false;
+        sessionStorage.removeItem('va_dash_unlocked');
+        gateModal.style.display = 'flex';
+        pinInput.focus();
+      });
+    }
+
+    // Render Visitor Journey Feed
+    function renderVisitorFeed(visitors) {
+      const container = document.getElementById('visitorFeed');
+      container.innerHTML = '';
+
+      if (!visitors || visitors.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📡</div>
+            <p style="font-weight: 600; color: var(--text); margin-bottom: 0.25rem;">Waiting for visitor activity...</p>
+            <p style="font-size: 0.8rem;">When recruiters or visitors open your portfolio, their journeys will stream here live.</p>
+          </div>
+        `;
+        return;
+      }
+
+      visitors.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'visitor-card';
+
+        const recruiterBadge = v.recruiter 
+          ? `<span class="recruiter-pill">🎯 ${v.recruiter}</span>` 
+          : '';
+
+        const timelineItems = v.steps.map(s => {
+          let extraClass = '';
+          if (s.type === 'highlight') extraClass = 'timeline-step--highlight';
+          if (s.type === 'cad') extraClass = 'timeline-step--cad';
+          return `<div class="timeline-step ${extraClass}">${s.text}</div>`;
+        }).join('');
+
+        card.innerHTML = `
+          <div class="visitor-card__top">
+            <div class="visitor-card__id">
+              <span>${v.id}</span>
+              ${recruiterBadge}
+            </div>
+            <span class="visitor-card__time">${v.time}</span>
+          </div>
+          <div class="visitor-card__meta">
+            <span>📍 ${v.location}</span>
+            <span>💻 ${v.device}</span>
+            <span>⏱️ ${v.duration}</span>
+          </div>
+          <div class="visitor-card__timeline">
+            ${timelineItems}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Render Charts
+    function renderCharts(trafficData, pagesData, sourcesData) {
+      // 1. Traffic Chart
+      const ctxTraffic = document.getElementById('trafficChart').getContext('2d');
+      if (state.charts.traffic) state.charts.traffic.destroy();
+      state.charts.traffic = new Chart(ctxTraffic, {
+        type: 'line',
+        data: {
+          labels: trafficData.labels.length ? trafficData.labels : ['No Data'],
+          datasets: [
+            {
+              label: 'Pageviews',
+              data: trafficData.views.length ? trafficData.views : [0],
+              borderColor: '#2f81f7',
+              backgroundColor: 'rgba(47, 129, 247, 0.1)',
+              fill: true,
+              tension: 0.35,
+              pointRadius: 4,
+              pointBackgroundColor: '#2f81f7'
+            },
+            {
+              label: 'Unique Visitors',
+              data: trafficData.visitors.length ? trafficData.visitors : [0],
+              borderColor: '#3fb950',
+              backgroundColor: 'transparent',
+              borderDash: [5, 5],
+              tension: 0.35,
+              pointRadius: 4,
+              pointBackgroundColor: '#3fb950'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: { color: '#8b949e', font: { family: 'DM Sans' } }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: '#21262d' },
+              ticks: { color: '#8b949e', font: { family: 'DM Sans' } }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: '#21262d' },
+              ticks: { color: '#8b949e', font: { family: 'DM Sans' }, precision: 0 }
+            }
+          }
+        }
+      });
+
+      // 2. Top Pages Chart
+      const ctxPages = document.getElementById('pagesChart').getContext('2d');
+      if (state.charts.pages) state.charts.pages.destroy();
+      state.charts.pages = new Chart(ctxPages, {
+        type: 'bar',
+        data: {
+          labels: pagesData.labels.length ? pagesData.labels : ['No Visits Yet'],
+          datasets: [{
+            data: pagesData.counts.length ? pagesData.counts : [0],
+            backgroundColor: ['#2f81f7', '#8957e5', '#3fb950', '#d29922', '#6e7681'],
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { beginAtZero: true, grid: { color: '#21262d' }, ticks: { color: '#8b949e', font: { family: 'DM Sans' }, precision: 0 } },
+            y: { grid: { display: false }, ticks: { color: '#f0f6fc', font: { family: 'DM Sans', size: 11 } } }
+          }
+        }
+      });
+
+      // 3. Sources Chart
+      const ctxSources = document.getElementById('sourcesChart').getContext('2d');
+      if (state.charts.sources) state.charts.sources.destroy();
+      state.charts.sources = new Chart(ctxSources, {
+        type: 'doughnut',
+        data: {
+          labels: sourcesData.labels.length ? sourcesData.labels : ['Direct'],
+          datasets: [{
+            data: sourcesData.counts.length ? sourcesData.counts : [1],
+            backgroundColor: ['#0a66c2', '#d29922', '#8957e5', '#3fb950', '#6e7681'],
+            borderColor: '#161b22',
+            borderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: { color: '#8b949e', font: { family: 'DM Sans', size: 11 }, boxWidth: 12 }
+            }
+          }
+        }
+      });
+    }
+
+    // Live Database Fetcher
+    async function loadLiveAnalytics() {
+      if (!state.supabaseUrl || !state.supabaseAnonKey) {
+        document.getElementById('statVisitors').textContent = '0';
+        document.getElementById('statPageviews').textContent = '0';
+        document.getElementById('statRecruiterHits').textContent = '0';
+        document.getElementById('statConversions').textContent = '0';
+        document.getElementById('statAvgTime').textContent = '--';
+
+        const feedContainer = document.getElementById('visitorFeed');
+        feedContainer.innerHTML = `
+          <div style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+            <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">⚙️</div>
+            <h4 style="color: var(--text); margin-bottom: 0.5rem;">Connect Supabase Database</h4>
+            <p style="font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.25rem;">
+              Paste your free Supabase URL and API Key in Settings to start streaming live visitor intelligence.
+            </p>
+            <button class="btn btn--accent" id="btnPromptSettings">Open Settings</button>
+          </div>
+        `;
+        document.getElementById('btnPromptSettings')?.addEventListener('click', () => {
+          document.getElementById('btnSettings').click();
+        });
+
+        renderCharts(
+          { labels: ['Today'], views: [0], visitors: [0] },
+          { labels: ['No Visits Yet'], counts: [0] },
+          { labels: ['Direct'], counts: [1] }
+        );
+        return;
+      }
+
+      try {
+        const headers = {
+          'apikey': state.supabaseAnonKey,
+          'Authorization': `Bearer ${state.supabaseAnonKey}`
+        };
+
+        const [sessionsRes, eventsRes] = await Promise.all([
+          fetch(`${state.supabaseUrl}/rest/v1/analytics_sessions?order=created_at.desc&limit=100`, { headers }),
+          fetch(`${state.supabaseUrl}/rest/v1/analytics_events?order=created_at.desc&limit=300`, { headers })
+        ]);
+
+        if (!sessionsRes.ok || !eventsRes.ok) {
+          throw new Error('Supabase responded with an error. Please verify table permissions or API keys.');
+        }
+
+        const sessions = await sessionsRes.json();
+        const events = await eventsRes.json();
+
+        // 1. Calculate Summary Metrics
+        const totalVisitors = sessions.length;
+        const totalPageviews = events.filter(e => e.event_type === 'pageview').length;
+        const recruiterHits = sessions.filter(s => s.ref_tag && s.ref_tag.trim() !== '').length;
+        const resumeDownloads = events.filter(e => e.event_type === 'resume_click').length;
+        const contactClicks = events.filter(e => e.event_type === 'contact_click').length;
+        const totalConversions = resumeDownloads + contactClicks;
+
+        // Dwell Time calculation
+        const dwellEvents = events.filter(e => e.event_type === 'page_dwell' && e.event_data?.duration_seconds);
+        let avgDwellStr = '--';
+        if (dwellEvents.length > 0) {
+          const totalSec = dwellEvents.reduce((acc, cur) => acc + (cur.event_data.duration_seconds || 0), 0);
+          const avgSec = Math.round(totalSec / dwellEvents.length);
+          const m = Math.floor(avgSec / 60);
+          const s = avgSec % 60;
+          avgDwellStr = m > 0 ? `${m}m ${s}s` : `${s}s`;
+        }
+
+        document.getElementById('statVisitors').textContent = totalVisitors;
+        document.getElementById('statPageviews').textContent = totalPageviews;
+        document.getElementById('statRecruiterHits').textContent = recruiterHits;
+        document.getElementById('statConversions').textContent = totalConversions;
+        document.getElementById('statAvgTime').textContent = avgDwellStr;
+
+        // 2. Build Traffic Over Time (Last 7 Days)
+        const dateMap = {};
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const key = d.toISOString().split('T')[0];
+          const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          dateMap[key] = { label, views: 0, visitors: new Set() };
+        }
+
+        events.forEach(e => {
+          const dayKey = (e.created_at || '').split('T')[0];
+          if (dateMap[dayKey]) {
+            if (e.event_type === 'pageview') dateMap[dayKey].views++;
+            if (e.session_id) dateMap[dayKey].visitors.add(e.session_id);
+          }
+        });
+
+        const trafficLabels = Object.values(dateMap).map(d => d.label);
+        const trafficViews = Object.values(dateMap).map(d => d.views);
+        const trafficVisitors = Object.values(dateMap).map(d => d.visitors.size);
+
+        // 3. Build Top Pages Data
+        const pageCounts = {};
+        events.filter(e => e.event_type === 'pageview').forEach(e => {
+          let name = e.page_title || e.page_path || 'Home';
+          name = name.replace(' — Michel Domenella', '').replace('Michel Domenella', 'Home');
+          pageCounts[name] = (pageCounts[name] || 0) + 1;
+        });
+
+        const sortedPages = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        const pagesLabels = sortedPages.map(p => p[0]);
+        const pagesValues = sortedPages.map(p => p[1]);
+
+        // 4. Build Sources Data
+        const sourceCounts = {};
+        sessions.forEach(s => {
+          let src = s.ref_tag ? `Recruiter: ${s.ref_tag}` : (s.referrer || 'Direct');
+          sourceCounts[src] = (sourceCounts[src] || 0) + 1;
+        });
+        const sortedSources = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        const sourcesLabels = sortedSources.map(s => s[0]);
+        const sourcesValues = sortedSources.map(s => s[1]);
+
+        renderCharts(
+          { labels: trafficLabels, views: trafficViews, visitors: trafficVisitors },
+          { labels: pagesLabels, counts: pagesValues },
+          { labels: sourcesLabels, counts: sourcesValues }
+        );
+
+        // 5. Build Live Visitor Feed
+        const visitorCards = sessions.slice(0, 20).map(s => {
+          const sEvents = events.filter(e => e.session_id === s.session_id).reverse();
+          const steps = sEvents.map(e => {
+            let t = 'normal';
+            let txt = `Viewed ${e.page_title || e.page_path}`;
+            if (e.event_type === 'resume_click') { t = 'highlight'; txt = '📄 Downloaded Resume PDF'; }
+            if (e.event_type === 'contact_click') { t = 'highlight'; txt = '✉️ Clicked Email contact link'; }
+            if (e.event_type === 'cad_viewer_interact') { t = 'cad'; txt = '🌀 Interacted with 3D CAD Viewer'; }
+            return { text: txt, type: t };
+          });
+
+          if (steps.length === 0) {
+            steps.push({ text: `Arrived from ${s.referrer || 'Direct'}`, type: 'normal' });
+          }
+
+          const createdDate = new Date(s.created_at);
+          const timeFormatted = isNaN(createdDate) ? 'Just now' : createdDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+          return {
+            id: s.session_id.substring(0, 10),
+            recruiter: s.ref_tag || null,
+            device: `${s.device_type || 'Desktop'}`,
+            location: s.city ? `${s.city}, ${s.country}` : 'Visitor',
+            time: timeFormatted,
+            duration: 'Active',
+            steps: steps
+          };
+        });
+
+        renderVisitorFeed(visitorCards);
+      } catch (err) {
+        console.error('Error fetching live analytics:', err);
+      }
+    }
+
+    // Recruiter URL Generator
+    function initRecruiterTool() {
+      const input = document.getElementById('recruiterInput');
+      const btn = document.getElementById('btnGenerateLink');
+
+      btn.addEventListener('click', () => {
+        const raw = input.value.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-');
+        if (!raw) {
+          alert('Please enter a company name (e.g. Tesla, Apple, IDEO)');
+          return;
+        }
+
+        const baseUrl = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
+          ? 'https://micheldomenella.com'
+          : window.location.origin;
+
+        const generatedUrl = `${baseUrl}/?ref=${raw}`;
+        navigator.clipboard.writeText(generatedUrl).then(() => {
+          btn.textContent = '✓ Copied to Clipboard!';
+          setTimeout(() => { btn.textContent = 'Generate & Copy'; }, 2500);
+        });
+      });
+    }
+
+    // Settings Modal Handlers
+    function initSettings() {
+      const modal = document.getElementById('settingsModal');
+      const btnSettings = document.getElementById('btnSettings');
+      const btnCancel = document.getElementById('btnCancelSettings');
+      const btnSave = document.getElementById('btnSaveSettings');
+
+      const cfgPin = document.getElementById('cfgPin');
+      const cfgUrl = document.getElementById('cfgSupabaseUrl');
+      const cfgKey = document.getElementById('cfgSupabaseKey');
+
+      btnSettings.addEventListener('click', () => {
+        cfgPin.value = state.pin;
+        cfgUrl.value = state.supabaseUrl;
+        cfgKey.value = state.supabaseAnonKey;
+        modal.style.display = 'flex';
+      });
+
+      btnCancel.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+
+      btnSave.addEventListener('click', () => {
+        if (cfgPin.value) {
+          state.pin = cfgPin.value;
+          localStorage.setItem('va_dash_pin', state.pin);
+        }
+        state.supabaseUrl = cfgUrl.value.trim().replace(/\/+$/, '');
+        state.supabaseAnonKey = cfgKey.value.trim();
+        localStorage.setItem('va_supabase_url', state.supabaseUrl);
+        localStorage.setItem('va_supabase_key', state.supabaseAnonKey);
+
+        modal.style.display = 'none';
+        loadLiveAnalytics();
+      });
+    }
+
+    // Main Dashboard Initializer
+    function initDashboard() {
+      initRecruiterTool();
+      initSettings();
+      loadLiveAnalytics();
+
+      document.getElementById('btnRefresh').addEventListener('click', () => {
+        loadLiveAnalytics();
+      });
+    }
+
+    // On Load
+    document.addEventListener('DOMContentLoaded', () => {
+      initSecurity();
+      if (state.isUnlocked) {
+        initDashboard();
+      }
+    });
+  </script>
+</body>
+</html>
