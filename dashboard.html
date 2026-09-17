@@ -719,8 +719,8 @@
       </p>
 
       <div class="form-group">
-        <label>Dashboard Gate PIN / Password</label>
-        <input type="password" id="cfgPin" value="1234" maxlength="64" placeholder="Enter PIN or Password" />
+        <label>Dashboard Gate Password</label>
+        <input type="password" id="cfgPin" maxlength="64" placeholder="Enter New Master Password" />
       </div>
 
       <div class="form-group">
@@ -744,7 +744,7 @@
     // Configuration & State
     const state = {
       isUnlocked: sessionStorage.getItem('va_dash_unlocked') === 'true',
-      pin: localStorage.getItem('va_dash_pin') || '1234',
+      pin: localStorage.getItem('va_dash_pin') || '',
       supabaseUrl: localStorage.getItem('va_supabase_url') || 'https://xeysfzxizzdftwzjbirp.supabase.co',
       supabaseAnonKey: localStorage.getItem('va_supabase_key') || 'sb_publishable_U4i9nnuj-Sa09NEZU_ufmA_YbQl3YnN',
       charts: {}
@@ -762,7 +762,29 @@
       }
 
       function attemptUnlock() {
-        if (pinInput.value === state.pin) {
+        const currentPin = (localStorage.getItem('va_dash_pin') || '').trim();
+        const entered = (pinInput.value || '').trim();
+
+        // If no password set yet, establish the entered password as the master password
+        if (!currentPin) {
+          if (!entered) {
+            gateError.textContent = 'Please enter a password to protect your dashboard.';
+            gateError.style.display = 'block';
+            return;
+          }
+          localStorage.setItem('va_dash_pin', entered);
+          state.pin = entered;
+          state.isUnlocked = true;
+          sessionStorage.setItem('va_dash_unlocked', 'true');
+          gateModal.style.display = 'none';
+          gateError.style.display = 'none';
+          pinInput.value = '';
+          initDashboard();
+          return;
+        }
+
+        // Strictly verify against custom master password (no default 1234)
+        if (entered === currentPin) {
           state.isUnlocked = true;
           sessionStorage.setItem('va_dash_unlocked', 'true');
           gateModal.style.display = 'none';
@@ -770,6 +792,7 @@
           pinInput.value = '';
           initDashboard();
         } else {
+          gateError.textContent = 'Incorrect Password. Please try again.';
           gateError.style.display = 'block';
           pinInput.value = '';
           pinInput.focus();
