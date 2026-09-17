@@ -95,7 +95,7 @@
       } catch (e) {}
     }
 
-    fetch(url, {
+    return fetch(url, {
       method: 'POST',
       headers: headers,
       body: payload,
@@ -119,8 +119,9 @@
         user_agent: navigator.userAgent,
         created_at: new Date().toISOString(),
       };
-      sendToBackend('analytics_sessions', sessionData);
+      return sendToBackend('analytics_sessions', sessionData);
     }
+    return Promise.resolve();
   }
 
   // Record Pageview Event
@@ -137,7 +138,7 @@
         referrer: referrer,
       },
     };
-    sendToBackend('analytics_events', pageData);
+    return sendToBackend('analytics_events', pageData);
   }
 
   // Custom Event Tracker (Exposed globally)
@@ -221,8 +222,14 @@
 
   // Initialize
   function init() {
-    recordSession();
-    recordPageview();
+    Promise.resolve(recordSession())
+      .then(function () {
+        return recordPageview();
+      })
+      .catch(function (err) {
+        if (CONFIG.debug) console.warn('[Analytics Init Error]', err);
+      });
+
     attachInteractionListeners();
 
     // Listen for page exit / navigation
