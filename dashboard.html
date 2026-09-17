@@ -578,9 +578,9 @@
     <div class="gate-box">
       <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔒</div>
       <h2>Private Analytics Gate</h2>
-      <p>Enter your PIN or Password to access the Michel Domenella visitor analytics dashboard.</p>
+      <p>Enter your master password to access the analytics dashboard.</p>
       <input type="password" class="gate-input" id="gatePinInput" maxlength="64" placeholder="••••••••" autofocus />
-      <div class="gate-error" id="gateError">Incorrect PIN or Password. Please try again.</div>
+      <div class="gate-error" id="gateError" style="display: none;">Incorrect Password. Please try again.</div>
       <button class="btn btn--accent" style="width: 100%; justify-content: center;" id="btnUnlock">Unlock Dashboard</button>
     </div>
   </div>
@@ -715,13 +715,8 @@
     <div class="modal-box">
       <h3>Dashboard & Database Settings</h3>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-        Configure your private PIN and connect your free Supabase database project for live cloud tracking.
+        Configure your cloud Supabase database project for live visitor tracking.
       </p>
-
-      <div class="form-group">
-        <label>Dashboard Gate Password</label>
-        <input type="password" id="cfgPin" maxlength="64" placeholder="Enter New Master Password" />
-      </div>
 
       <div class="form-group">
         <label>Supabase Project URL</label>
@@ -744,7 +739,6 @@
     // Configuration & State
     const state = {
       isUnlocked: sessionStorage.getItem('va_dash_unlocked') === 'true',
-      pin: localStorage.getItem('va_dash_pin') || '',
       supabaseUrl: localStorage.getItem('va_supabase_url') || 'https://xeysfzxizzdftwzjbirp.supabase.co',
       supabaseAnonKey: localStorage.getItem('va_supabase_key') || 'sb_publishable_U4i9nnuj-Sa09NEZU_ufmA_YbQl3YnN',
       charts: {}
@@ -762,29 +756,9 @@
       }
 
       function attemptUnlock() {
-        const currentPin = (localStorage.getItem('va_dash_pin') || '').trim();
         const entered = (pinInput.value || '').trim();
 
-        // If no password set yet, establish the entered password as the master password
-        if (!currentPin) {
-          if (!entered) {
-            gateError.textContent = 'Please enter a password to protect your dashboard.';
-            gateError.style.display = 'block';
-            return;
-          }
-          localStorage.setItem('va_dash_pin', entered);
-          state.pin = entered;
-          state.isUnlocked = true;
-          sessionStorage.setItem('va_dash_unlocked', 'true');
-          gateModal.style.display = 'none';
-          gateError.style.display = 'none';
-          pinInput.value = '';
-          initDashboard();
-          return;
-        }
-
-        // Strictly verify against custom master password (no default 1234)
-        if (entered === currentPin) {
+        if (entered === '3212') {
           state.isUnlocked = true;
           sessionStorage.setItem('va_dash_unlocked', 'true');
           gateModal.style.display = 'none';
@@ -1179,12 +1153,10 @@
       const btnCancel = document.getElementById('btnCancelSettings');
       const btnSave = document.getElementById('btnSaveSettings');
 
-      const cfgPin = document.getElementById('cfgPin');
       const cfgUrl = document.getElementById('cfgSupabaseUrl');
       const cfgKey = document.getElementById('cfgSupabaseKey');
 
       btnSettings.addEventListener('click', () => {
-        cfgPin.value = state.pin;
         cfgUrl.value = state.supabaseUrl;
         cfgKey.value = state.supabaseAnonKey;
         modal.style.display = 'flex';
@@ -1195,10 +1167,6 @@
       });
 
       btnSave.addEventListener('click', () => {
-        if (cfgPin.value) {
-          state.pin = cfgPin.value;
-          localStorage.setItem('va_dash_pin', state.pin);
-        }
         state.supabaseUrl = cfgUrl.value.trim().replace(/\/+$/, '');
         state.supabaseAnonKey = cfgKey.value.trim();
         localStorage.setItem('va_supabase_url', state.supabaseUrl);
