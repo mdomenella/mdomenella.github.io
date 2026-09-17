@@ -584,7 +584,7 @@
       <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔒</div>
       <h2>Private Analytics Gate</h2>
       <p>Enter your master password to access the analytics dashboard.</p>
-      <form id="gateForm" onsubmit="event.preventDefault(); attemptUnlock();">
+      <form id="gateForm">
         <input type="password" class="gate-input" id="gatePinInput" maxlength="64" placeholder="••••••••" autofocus required />
         <div class="gate-error" id="gateError">Incorrect Password. Please try again.</div>
         <button type="submit" class="btn btn--accent" style="width: 100%; justify-content: center;" id="btnUnlock">Unlock Dashboard</button>
@@ -753,6 +753,7 @@
 
     // Global Unlock Function
     window.attemptUnlock = function () {
+      if (state.isUnlocked) return;
       const pinInput = document.getElementById('gatePinInput');
       const gateModal = document.getElementById('gateModal');
       const gateError = document.getElementById('gateError');
@@ -783,6 +784,7 @@
     // Initialize Security Gate
     function initSecurity() {
       const gateModal = document.getElementById('gateModal');
+      const gateForm = document.getElementById('gateForm');
       const pinInput = document.getElementById('gatePinInput');
 
       if (sessionStorage.getItem('va_dash_unlocked') === 'true') {
@@ -792,6 +794,11 @@
           gateModal.style.setProperty('display', 'none', 'important');
         }
       }
+
+      gateForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        attemptUnlock();
+      });
 
       document.getElementById('btnLock')?.addEventListener('click', () => {
         state.isUnlocked = false;
