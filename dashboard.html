@@ -578,13 +578,10 @@
     <div class="gate-box">
       <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔒</div>
       <h2>Private Analytics Gate</h2>
-      <p>Enter your 4-digit PIN to access the Michel Domenella visitor analytics dashboard.</p>
-      <input type="password" class="gate-input" id="gatePinInput" maxlength="6" placeholder="••••" autofocus />
-      <div class="gate-error" id="gateError">Incorrect PIN. Try default: 1234</div>
+      <p>Enter your PIN or Password to access the Michel Domenella visitor analytics dashboard.</p>
+      <input type="password" class="gate-input" id="gatePinInput" maxlength="64" placeholder="••••••••" autofocus />
+      <div class="gate-error" id="gateError">Incorrect PIN or Password. Please try again.</div>
       <button class="btn btn--accent" style="width: 100%; justify-content: center;" id="btnUnlock">Unlock Dashboard</button>
-      <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted);">
-        (Default PIN: <code>1234</code> — customizable in settings)
-      </div>
     </div>
   </div>
 
@@ -722,8 +719,8 @@
       </p>
 
       <div class="form-group">
-        <label>Dashboard Gate PIN</label>
-        <input type="password" id="cfgPin" value="1234" placeholder="Enter PIN" />
+        <label>Dashboard Gate PIN / Password</label>
+        <input type="password" id="cfgPin" value="1234" maxlength="64" placeholder="Enter PIN or Password" />
       </div>
 
       <div class="form-group">
