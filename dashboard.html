@@ -575,6 +575,262 @@
       font-family: inherit;
       font-size: 0.85rem;
     }
+
+    /* Spreadsheet Data Grid View */
+    .spreadsheet-panel {
+      margin-top: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .spreadsheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .spreadsheet-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .spreadsheet-search {
+      background: var(--bg);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.85rem;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+      min-width: 200px;
+      transition: border-color 0.2s;
+    }
+
+    .spreadsheet-search:focus {
+      border-color: var(--accent);
+    }
+
+    .spreadsheet-filter-select {
+      background: var(--bg);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.75rem;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .spreadsheet-filter-select:focus {
+      border-color: var(--accent);
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: var(--bg);
+    }
+
+    .spreadsheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .spreadsheet-table th {
+      background: var(--surface);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--surface-border);
+      border-right: 1px solid rgba(48, 54, 61, 0.4);
+      position: sticky;
+      top: 0;
+      user-select: none;
+    }
+
+    .spreadsheet-table th:last-child {
+      border-right: none;
+    }
+
+    .spreadsheet-table td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid rgba(48, 54, 61, 0.45);
+      border-right: 1px solid rgba(48, 54, 61, 0.3);
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    .spreadsheet-table td:last-child {
+      border-right: none;
+    }
+
+    .spreadsheet-table tr:hover td {
+      background: var(--surface-hover);
+    }
+
+    .spreadsheet-table tr.is-you td {
+      background: rgba(47, 129, 247, 0.08);
+    }
+
+    .spreadsheet-table tr.is-selected td {
+      background: rgba(47, 129, 247, 0.15);
+    }
+
+    .cell-mono {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 0.8rem;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-pill--yes {
+      background: rgba(210, 153, 34, 0.2);
+      color: #e3b341;
+      border: 1px solid #d29922;
+    }
+
+    .badge-pill--no {
+      background: rgba(139, 148, 158, 0.15);
+      color: var(--text-muted);
+      border: 1px solid rgba(139, 148, 158, 0.3);
+    }
+
+    .badge-pill--device {
+      background: rgba(110, 118, 129, 0.15);
+      color: var(--text);
+      border: 1px solid var(--surface-border);
+      font-weight: 500;
+      text-transform: none;
+      font-size: 0.75rem;
+    }
+
+    .badge-pill--you {
+      background: rgba(47, 129, 247, 0.2);
+      color: #58a6ff;
+      border: 1px solid var(--accent);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      margin-left: 0.35rem;
+    }
+
+    .btn-delete-row {
+      background: transparent;
+      border: 1px solid rgba(248, 81, 73, 0.3);
+      color: #f85149;
+      padding: 0.28rem 0.6rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-delete-row:hover {
+      background: rgba(248, 81, 73, 0.18);
+      border-color: #f85149;
+      color: #ff7b72;
+    }
+
+    .btn-delete-bulk {
+      background: rgba(248, 81, 73, 0.12);
+      border: 1px solid rgba(248, 81, 73, 0.4);
+      color: #f85149;
+    }
+
+    .btn-delete-bulk:hover:not(:disabled) {
+      background: #da3633;
+      border-color: #da3633;
+      color: #fff;
+    }
+
+    .btn-delete-bulk:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      border-color: var(--surface-border);
+      color: var(--text-muted);
+      background: transparent;
+    }
+
+    .spreadsheet-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-top: none;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .toast {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      animation: toastSlide 0.2s ease-out;
+    }
+
+    .toast--success {
+      border-color: var(--green-light);
+    }
+
+    .toast--error {
+      border-color: #f85149;
+    }
+
+    @keyframes toastSlide {
+      from { transform: translateY(15px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -716,7 +972,69 @@
         </div>
       </div>
     </div>
+
+    <!-- Unique Visitors Spreadsheet Panel -->
+    <section class="panel spreadsheet-panel" id="visitorsSpreadsheetSection">
+      <div class="spreadsheet-header">
+        <div>
+          <div class="panel__title" style="display: flex; align-items: center; gap: 0.6rem;">
+            <span>📋 Unique Visitors Data Log</span>
+            <span class="nav__badge" id="tableCountBadge">0 sessions</span>
+          </div>
+          <div class="panel__sub" style="margin-top: 0.25rem;">
+            Spreadsheet records for each unique visitor. Search, filter, or delete unwanted sessions (such as your own visits).
+          </div>
+        </div>
+        <div class="spreadsheet-controls">
+          <input type="text" class="spreadsheet-search" id="tableSearchInput" placeholder="🔍 Search date, tag, device, referrer..." />
+          <select class="spreadsheet-filter-select" id="tableFilterSelect">
+            <option value="all">All Visitors</option>
+            <option value="recruiter">Recruiters Only (Y)</option>
+            <option value="non-recruiter">Non-Recruiters (N)</option>
+            <option value="desktop">Desktop Only</option>
+            <option value="mobile">Mobile Only</option>
+          </select>
+          <button class="btn btn-delete-bulk" id="btnBulkDelete" disabled>🗑️ Delete Selected</button>
+          <button class="btn" id="btnDeleteSelf" title="Find and delete your current active session">👤 Delete My Session</button>
+          <button class="btn" id="btnExportCsv" title="Export visitor log as CSV file">📥 Export CSV</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="spreadsheet-table" id="visitorsSpreadsheetTable">
+          <thead>
+            <tr>
+              <th style="width: 38px; text-align: center;">
+                <input type="checkbox" id="selectAllCheckbox" title="Select all rows" />
+              </th>
+              <th style="width: 46px;">#</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Device</th>
+              <th>Recruiter (Y/N)</th>
+              <th>Referrer / Source</th>
+              <th>Session ID</th>
+              <th>Activity & Dwell</th>
+              <th style="text-align: right; width: 90px;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="spreadsheetTbody">
+            <!-- Rows injected here -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="spreadsheet-meta-bar">
+        <span id="spreadsheetShowingText">Showing 0 of 0 visitors</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">
+          💡 Tip: Deleting removes the session from the database and recalculates all charts in real time.
+        </span>
+      </div>
+    </section>
   </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
 
   <!-- Settings Modal -->
   <div class="modal-overlay" id="settingsModal">
@@ -750,8 +1068,28 @@
       supabaseUrl: localStorage.getItem('va_supabase_url') || 'https://xeysfzxizzdftwzjbirp.supabase.co',
       supabaseAnonKey: localStorage.getItem('va_supabase_key') || 'sb_publishable_U4i9nnuj-Sa09NEZU_ufmA_YbQl3YnN',
       charts: {},
-      dashboardInitialized: false
+      dashboardInitialized: false,
+      rawSessions: [],
+      rawEvents: [],
+      searchQuery: '',
+      filterType: 'all',
+      selectedSessionIds: new Set()
     };
+
+    // Toast Notification System
+    function showToast(message, isError = false) {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = `toast ${isError ? 'toast--error' : 'toast--success'}`;
+      toast.innerHTML = `<span>${isError ? '⚠️' : '✅'}</span><span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
 
     // Global Unlock Function
     window.attemptUnlock = function () {
@@ -1003,6 +1341,493 @@
       });
     }
 
+    // Render Spreadsheet Table
+    function renderSpreadsheetTable() {
+      const tbody = document.getElementById('spreadsheetTbody');
+      if (!tbody) return;
+
+      const currentSessionId = sessionStorage.getItem('va_session_id');
+      const sessions = state.rawSessions || [];
+      const events = state.rawEvents || [];
+
+      // Filter sessions
+      const q = (state.searchQuery || '').trim().toLowerCase();
+      const f = state.filterType || 'all';
+
+      const filtered = sessions.filter(s => {
+        const isRecruiter = !!(s.ref_tag && s.ref_tag.trim());
+        const devType = (s.device_type || 'Desktop').toLowerCase();
+
+        if (f === 'recruiter' && !isRecruiter) return false;
+        if (f === 'non-recruiter' && isRecruiter) return false;
+        if (f === 'desktop' && !devType.includes('desktop')) return false;
+        if (f === 'mobile' && !devType.includes('mobile') && !devType.includes('tablet') && !devType.includes('phone')) return false;
+
+        if (q) {
+          const matchId = (s.session_id || '').toLowerCase().includes(q);
+          const matchTag = (s.ref_tag || '').toLowerCase().includes(q);
+          const matchDev = (s.device_type || '').toLowerCase().includes(q);
+          const matchRef = (s.referrer || '').toLowerCase().includes(q);
+          const matchDate = (s.created_at || '').toLowerCase().includes(q);
+          if (!matchId && !matchTag && !matchDev && !matchRef && !matchDate) return false;
+        }
+
+        return true;
+      });
+
+      // Update count badge & metadata
+      const countBadge = document.getElementById('tableCountBadge');
+      if (countBadge) {
+        countBadge.textContent = `${sessions.length} session${sessions.length === 1 ? '' : 's'}`;
+      }
+
+      const showingEl = document.getElementById('spreadsheetShowingText');
+      if (showingEl) {
+        showingEl.textContent = `Showing ${filtered.length} of ${sessions.length} visitor session${sessions.length === 1 ? '' : 's'}${q || f !== 'all' ? ' (filtered)' : ''}`;
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="10" style="text-align: center; padding: 2.5rem 1rem; color: var(--text-muted);">
+              ${sessions.length === 0 ? 'No visitor records found in database.' : 'No sessions match your search/filter.'}
+            </td>
+          </tr>
+        `;
+        updateBulkDeleteButton();
+        return;
+      }
+
+      tbody.innerHTML = '';
+
+      filtered.forEach((s, index) => {
+        const tr = document.createElement('tr');
+        const isYou = currentSessionId && s.session_id === currentSessionId;
+        const isSelected = state.selectedSessionIds.has(s.session_id);
+
+        if (isYou) tr.classList.add('is-you');
+        if (isSelected) tr.classList.add('is-selected');
+
+        const d = new Date(s.created_at);
+        const isValidDate = !isNaN(d.getTime());
+        const dateStr = isValidDate ? d.toISOString().split('T')[0] : 'N/A';
+        const timeStr = isValidDate ? d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'N/A';
+
+        // Device Icon & Badge
+        const devRaw = (s.device_type || 'Desktop').toLowerCase();
+        let devIcon = '💻';
+        let devLabel = s.device_type || 'Desktop';
+        if (devRaw.includes('mobile') || devRaw.includes('phone') || devRaw.includes('android') || devRaw.includes('iphone')) {
+          devIcon = '📱';
+          devLabel = 'Mobile';
+        } else if (devRaw.includes('tablet') || devRaw.includes('ipad')) {
+          devIcon = '📟';
+          devLabel = 'Tablet';
+        }
+
+        // Recruiter Y/N
+        const isRecruiter = !!(s.ref_tag && s.ref_tag.trim());
+        const recruiterHtml = isRecruiter
+          ? `<span class="badge-pill badge-pill--yes">YES (${s.ref_tag})</span>`
+          : `<span class="badge-pill badge-pill--no">NO</span>`;
+
+        // Activity metrics
+        const sEvents = events.filter(e => e.session_id === s.session_id);
+        const pageViews = sEvents.filter(e => e.event_type === 'pageview').length || 1;
+        const dwellEv = sEvents.find(e => e.event_type === 'page_dwell' && e.event_data?.duration_seconds);
+        const dwellSec = dwellEv ? dwellEv.event_data.duration_seconds : null;
+        let dwellText = dwellSec ? `${dwellSec}s dwell` : '';
+
+        const hasResume = sEvents.some(e => e.event_type === 'resume_click');
+        const hasEmail = sEvents.some(e => e.event_type === 'contact_click');
+        const hasCad = sEvents.some(e => e.event_type === 'cad_viewer_interact');
+
+        let badgesHtml = '';
+        if (hasResume) badgesHtml += ' 📄 Resume';
+        if (hasEmail) badgesHtml += ' ✉️ Email';
+        if (hasCad) badgesHtml += ' 🌀 CAD';
+
+        const activitySummary = `${pageViews} page${pageViews === 1 ? '' : 's'}${dwellText ? ' • ' + dwellText : ''}${badgesHtml ? ' • ' + badgesHtml : ''}`;
+
+        tr.innerHTML = `
+          <td style="text-align: center;">
+            <input type="checkbox" class="visitor-row-checkbox" value="${s.session_id}" ${isSelected ? 'checked' : ''} />
+          </td>
+          <td style="color: var(--text-muted); font-size: 0.75rem;">${index + 1}</td>
+          <td class="cell-mono">${dateStr}</td>
+          <td class="cell-mono">${timeStr}</td>
+          <td>
+            <span class="badge-pill badge-pill--device">${devIcon} ${devLabel}</span>
+          </td>
+          <td>${recruiterHtml}</td>
+          <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis;" title="${s.referrer || 'Direct'}">
+            ${s.referrer || 'Direct'}
+          </td>
+          <td class="cell-mono" title="${s.session_id}">
+            ${s.session_id.substring(0, 11)}...
+            ${isYou ? '<span class="badge-pill badge-pill--you">YOU</span>' : ''}
+          </td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">${activitySummary}</td>
+          <td style="text-align: right;">
+            <button class="btn-delete-row" data-session-id="${s.session_id}" title="Delete session">
+              🗑️ Delete
+            </button>
+          </td>
+        `;
+
+        // Checkbox listener
+        const checkbox = tr.querySelector('.visitor-row-checkbox');
+        checkbox?.addEventListener('change', (e) => {
+          if (e.target.checked) {
+            state.selectedSessionIds.add(s.session_id);
+            tr.classList.add('is-selected');
+          } else {
+            state.selectedSessionIds.delete(s.session_id);
+            tr.classList.remove('is-selected');
+          }
+          updateBulkDeleteButton();
+        });
+
+        // Delete button listener
+        const deleteBtn = tr.querySelector('.btn-delete-row');
+        deleteBtn?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteVisitorSession(s.session_id);
+        });
+
+        tbody.appendChild(tr);
+      });
+
+      updateBulkDeleteButton();
+    }
+
+    // Update Bulk Delete Button State
+    function updateBulkDeleteButton() {
+      const btnBulk = document.getElementById('btnBulkDelete');
+      const selectAll = document.getElementById('selectAllCheckbox');
+      const count = state.selectedSessionIds.size;
+
+      if (btnBulk) {
+        btnBulk.disabled = count === 0;
+        btnBulk.textContent = count > 0 ? `🗑️ Delete Selected (${count})` : '🗑️ Delete Selected';
+      }
+
+      if (selectAll) {
+        const visibleCheckboxes = document.querySelectorAll('.visitor-row-checkbox');
+        selectAll.checked = visibleCheckboxes.length > 0 && Array.from(visibleCheckboxes).every(cb => cb.checked);
+      }
+    }
+
+    // Delete Single Session
+    async function deleteVisitorSession(sessionId) {
+      if (!confirm(`Are you sure you want to permanently delete visitor session "${sessionId}"?\n\nThis will remove it from all traffic graphs, recruiter counts, and database records.`)) {
+        return;
+      }
+
+      try {
+        if (state.supabaseUrl && state.supabaseAnonKey) {
+          const headers = {
+            'apikey': state.supabaseAnonKey,
+            'Authorization': `Bearer ${state.supabaseAnonKey}`
+          };
+          await Promise.all([
+            fetch(`${state.supabaseUrl}/rest/v1/analytics_sessions?session_id=eq.${encodeURIComponent(sessionId)}`, {
+              method: 'DELETE',
+              headers
+            }),
+            fetch(`${state.supabaseUrl}/rest/v1/analytics_events?session_id=eq.${encodeURIComponent(sessionId)}`, {
+              method: 'DELETE',
+              headers
+            })
+          ]);
+        }
+
+        state.selectedSessionIds.delete(sessionId);
+        state.rawSessions = state.rawSessions.filter(s => s.session_id !== sessionId);
+        state.rawEvents = state.rawEvents.filter(e => e.session_id !== sessionId);
+
+        processAndRenderAnalytics(state.rawSessions, state.rawEvents);
+        showToast('Visitor session deleted successfully.');
+      } catch (err) {
+        console.error('Delete error:', err);
+        showToast(`Could not delete session: ${err.message}`, true);
+      }
+    }
+
+    // Delete Bulk Selected Sessions
+    async function deleteSelectedSessions() {
+      const ids = Array.from(state.selectedSessionIds);
+      if (ids.length === 0) return;
+
+      if (!confirm(`Permanently delete ${ids.length} selected visitor session(s)?\n\nThis will update all analytics and cannot be undone.`)) {
+        return;
+      }
+
+      try {
+        if (state.supabaseUrl && state.supabaseAnonKey) {
+          const headers = {
+            'apikey': state.supabaseAnonKey,
+            'Authorization': `Bearer ${state.supabaseAnonKey}`
+          };
+          const inQuery = `(${ids.map(id => `"${id}"`).join(',')})`;
+          await Promise.all([
+            fetch(`${state.supabaseUrl}/rest/v1/analytics_sessions?session_id=in.${encodeURIComponent(inQuery)}`, {
+              method: 'DELETE',
+              headers
+            }),
+            fetch(`${state.supabaseUrl}/rest/v1/analytics_events?session_id=in.${encodeURIComponent(inQuery)}`, {
+              method: 'DELETE',
+              headers
+            })
+          ]);
+        }
+
+        const idSet = new Set(ids);
+        state.rawSessions = state.rawSessions.filter(s => !idSet.has(s.session_id));
+        state.rawEvents = state.rawEvents.filter(e => !idSet.has(e.session_id));
+        state.selectedSessionIds.clear();
+
+        processAndRenderAnalytics(state.rawSessions, state.rawEvents);
+        showToast(`Deleted ${ids.length} visitor sessions.`);
+      } catch (err) {
+        console.error('Bulk delete error:', err);
+        showToast(`Error deleting sessions: ${err.message}`, true);
+      }
+    }
+
+    // Delete Self Session
+    function deleteCurrentSession() {
+      const currentSessionId = sessionStorage.getItem('va_session_id');
+      if (!currentSessionId) {
+        showToast('No active local session ID found in this browser tab.', true);
+        return;
+      }
+
+      const match = (state.rawSessions || []).find(s => s.session_id === currentSessionId);
+      if (!match) {
+        showToast(`Your session (${currentSessionId.substring(0, 10)}...) is not in the database.`);
+        return;
+      }
+
+      deleteVisitorSession(currentSessionId);
+    }
+
+    // Export CSV of Visitors
+    function exportVisitorsCSV() {
+      const sessions = state.rawSessions || [];
+      const events = state.rawEvents || [];
+
+      if (sessions.length === 0) {
+        showToast('No visitor data to export.', true);
+        return;
+      }
+
+      const rows = [
+        ['Session ID', 'Date', 'Time', 'Device', 'Recruiter (Y/N)', 'Recruiter Tag', 'Referrer', 'Total Pageviews']
+      ];
+
+      sessions.forEach(s => {
+        const d = new Date(s.created_at);
+        const dateStr = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : 'N/A';
+        const timeStr = !isNaN(d.getTime()) ? d.toLocaleTimeString() : 'N/A';
+        const isRecruiter = s.ref_tag && s.ref_tag.trim() ? 'Y' : 'N';
+        const pageViews = events.filter(e => e.session_id === s.session_id && e.event_type === 'pageview').length || 1;
+
+        rows.push([
+          s.session_id,
+          dateStr,
+          timeStr,
+          s.device_type || 'Desktop',
+          isRecruiter,
+          s.ref_tag || '',
+          s.referrer || 'Direct',
+          pageViews
+        ]);
+      });
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + rows.map(r => r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `visitors_export_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('CSV downloaded successfully.');
+    }
+
+    // Process & Render All Analytics Views
+    function processAndRenderAnalytics(sessions, events) {
+      state.rawSessions = sessions || [];
+      state.rawEvents = events || [];
+
+      // 1. Calculate Summary Metrics
+      const totalVisitors = sessions.length;
+      const rawViews = events.filter(e => e.event_type === 'pageview').length;
+      const totalPageviews = rawViews > 0 ? rawViews : totalVisitors;
+      const recruiterHits = sessions.filter(s => s.ref_tag && s.ref_tag.trim() !== '').length;
+      const resumeDownloads = events.filter(e => e.event_type === 'resume_click').length;
+      const contactClicks = events.filter(e => e.event_type === 'contact_click').length;
+      const totalConversions = resumeDownloads + contactClicks;
+
+      // Today's visitors calculation
+      const todayStr = new Date().toISOString().split('T')[0];
+      const todayVisitors = sessions.filter(s => (s.created_at || '').startsWith(todayStr)).length;
+
+      // Pages per session
+      const pagesPerSession = totalVisitors > 0 ? (totalPageviews / totalVisitors).toFixed(1) : '0.0';
+
+      // Tagged recruiter sources
+      const recruiterTags = [...new Set(sessions.map(s => s.ref_tag?.trim()).filter(Boolean))];
+
+      // Dwell Time calculation
+      const dwellEvents = events.filter(e => e.event_type === 'page_dwell' && e.event_data?.duration_seconds);
+      let avgDwellStr = '--';
+      if (dwellEvents.length > 0) {
+        const totalSec = dwellEvents.reduce((acc, cur) => acc + (cur.event_data.duration_seconds || 0), 0);
+        const avgSec = Math.round(totalSec / dwellEvents.length);
+        const m = Math.floor(avgSec / 60);
+        const s = avgSec % 60;
+        avgDwellStr = m > 0 ? `${m}m ${s}s` : `${s}s`;
+      }
+
+      // Populate Main Stat Values
+      document.getElementById('statVisitors').textContent = totalVisitors;
+      document.getElementById('statPageviews').textContent = totalPageviews;
+      document.getElementById('statRecruiterHits').textContent = recruiterHits;
+      document.getElementById('statConversions').textContent = totalConversions;
+      document.getElementById('statAvgTime').textContent = avgDwellStr;
+
+      // Populate Dynamic Subtitles
+      const visitorsSubEl = document.getElementById('statVisitorsSub');
+      if (visitorsSubEl) {
+        visitorsSubEl.innerHTML = `<span class="trend--up">●</span> ${todayVisitors} new today`;
+      }
+
+      const pageviewsSubEl = document.getElementById('statPageviewsSub');
+      if (pageviewsSubEl) {
+        pageviewsSubEl.textContent = `~${pagesPerSession} pages / session`;
+      }
+
+      const recruiterHitsSubEl = document.getElementById('statRecruiterHitsSub');
+      if (recruiterHitsSubEl) {
+        recruiterHitsSubEl.textContent = recruiterHits > 0 
+          ? `${recruiterTags.length} tagged source${recruiterTags.length === 1 ? '' : 's'}` 
+          : 'From tagged links';
+      }
+
+      const conversionsSubEl = document.getElementById('statConversionsSub');
+      if (conversionsSubEl) {
+        conversionsSubEl.textContent = `${resumeDownloads} Resume${resumeDownloads === 1 ? '' : 's'} • ${contactClicks} Email${contactClicks === 1 ? '' : 's'}`;
+      }
+
+      const avgTimeSubEl = document.getElementById('statAvgTimeSub');
+      if (avgTimeSubEl) {
+        avgTimeSubEl.textContent = dwellEvents.length > 0 
+          ? `Across ${dwellEvents.length} recorded session${dwellEvents.length === 1 ? '' : 's'}` 
+          : 'Awaiting session dwell';
+      }
+
+      // 2. Build Traffic Over Time (Last 7 Days)
+      const dateMap = {};
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().split('T')[0];
+        const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        dateMap[key] = { label, views: 0, visitors: new Set() };
+      }
+
+      // Add sessions to visitor counts
+      sessions.forEach(s => {
+        const dayKey = (s.created_at || '').split('T')[0];
+        if (dateMap[dayKey]) {
+          dateMap[dayKey].visitors.add(s.session_id);
+          if (rawViews === 0) dateMap[dayKey].views++;
+        }
+      });
+
+      // Add events to views and visitors
+      events.forEach(e => {
+        const dayKey = (e.created_at || '').split('T')[0];
+        if (dateMap[dayKey]) {
+          if (e.event_type === 'pageview' && rawViews > 0) dateMap[dayKey].views++;
+          if (e.session_id) dateMap[dayKey].visitors.add(e.session_id);
+        }
+      });
+
+      const trafficLabels = Object.values(dateMap).map(d => d.label);
+      const trafficViews = Object.values(dateMap).map(d => d.views);
+      const trafficVisitors = Object.values(dateMap).map(d => d.visitors.size);
+
+      // 3. Build Top Pages Data
+      const pageCounts = {};
+      if (rawViews > 0) {
+        events.filter(e => e.event_type === 'pageview').forEach(e => {
+          let name = e.page_title || e.page_path || 'Home';
+          name = name.replace(' — Michel Domenella', '').replace('Michel Domenella', 'Home');
+          pageCounts[name] = (pageCounts[name] || 0) + 1;
+        });
+      } else if (totalVisitors > 0) {
+        pageCounts['Home'] = totalVisitors;
+      }
+
+      const sortedPages = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      const pagesLabels = sortedPages.length ? sortedPages.map(p => p[0]) : ['Home'];
+      const pagesValues = sortedPages.length ? sortedPages.map(p => p[1]) : [totalVisitors];
+
+      // 4. Build Sources Data
+      const sourceCounts = {};
+      sessions.forEach(s => {
+        let src = s.ref_tag ? `Recruiter: ${s.ref_tag}` : (s.referrer || 'Direct');
+        sourceCounts[src] = (sourceCounts[src] || 0) + 1;
+      });
+      const sortedSources = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      const sourcesLabels = sortedSources.length ? sortedSources.map(s => s[0]) : ['Direct'];
+      const sourcesValues = sortedSources.length ? sortedSources.map(s => s[1]) : [1];
+
+      renderCharts(
+        { labels: trafficLabels, views: trafficViews, visitors: trafficVisitors },
+        { labels: pagesLabels, counts: pagesValues },
+        { labels: sourcesLabels, counts: sourcesValues }
+      );
+
+      // 5. Build Live Visitor Feed
+      const visitorCards = sessions.slice(0, 20).map(s => {
+        const sEvents = events.filter(e => e.session_id === s.session_id).reverse();
+        const steps = sEvents.map(e => {
+          let t = 'normal';
+          let txt = `Viewed ${e.page_title || e.page_path}`;
+          if (e.event_type === 'resume_click') { t = 'highlight'; txt = '📄 Downloaded Resume PDF'; }
+          if (e.event_type === 'contact_click') { t = 'highlight'; txt = '✉️ Clicked Email contact link'; }
+          if (e.event_type === 'cad_viewer_interact') { t = 'cad'; txt = '🌀 Interacted with 3D CAD Viewer'; }
+          return { text: txt, type: t };
+        });
+
+        if (steps.length === 0) {
+          steps.push({ text: `Arrived from ${s.referrer || 'Direct'}`, type: 'normal' });
+        }
+
+        const createdDate = new Date(s.created_at);
+        const timeFormatted = isNaN(createdDate) ? 'Just now' : createdDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        return {
+          id: s.session_id.substring(0, 10),
+          recruiter: s.ref_tag || null,
+          device: `${s.device_type || 'Desktop'}`,
+          location: s.city ? `${s.city}, ${s.country}` : 'Visitor',
+          time: timeFormatted,
+          duration: 'Active',
+          steps: steps
+        };
+      });
+
+      renderVisitorFeed(visitorCards);
+
+      // 6. Build Spreadsheet Data Grid Table
+      renderSpreadsheetTable();
+    }
+
     // Live Database Fetcher
     async function loadLiveAnalytics() {
       if (!state.supabaseUrl || !state.supabaseAnonKey) {
@@ -1037,6 +1862,8 @@
           { labels: ['No Visits Yet'], counts: [0] },
           { labels: ['Direct'], counts: [1] }
         );
+
+        renderSpreadsheetTable();
         return;
       }
 
@@ -1058,171 +1885,49 @@
         const sessions = await sessionsRes.json();
         const events = await eventsRes.json();
 
-        // 1. Calculate Summary Metrics
-        const totalVisitors = sessions.length;
-        const rawViews = events.filter(e => e.event_type === 'pageview').length;
-        const totalPageviews = rawViews > 0 ? rawViews : totalVisitors;
-        const recruiterHits = sessions.filter(s => s.ref_tag && s.ref_tag.trim() !== '').length;
-        const resumeDownloads = events.filter(e => e.event_type === 'resume_click').length;
-        const contactClicks = events.filter(e => e.event_type === 'contact_click').length;
-        const totalConversions = resumeDownloads + contactClicks;
-
-        // Today's visitors calculation
-        const todayStr = new Date().toISOString().split('T')[0];
-        const todayVisitors = sessions.filter(s => (s.created_at || '').startsWith(todayStr)).length;
-
-        // Pages per session
-        const pagesPerSession = totalVisitors > 0 ? (totalPageviews / totalVisitors).toFixed(1) : '0.0';
-
-        // Tagged recruiter sources
-        const recruiterTags = [...new Set(sessions.map(s => s.ref_tag?.trim()).filter(Boolean))];
-
-        // Dwell Time calculation
-        const dwellEvents = events.filter(e => e.event_type === 'page_dwell' && e.event_data?.duration_seconds);
-        let avgDwellStr = '--';
-        if (dwellEvents.length > 0) {
-          const totalSec = dwellEvents.reduce((acc, cur) => acc + (cur.event_data.duration_seconds || 0), 0);
-          const avgSec = Math.round(totalSec / dwellEvents.length);
-          const m = Math.floor(avgSec / 60);
-          const s = avgSec % 60;
-          avgDwellStr = m > 0 ? `${m}m ${s}s` : `${s}s`;
-        }
-
-        // Populate Main Stat Values
-        document.getElementById('statVisitors').textContent = totalVisitors;
-        document.getElementById('statPageviews').textContent = totalPageviews;
-        document.getElementById('statRecruiterHits').textContent = recruiterHits;
-        document.getElementById('statConversions').textContent = totalConversions;
-        document.getElementById('statAvgTime').textContent = avgDwellStr;
-
-        // Populate Dynamic Subtitles
-        const visitorsSubEl = document.getElementById('statVisitorsSub');
-        if (visitorsSubEl) {
-          visitorsSubEl.innerHTML = `<span class="trend--up">●</span> ${todayVisitors} new today`;
-        }
-
-        const pageviewsSubEl = document.getElementById('statPageviewsSub');
-        if (pageviewsSubEl) {
-          pageviewsSubEl.textContent = `~${pagesPerSession} pages / session`;
-        }
-
-        const recruiterHitsSubEl = document.getElementById('statRecruiterHitsSub');
-        if (recruiterHitsSubEl) {
-          recruiterHitsSubEl.textContent = recruiterHits > 0 
-            ? `${recruiterTags.length} tagged source${recruiterTags.length === 1 ? '' : 's'}` 
-            : 'From tagged links';
-        }
-
-        const conversionsSubEl = document.getElementById('statConversionsSub');
-        if (conversionsSubEl) {
-          conversionsSubEl.textContent = `${resumeDownloads} Resume${resumeDownloads === 1 ? '' : 's'} • ${contactClicks} Email${contactClicks === 1 ? '' : 's'}`;
-        }
-
-        const avgTimeSubEl = document.getElementById('statAvgTimeSub');
-        if (avgTimeSubEl) {
-          avgTimeSubEl.textContent = dwellEvents.length > 0 
-            ? `Across ${dwellEvents.length} recorded session${dwellEvents.length === 1 ? '' : 's'}` 
-            : 'Awaiting session dwell';
-        }
-
-        // 2. Build Traffic Over Time (Last 7 Days)
-        const dateMap = {};
-        for (let i = 6; i >= 0; i--) {
-          const d = new Date();
-          d.setDate(d.getDate() - i);
-          const key = d.toISOString().split('T')[0];
-          const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-          dateMap[key] = { label, views: 0, visitors: new Set() };
-        }
-
-        // Add sessions to visitor counts
-        sessions.forEach(s => {
-          const dayKey = (s.created_at || '').split('T')[0];
-          if (dateMap[dayKey]) {
-            dateMap[dayKey].visitors.add(s.session_id);
-            if (rawViews === 0) dateMap[dayKey].views++;
-          }
-        });
-
-        // Add events to views and visitors
-        events.forEach(e => {
-          const dayKey = (e.created_at || '').split('T')[0];
-          if (dateMap[dayKey]) {
-            if (e.event_type === 'pageview' && rawViews > 0) dateMap[dayKey].views++;
-            if (e.session_id) dateMap[dayKey].visitors.add(e.session_id);
-          }
-        });
-
-        const trafficLabels = Object.values(dateMap).map(d => d.label);
-        const trafficViews = Object.values(dateMap).map(d => d.views);
-        const trafficVisitors = Object.values(dateMap).map(d => d.visitors.size);
-
-        // 3. Build Top Pages Data
-        const pageCounts = {};
-        if (rawViews > 0) {
-          events.filter(e => e.event_type === 'pageview').forEach(e => {
-            let name = e.page_title || e.page_path || 'Home';
-            name = name.replace(' — Michel Domenella', '').replace('Michel Domenella', 'Home');
-            pageCounts[name] = (pageCounts[name] || 0) + 1;
-          });
-        } else if (totalVisitors > 0) {
-          pageCounts['Home'] = totalVisitors;
-        }
-
-        const sortedPages = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-        const pagesLabels = sortedPages.length ? sortedPages.map(p => p[0]) : ['Home'];
-        const pagesValues = sortedPages.length ? sortedPages.map(p => p[1]) : [totalVisitors];
-
-        // 4. Build Sources Data
-        const sourceCounts = {};
-        sessions.forEach(s => {
-          let src = s.ref_tag ? `Recruiter: ${s.ref_tag}` : (s.referrer || 'Direct');
-          sourceCounts[src] = (sourceCounts[src] || 0) + 1;
-        });
-        const sortedSources = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-        const sourcesLabels = sortedSources.map(s => s[0]);
-        const sourcesValues = sortedSources.map(s => s[1]);
-
-        renderCharts(
-          { labels: trafficLabels, views: trafficViews, visitors: trafficVisitors },
-          { labels: pagesLabels, counts: pagesValues },
-          { labels: sourcesLabels, counts: sourcesValues }
-        );
-
-        // 5. Build Live Visitor Feed
-        const visitorCards = sessions.slice(0, 20).map(s => {
-          const sEvents = events.filter(e => e.session_id === s.session_id).reverse();
-          const steps = sEvents.map(e => {
-            let t = 'normal';
-            let txt = `Viewed ${e.page_title || e.page_path}`;
-            if (e.event_type === 'resume_click') { t = 'highlight'; txt = '📄 Downloaded Resume PDF'; }
-            if (e.event_type === 'contact_click') { t = 'highlight'; txt = '✉️ Clicked Email contact link'; }
-            if (e.event_type === 'cad_viewer_interact') { t = 'cad'; txt = '🌀 Interacted with 3D CAD Viewer'; }
-            return { text: txt, type: t };
-          });
-
-          if (steps.length === 0) {
-            steps.push({ text: `Arrived from ${s.referrer || 'Direct'}`, type: 'normal' });
-          }
-
-          const createdDate = new Date(s.created_at);
-          const timeFormatted = isNaN(createdDate) ? 'Just now' : createdDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-          return {
-            id: s.session_id.substring(0, 10),
-            recruiter: s.ref_tag || null,
-            device: `${s.device_type || 'Desktop'}`,
-            location: s.city ? `${s.city}, ${s.country}` : 'Visitor',
-            time: timeFormatted,
-            duration: 'Active',
-            steps: steps
-          };
-        });
-
-        renderVisitorFeed(visitorCards);
+        processAndRenderAnalytics(sessions, events);
       } catch (err) {
         console.error('Error fetching live analytics:', err);
       }
+    }
+
+    // Initialize Spreadsheet Controls & Filter Listeners
+    function initSpreadsheetControls() {
+      const searchInput = document.getElementById('tableSearchInput');
+      const filterSelect = document.getElementById('tableFilterSelect');
+      const btnBulk = document.getElementById('btnBulkDelete');
+      const btnSelf = document.getElementById('btnDeleteSelf');
+      const btnExport = document.getElementById('btnExportCsv');
+      const selectAll = document.getElementById('selectAllCheckbox');
+
+      searchInput?.addEventListener('input', (e) => {
+        state.searchQuery = e.target.value;
+        renderSpreadsheetTable();
+      });
+
+      filterSelect?.addEventListener('change', (e) => {
+        state.filterType = e.target.value;
+        renderSpreadsheetTable();
+      });
+
+      btnBulk?.addEventListener('click', deleteSelectedSessions);
+      btnSelf?.addEventListener('click', deleteCurrentSession);
+      btnExport?.addEventListener('click', exportVisitorsCSV);
+
+      selectAll?.addEventListener('change', (e) => {
+        const visibleCheckboxes = document.querySelectorAll('.visitor-row-checkbox');
+        visibleCheckboxes.forEach(cb => {
+          cb.checked = e.target.checked;
+          if (e.target.checked) {
+            state.selectedSessionIds.add(cb.value);
+            cb.closest('tr')?.classList.add('is-selected');
+          } else {
+            state.selectedSessionIds.delete(cb.value);
+            cb.closest('tr')?.classList.remove('is-selected');
+          }
+        });
+        updateBulkDeleteButton();
+      });
     }
 
     // Recruiter URL Generator
@@ -1289,6 +1994,7 @@
       state.dashboardInitialized = true;
       initRecruiterTool();
       initSettings();
+      initSpreadsheetControls();
       loadLiveAnalytics();
 
       document.getElementById('btnRefresh')?.addEventListener('click', () => {
