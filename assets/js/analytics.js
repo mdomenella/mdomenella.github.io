@@ -14,6 +14,37 @@
     debug: false,
   };
 
+  // Detect automated bots, web crawlers, search spiders, and headless scrapers
+  function isBotOrCrawler() {
+    // 1. Explicit automation flag (Puppeteer, Playwright, Selenium, WebDriver)
+    if (navigator.webdriver) return true;
+
+    // 2. Headless browser globals and injection hooks
+    if (window.callPhantom || window._phantom || window.__nightmare || window.domAutomation || window.domAutomationController) {
+      return true;
+    }
+
+    // 3. User-Agent crawler/bot signatures
+    const ua = (navigator.userAgent || '').toLowerCase();
+    const botPattern = /bot|crawler|spider|slurp|headless|phantom|scraper|search|archiver|transcoder|facebookexternalhit|whatsapp|preview|lighthouse|insights|pingdom|uptimerobot|monitoring|curl|wget|python|java|urllib|postman|apachebench|feed|ahrefs|semrush|petalbot|dotbot|bytespider|yandex|sogou|exabot|ia_archiver|mj12bot|screaming frog|netcraft|censys|shodan|googlebot|bingbot|duckduckbot|baiduspider|yodaobot|applebot|yandexbot|gptbot|claudebot|perplexity/i;
+    if (botPattern.test(ua)) return true;
+
+    // 4. Headless Chrome token
+    if (ua.includes('headlesschrome')) return true;
+
+    // 5. Zero screen resolution / impossible screen metrics (typical in scraping containers)
+    if (window.screen && (window.screen.width === 0 || window.screen.height === 0 || window.screen.availWidth === 0)) {
+      return true;
+    }
+
+    // 6. Missing language definition (common in automated headless environments)
+    if (navigator.languages !== undefined && Array.isArray(navigator.languages) && navigator.languages.length === 0) {
+      return true;
+    }
+
+    return false;
+  }
+
   // Generate or retrieve persistent session ID (lives for the browser tab session)
   function getSessionId() {
     let sid = sessionStorage.getItem('va_session_id');
@@ -143,6 +174,7 @@
 
   // Custom Event Tracker (Exposed globally)
   window.trackPortfolioEvent = function (eventType, eventData) {
+    if (isBotOrCrawler()) return;
     const eventPayload = {
       session_id: sessionId,
       event_type: eventType,
@@ -157,6 +189,7 @@
 
   // Record Dwell Time on Exit
   function recordPageExit() {
+    if (isBotOrCrawler()) return;
     const dwellSeconds = Math.round((Date.now() - pageStartTime) / 1000);
     if (dwellSeconds > 1) {
       window.trackPortfolioEvent('page_dwell', {
@@ -222,6 +255,20 @@
 
   // Initialize
   function init() {
+    // 1. Filter out automated bots, search indexers, and headless scrapers
+    if (isBotOrCrawler()) {
+      if (CONFIG.debug) console.log('[Analytics] Automated bot or crawler detected. Tracking ignored.');
+      return;
+    }
+
+    // 2. Handle speculative browser pre-rendering
+    if (document.prerendering) {
+      document.addEventListener('prerenderingchange', function () {
+        if (!document.prerendering) init();
+      }, { once: true });
+      return;
+    }
+
     Promise.resolve(recordSession())
       .then(function () {
         return recordPageview();
