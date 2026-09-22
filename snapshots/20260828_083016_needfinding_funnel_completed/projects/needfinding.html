@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Needfinding in Clinical Environments — Michel Domenella</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="../assets/css/main.css" />
+</head>
+<body>
+	<a class="skip-link" href="#main">Skip to Content</a>
+
+	<header class="site-header" id="header">
+		<div class="site-header__inner">
+			<a class="site-logo" href="../index.html">Michel Domenella</a>
+			<nav class="site-nav" aria-label="Primary">
+				<ul>
+					<li><a href="../index.html#work">Work</a></li>
+					<li><a href="../index.html#bio">Bio</a></li>
+					<li><a href="../images/Domenella Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+				</ul>
+			</nav>
+			<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+				<span></span>
+				<span></span>
+			</button>
+		</div>
+		<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+			<ul>
+				<li><a href="../index.html#work">Work</a></li>
+				<li><a href="../index.html#bio">Bio</a></li>
+				<li><a href="../images/Domenella Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main id="main" class="project-page">
+		<section class="project-hero">
+			<img class="project-hero__img project-hero__img--top" src="../images/northwestern-medicine.jpg" alt="Northwestern Medicine building signage" />
+		</section>
+
+		<a class="project-back" href="../index.html#work">&larr; Back</a>
+
+		<section class="project-intro">
+			<div>
+				<h1 class="project-intro__title">Needfinding in Clinical Environments</h1>
+				<p class="project-intro__subtitle">Partnering with: Northwestern Medicine</p>
+			</div>
+			<div class="project-intro__body">
+				<p>Esophageal cancer, or Esophageal Adenocarcinoma (EAC), is one of the deadliest cancers when caught late, with much higher survival rates when caught early. Northwestern Medicine, in an effort spearheaded by Dr. Sri Komanduri, partnered with Northwestern's EDI and Biomedical graduate programs to bring a fresh lens to identifying the patients most at risk of developing it.</p>
+				<p>The focus of the class was on &ldquo;increasing the denominator,&rdquo; which meant finding high-risk patients who currently go unidentified. As an entirely new class at Northwestern, we spent the quarter identifying and understanding what problems existed, how they should be classified, and what stakeholders to hand them off to.</p>
+			</div>
+		</section>
+
+		<section class="project-funnel-section" aria-label="Patient Loss Funnel Diagram">
+			<div class="project-funnel-wrapper">
+				<svg class="project-funnel-svg" viewBox="0 0 1500 730" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Where Patients are Lost funnel graphic showing four stages: 100% of at-risk patients, 50% identified as at-risk by PCP, 17% referred by PCP, and 7% total at-risk patients screened">
+					<defs>
+						<!-- Gradients -->
+						<linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#f6daf0"/>
+							<stop offset="60%" stop-color="#e9bfe5"/>
+							<stop offset="100%" stop-color="#d99ecc"/>
+						</linearGradient>
+						<linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#dbe0f8"/>
+							<stop offset="60%" stop-color="#bcc4ee"/>
+							<stop offset="100%" stop-color="#9ea9df"/>
+						</linearGradient>
+						<linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#cde8f8"/>
+							<stop offset="60%" stop-color="#a4d3ed"/>
+							<stop offset="100%" stop-color="#80bbe0"/>
+						</linearGradient>
+						<linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stop-color="#d2f3dc"/>
+							<stop offset="60%" stop-color="#a6e3ba"/>
+							<stop offset="100%" stop-color="#7ecf97"/>
+						</linearGradient>
+
+						<!-- Drop Shadows -->
+						<filter id="shadow" x="-5%" y="-5%" width="115%" height="120%" filterUnits="userSpaceOnUse">
+							<feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
+						</filter>
+						<filter id="bubbleShadow" x="-10%" y="-10%" width="125%" height="130%">
+							<feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.05"/>
+						</filter>
+						
+						<!-- Arrow Markers -->
+						<marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+							<path d="M 0 0 L 6 3 L 0 6 z" fill="#111111" />
+						</marker>
+					</defs>
+
+					<!-- Title -->
+					<text x="255" y="45" font-size="32" font-weight="700" fill="#111827" letter-spacing="-0.02em" font-family="'DM Sans', sans-serif">Where Patients are Lost</text>
+
+					<!-- Left Trajectory Flow: 4 Separate Curved Arrows with Gaps -->
+					<g class="funnel-left-flow" stroke="#71717a" stroke-width="1.8" stroke-linecap="round" fill="none">
+						<!-- Arrow 1 (Pink Tier) -->
+						<g class="funnel-left-arrow funnel-left-arrow--1">
+							<path d="M 280 70 Q 325 160 375 240" />
+							<polygon points="378,245 366,236 376,230" fill="#71717a" stroke="none"/>
+						</g>
+
+						<!-- Arrow 2 (Purple Tier) -->
+						<g class="funnel-left-arrow funnel-left-arrow--2">
+							<path d="M 390 275 Q 430 340 468 398" />
+							<polygon points="471,403 459,395 469,389" fill="#71717a" stroke="none"/>
+						</g>
+
+						<!-- Arrow 3 (Blue Tier) -->
+						<g class="funnel-left-arrow funnel-left-arrow--3">
+							<path d="M 480 435 Q 510 490 538 538" />
+							<polygon points="541,543 530,535 539,529" fill="#71717a" stroke="none"/>
+						</g>
+
+						<!-- Arrow 4 (Green Tier) -->
+						<g class="funnel-left-arrow funnel-left-arrow--4">
+							<path d="M 548 572 Q 552 620 555 662" />
+							<polygon points="556,669 549,656 563,656" fill="#71717a" stroke="none"/>
+						</g>
+					</g>
+
+					<!-- STAGE 1: Pink (100% of at-risk patients) -->
+					<g class="funnel-tier funnel-tier--1">
+						<path d="M 320 60 Q 750 150 1180 60 L 1090 230 Q 750 265 410 230 Z" fill="url(#pinkGrad)" stroke="#cca0bf" stroke-width="1.2" filter="url(#shadow)"/>
+						
+						<!-- Tier 1 Divider -->
+						<line x1="880" y1="110" x2="880" y2="205" stroke="#cca0bf" stroke-width="1.2" opacity="0.65"/>
+
+						<!-- Left Content -->
+						<text x="595" y="168" fill="#111827" font-size="28" font-weight="700" font-family="'DM Sans', sans-serif" text-anchor="end">100%</text>
+						<text x="610" y="168" fill="#111827" font-size="20" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">of at-risk patients</text>
+
+						<!-- Right Content (Centered Icon & Count Stack) -->
+						<g transform="translate(987, 115)" stroke="#111827" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="18" cy="10" r="5"/>
+							<path d="M 9 26 C 9 20, 27 20, 27 26"/>
+							<circle cx="7" cy="12" r="4"/>
+							<path d="M 1 26 C 1 21, 13 21, 13 26"/>
+							<circle cx="29" cy="12" r="4"/>
+							<path d="M 23 26 C 23 21, 35 21, 35 26"/>
+						</g>
+						<text x="1005" y="172" text-anchor="middle" fill="#1f2937" font-size="16" font-weight="500" font-family="'DM Sans', sans-serif">~120 million people</text>
+					</g>
+
+					<!-- Down Arrow 1 -->
+					<g class="funnel-arrow funnel-arrow--1">
+						<line x1="750" y1="248" x2="750" y2="267" stroke="#111827" stroke-width="2.2" marker-end="url(#arrowhead)"/>
+					</g>
+
+					<!-- CALLOUT 1: asymptomatic patients -->
+					<g class="funnel-callout funnel-callout--1">
+						<!-- Connector Line -->
+						<line x1="1105" y1="235" x2="1200" y2="235" stroke="#cbd5e1" stroke-width="1.5"/>
+						<!-- Bubble -->
+						<rect x="1200" y="210" width="240" height="48" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" filter="url(#bubbleShadow)"/>
+						<text x="1320" y="240" text-anchor="middle" font-size="15" font-style="italic" fill="#334155" font-weight="400" font-family="'DM Sans', sans-serif">asymptomatic patients</text>
+					</g>
+
+					<!-- STAGE 2: Purple (50% identified by PCP) -->
+					<g class="funnel-tier funnel-tier--2">
+						<path d="M 420 270 Q 750 295 1080 270 L 1000 395 Q 750 415 500 395 Z" fill="url(#purpleGrad)" stroke="#9ba7db" stroke-width="1.2" filter="url(#shadow)"/>
+						
+						<!-- Tier 2 Divider -->
+						<line x1="860" y1="295" x2="860" y2="370" stroke="#9ba7db" stroke-width="1.2" opacity="0.65"/>
+
+						<!-- Left Content -->
+						<text x="605" y="345" fill="#111827" font-size="26" font-weight="700" font-family="'DM Sans', sans-serif" text-anchor="end">50%</text>
+						<text x="618" y="336" fill="#111827" font-size="16.5" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">identified as &ldquo;at-risk&rdquo;</text>
+						<text x="618" y="358" fill="#111827" font-size="16.5" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">by PCP</text>
+
+						<!-- Right Content (Doctor Icon & Label Stack) -->
+						<g transform="translate(934, 295)" stroke="#111827" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="14" cy="8" r="5.5"/>
+							<path d="M 4 25 C 4 18, 24 18, 24 25"/>
+							<path d="M 9 17 C 9 22, 19 22, 19 17"/>
+							<path d="M 14 22 L 14 24"/>
+						</g>
+						<text x="948" y="344" text-anchor="middle" fill="#1f2937" font-size="13.5" font-weight="500" font-family="'DM Sans', sans-serif">Primary Care</text>
+						<text x="948" y="361" text-anchor="middle" fill="#1f2937" font-size="13.5" font-weight="500" font-family="'DM Sans', sans-serif">Identification</text>
+					</g>
+
+					<!-- Down Arrow 2 -->
+					<g class="funnel-arrow funnel-arrow--2">
+						<line x1="750" y1="408" x2="750" y2="426" stroke="#111827" stroke-width="2.2" marker-end="url(#arrowhead)"/>
+					</g>
+
+					<!-- CALLOUT 2: PCP attention constraints -->
+					<g class="funnel-callout funnel-callout--2">
+						<!-- Connector Line -->
+						<path d="M 1015 400 L 1090 400 L 1160 385" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+						<!-- Bubble -->
+						<rect x="1160" y="342" width="275" height="82" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" filter="url(#bubbleShadow)"/>
+						<text x="1297" y="369" text-anchor="middle" font-size="14.5" font-weight="500" fill="#1e293b" font-family="'DM Sans', sans-serif">PCP attention constraints</text>
+						<text x="1297" y="390" text-anchor="middle" font-size="13.5" font-style="italic" fill="#64748b" font-family="'DM Sans', sans-serif">(broad criteria, competing</text>
+						<text x="1297" y="408" text-anchor="middle" font-size="13.5" font-style="italic" fill="#64748b" font-family="'DM Sans', sans-serif">comorbidities)</text>
+					</g>
+
+					<!-- STAGE 3: Blue (17% referred by PCP) -->
+					<g class="funnel-tier funnel-tier--3">
+						<path d="M 510 430 Q 750 448 990 430 L 930 535 Q 750 550 570 535 Z" fill="url(#blueGrad)" stroke="#85b9d7" stroke-width="1.2" filter="url(#shadow)"/>
+						
+						<!-- Tier 3 Divider -->
+						<line x1="825" y1="450" x2="825" y2="515" stroke="#85b9d7" stroke-width="1.2" opacity="0.65"/>
+
+						<!-- Left Content -->
+						<text x="645" y="490" fill="#111827" font-size="25" font-weight="700" font-family="'DM Sans', sans-serif" text-anchor="end">17%</text>
+						<text x="658" y="490" fill="#111827" font-size="16.5" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">referred by PCP</text>
+
+						<!-- Right Content (PCP-Specialist Gap Stack) -->
+						<g transform="translate(878, 445)" stroke="#111827" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="7" cy="7" r="4.5"/>
+							<path d="M 1 20 C 1 15, 13 15, 13 20"/>
+							<circle cx="23" cy="7" r="4.5"/>
+							<path d="M 17 20 C 17 15, 29 15, 29 20"/>
+							<path d="M 10 12 L 20 12" stroke-dasharray="2.5,2.5"/>
+						</g>
+						<text x="892" y="492" text-anchor="middle" fill="#1f2937" font-size="13" font-weight="500" font-family="'DM Sans', sans-serif">PCP-Specialist</text>
+						<text x="892" y="508" text-anchor="middle" fill="#1f2937" font-size="13" font-weight="500" font-family="'DM Sans', sans-serif">Gap</text>
+					</g>
+
+					<!-- Down Arrow 3 -->
+					<g class="funnel-arrow funnel-arrow--3">
+						<line x1="750" y1="544" x2="750" y2="561" stroke="#111827" stroke-width="2.2" marker-end="url(#arrowhead)"/>
+					</g>
+
+					<!-- CALLOUT 3: Patient scheduling, transportation... -->
+					<g class="funnel-callout funnel-callout--3">
+						<!-- Connector Line -->
+						<path d="M 940 540 L 1010 540 L 1080 555" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+						<!-- Bubble -->
+						<rect x="1080" y="505" width="345" height="110" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" filter="url(#bubbleShadow)"/>
+						<text x="1252" y="532" text-anchor="middle" font-size="13" font-style="italic" fill="#475569" font-family="'DM Sans', sans-serif">Patient scheduling,</text>
+						<text x="1252" y="551" text-anchor="middle" font-size="13" font-style="italic" fill="#475569" font-family="'DM Sans', sans-serif">transportation, sedation burden,</text>
+						<text x="1252" y="570" text-anchor="middle" font-size="13" font-style="italic" fill="#475569" font-family="'DM Sans', sans-serif">anxiety, clinic capacity constraints,</text>
+						<text x="1252" y="589" text-anchor="middle" font-size="13" font-style="italic" fill="#475569" font-family="'DM Sans', sans-serif">workflow bottlenecks</text>
+					</g>
+
+					<!-- STAGE 4: Green (7% total at-risk patients screened) -->
+					<g class="funnel-tier funnel-tier--4">
+						<path d="M 580 565 Q 750 578 920 565 L 910 665 Q 750 678 590 665 Z" fill="url(#greenGrad)" stroke="#60b57a" stroke-width="1.5" filter="url(#shadow)"/>
+						
+						<!-- Tier 4 Divider -->
+						<line x1="795" y1="582" x2="795" y2="648" stroke="#60b57a" stroke-width="1.2" opacity="0.65"/>
+
+						<!-- Left Content -->
+						<text x="645" y="622" fill="#111827" font-size="24" font-weight="700" font-family="'DM Sans', sans-serif" text-anchor="end">7%</text>
+						<text x="656" y="612" fill="#111827" font-size="13" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">total at-risk</text>
+						<text x="656" y="629" fill="#111827" font-size="13" font-weight="600" font-family="'DM Sans', sans-serif" text-anchor="start">patients screened</text>
+
+						<!-- Right Content (Calendar + Clock Icon & Label Stack) -->
+						<g transform="translate(843, 582)" stroke="#111827" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="2" y="4" width="20" height="17" rx="2"/>
+							<line x1="2" y1="9" x2="22" y2="9"/>
+							<line x1="6" y1="2" x2="6" y2="6"/>
+							<line x1="18" y1="2" x2="18" y2="6"/>
+							<circle cx="17" cy="17" r="5" fill="#a6e3ba"/>
+							<polyline points="17,14.5 17,17 19,17"/>
+						</g>
+						<text x="855" y="624" text-anchor="middle" fill="#1f2937" font-size="12" font-weight="500" font-family="'DM Sans', sans-serif">Procedural +</text>
+						<text x="855" y="639" text-anchor="middle" fill="#1f2937" font-size="12" font-weight="500" font-family="'DM Sans', sans-serif">Access Gap</text>
+					</g>
+				</svg>
+			</div>
+		</section>
+
+		<nav class="project-pager">
+			<a href="clippard.html">&larr; Clippard</a>
+			<a href="pg.html">Procter &amp; Gamble &rarr;</a>
+		</nav>
+	</main>
+
+	<footer class="site-footer">
+		<div class="site-footer__links">
+			<a href="mailto:domenellamichel@gmail.com" aria-label="Email">
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+			</a>
+			<a href="https://www.linkedin.com/in/michel-domenella/" target="_blank" rel="noopener" aria-label="LinkedIn">
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69A1.69 1.69 0 0 0 5.2 6.88a1.69 1.69 0 0 0 1.68 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+			</a>
+		</div>
+		<p class="site-footer__copy">&copy; 2026 Michel Domenella — All Rights Reserved</p>
+	</footer>
+
+	<script src="../assets/js/main.js"></script>
+</body>
+</html>

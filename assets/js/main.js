@@ -100,7 +100,6 @@
 		revealGroup(".accordion__item", true);
 		revealGroup(".personal-projects__label", false);
 		revealGroup(".personal-project-card", true);
-		revealGroup(".photo-gallery-item", true);
 		revealGroup(".project-intro > *", true);
 		revealGroup(".project-meta > *", true);
 		revealGroup(".project-strip", false);
@@ -108,6 +107,70 @@
 		revealGroup(".project-img-grid img", true);
 		revealGroup(".project-pager", false);
 	}
+
+	// Work grid cards midpoint scroll reveal (strictly one row active at a time as user scrolls)
+	(function initWorkCardScrollReveal() {
+		var cards = Array.from(document.querySelectorAll(".work-grid .project-card"));
+		if (!cards.length) return;
+
+		var ticking = false;
+
+		function checkCardPositions() {
+			var vh = window.innerHeight || document.documentElement.clientHeight;
+			var vCenter = vh * 0.5;
+
+			// Group cards by row based on vertical offset
+			var rowMap = new Map();
+			cards.forEach(function (card) {
+				var topKey = Math.round(card.offsetTop / 20) * 20;
+				if (!rowMap.has(topKey)) {
+					rowMap.set(topKey, []);
+				}
+				rowMap.get(topKey).push(card);
+			});
+
+			var bestRow = null;
+			var minDistance = Infinity;
+
+			rowMap.forEach(function (rowCards) {
+				var rect = rowCards[0].getBoundingClientRect();
+				var rowCenter = rect.top + rect.height * 0.5;
+				var dist = Math.abs(rowCenter - vCenter);
+
+				// Only activate when row is within middle 36% zone of the screen
+				if (dist < vh * 0.36 && dist < minDistance) {
+					minDistance = dist;
+					bestRow = rowCards;
+				}
+			});
+
+			cards.forEach(function (card) {
+				if (bestRow && bestRow.indexOf(card) !== -1) {
+					card.classList.add("is-scrolled-active");
+				} else {
+					card.classList.remove("is-scrolled-active");
+				}
+			});
+
+			ticking = false;
+		}
+
+		window.addEventListener("scroll", function () {
+			if (!ticking) {
+				window.requestAnimationFrame(checkCardPositions);
+				ticking = true;
+			}
+		}, { passive: true });
+
+		window.addEventListener("resize", function () {
+			if (!ticking) {
+				window.requestAnimationFrame(checkCardPositions);
+				ticking = true;
+			}
+		}, { passive: true });
+
+		checkCardPositions();
+	})();
 
 	// Highlight wipe: grow background left → right when marks enter view.
 	(function initHighlightWipe() {
@@ -170,6 +233,18 @@
 	(function initFunnelScrollScrub() {
 		var funnelSection = document.querySelector(".project-funnel-section");
 		if (!funnelSection) return;
+
+		var funnelSvg = funnelSection.querySelector(".project-funnel-svg");
+		function updateFunnelViewBox() {
+			if (!funnelSvg) return;
+			if (window.innerWidth <= 768) {
+				funnelSvg.setAttribute("viewBox", "240 40 1220 650");
+			} else {
+				funnelSvg.setAttribute("viewBox", "0 0 1500 730");
+			}
+		}
+		updateFunnelViewBox();
+		window.addEventListener("resize", updateFunnelViewBox, { passive: true });
 
 		var tier1 = funnelSection.querySelector(".funnel-tier--1");
 		var leftArrow1 = funnelSection.querySelector(".funnel-left-arrow--1");
@@ -417,17 +492,39 @@
 
 		function activateNode(node) {
 			if (!node) return;
-			var left = node.getAttribute("data-left");
-			var width = node.getAttribute("data-width");
+			var isMobile = window.innerWidth <= 768;
+			var nodeIndex = Array.prototype.indexOf.call(nodes, node);
 
-			if (highlight && left && width) {
-				highlight.style.left = left;
-				highlight.style.width = width;
+			if (highlight) {
+				if (isMobile) {
+					var vMap = {
+						"0": { top: "0%", height: "35%" },   // ND BS (2019-2023)
+						"1": { top: "35%", height: "30%" },  // Clippard (2023-2025)
+						"2": { top: "65%", height: "35%" },  // MS EDI (2025-2027)
+						"3": { top: "24%", height: "6%" },   // Yaskawa (2022)
+						"4": { top: "62%", height: "8%" },   // P&G (2025)
+						"5": { top: "79%", height: "8%" },   // Needfinding (2026)
+						"6": { top: "88%", height: "8%" }    // Klein Tools (2026)
+					};
+					var vInfo = vMap[String(nodeIndex)] || { top: "0%", height: "10%" };
+					highlight.style.top = vInfo.top;
+					highlight.style.height = vInfo.height;
+					highlight.style.left = "-1px";
+					highlight.style.width = "4px";
+				} else {
+					var left = node.getAttribute("data-left");
+					var width = node.getAttribute("data-width");
+					if (left && width) {
+						highlight.style.left = left;
+						highlight.style.width = width;
+						highlight.style.top = "-1px";
+						highlight.style.height = "4px";
+					}
+				}
 				highlight.classList.add("is-active");
 			}
 
 			// Activate corresponding bracket if present
-			var nodeIndex = Array.prototype.indexOf.call(nodes, node);
 			brackets.forEach(function (b) {
 				if (parseInt(b.getAttribute("data-node"), 10) === nodeIndex) {
 					b.classList.add("is-active");
@@ -475,24 +572,86 @@
 			node.addEventListener("blur", function () {
 				deactivateNode();
 			});
+		});
 
-			// Touch support for mobile devices
-			node.addEventListener("touchstart", function (e) {
-				var wasActive = node.classList.contains("is-active");
-				nodes.forEach(function (n) { n.classList.remove("is-active"); });
-				if (!wasActive) {
-					node.classList.add("is-active");
-					activateNode(node);
-				} else {
-					deactivateNode();
+		// Mobile-only: double-tap / tap-twice navigation for project links in timeline
+		var lastClickedLink = null;
+		var lastClickTime = 0;
+
+		var linkElements = timeline.querySelectorAll("a.timeline-node, a.timeline-bracket");
+		linkElements.forEach(function (link) {
+			link.addEventListener("click", function (e) {
+				var isMobile = window.innerWidth <= 768;
+				if (!isMobile) {
+					// Desktop: normal single-click navigation directly to href
+					return;
 				}
-			}, { passive: true });
+
+				// Mobile-only: Tap once to preview bubble & highlight, tap again / double-tap to navigate
+				var now = Date.now();
+				var isRapidDbl = (lastClickedLink === link && (now - lastClickTime) < 550);
+				var targetNode = link.classList.contains("timeline-node") 
+					? link 
+					: nodes[parseInt(link.getAttribute("data-node"), 10)];
+				var wasAlreadyActive = targetNode ? targetNode.classList.contains("is-active") : false;
+
+				if (isRapidDbl || wasAlreadyActive) {
+					// Double-tap / second tap while active: navigate to project page
+					lastClickedLink = null;
+					lastClickTime = 0;
+					var href = link.getAttribute("href");
+					if (href) {
+						window.location.href = href;
+					}
+				} else {
+					// First tap on mobile: prevent immediate jump, activate card & show highlights
+					e.preventDefault();
+					lastClickedLink = link;
+					lastClickTime = now;
+
+					nodes.forEach(function (n) { n.classList.remove("is-active"); });
+					if (targetNode) {
+						targetNode.classList.add("is-active");
+						activateNode(targetNode);
+					}
+				}
+			});
+		});
+
+		// Non-link nodes tap/click support (mobile tap to inspect)
+		nodes.forEach(function (node) {
+			if (!node.matches("a.timeline-node")) {
+				node.addEventListener("click", function (e) {
+					if (window.innerWidth > 768) return;
+					var wasActive = node.classList.contains("is-active");
+					nodes.forEach(function (n) { n.classList.remove("is-active"); });
+					if (!wasActive) {
+						node.classList.add("is-active");
+						activateNode(node);
+					} else {
+						deactivateNode();
+					}
+				});
+			}
+		});
+
+		function clearTimelineSelection() {
+			nodes.forEach(function (n) { n.classList.remove("is-active"); });
+			deactivateNode();
+			lastClickedLink = null;
+			lastClickTime = 0;
+		}
+
+		// Mobile: dismiss bubble and highlight when tapping anywhere outside the active experience node
+		document.addEventListener("click", function (e) {
+			if (window.innerWidth <= 768 && !e.target.closest(".timeline-node, .timeline-bracket")) {
+				clearTimelineSelection();
+			}
 		});
 
 		document.addEventListener("touchstart", function (e) {
-			if (!e.target.closest(".timeline-node")) {
-				nodes.forEach(function (n) { n.classList.remove("is-active"); });
-				deactivateNode();
+			if (window.innerWidth <= 768 && !e.target.closest(".timeline-node, .timeline-bracket")) {
+				clearTimelineSelection();
 			}
 		}, { passive: true });
 
