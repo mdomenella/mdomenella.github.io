@@ -827,6 +827,49 @@
       border-color: #f85149;
     }
 
+    /* Segmented Control / Audience Tabs */
+    .segmented-control {
+      display: inline-flex;
+      background: var(--bg);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .seg-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      user-select: none;
+    }
+
+    .seg-btn:hover {
+      color: var(--text);
+    }
+
+    .seg-btn.is-active {
+      background: var(--surface-border);
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .badge-pill--engaged {
+      background: rgba(63, 185, 80, 0.15);
+      color: var(--green-light);
+      border: 1px solid rgba(63, 185, 80, 0.3);
+    }
+
     @keyframes toastSlide {
       from { transform: translateY(15px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
@@ -924,10 +967,14 @@
       <div style="display: flex; flex-direction: column; gap: 1.5rem;">
         <!-- Traffic Chart -->
         <div class="panel">
-          <div class="panel__head">
+          <div class="panel__head" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
             <div>
               <div class="panel__title">Visitor Traffic & Engagement Over Time</div>
-              <div class="panel__sub">Daily unique visitors and overall pageviews</div>
+              <div class="panel__sub" id="trafficChartSub">Daily unique visitors and overall pageviews</div>
+            </div>
+            <div class="segmented-control" id="chartAudienceToggle" title="Filter chart audience">
+              <button type="button" class="seg-btn is-active" data-audience="all">All Traffic</button>
+              <button type="button" class="seg-btn" data-audience="engaged">🔥 Engaged Only</button>
             </div>
           </div>
           <div class="chart-container">
@@ -986,9 +1033,14 @@
           </div>
         </div>
         <div class="spreadsheet-controls">
+          <div class="segmented-control" id="tableAudienceToggle" title="Filter visitors table">
+            <button type="button" class="seg-btn is-active" data-filter="all">All Visitors</button>
+            <button type="button" class="seg-btn" data-filter="engaged">🔥 Engaged Only</button>
+          </div>
           <input type="text" class="spreadsheet-search" id="tableSearchInput" placeholder="🔍 Search date, tag, device, referrer..." />
           <select class="spreadsheet-filter-select" id="tableFilterSelect">
             <option value="all">All Visitors</option>
+            <option value="engaged">🔥 Engaged Only (≥10s or Action)</option>
             <option value="recruiter">Recruiters Only (Y)</option>
             <option value="non-recruiter">Non-Recruiters (N)</option>
             <option value="desktop">Desktop Only</option>
@@ -1012,9 +1064,10 @@
               <th>Time</th>
               <th>Device</th>
               <th>Recruiter (Y/N)</th>
+              <th>Total Time</th>
               <th>Referrer / Source</th>
               <th>Session ID</th>
-              <th>Activity & Dwell</th>
+              <th>Pages & Actions</th>
               <th style="text-align: right; width: 90px;">Action</th>
             </tr>
           </thead>
@@ -1073,8 +1126,37 @@
       rawEvents: [],
       searchQuery: '',
       filterType: 'all',
+      chartAudience: 'all',
       selectedSessionIds: new Set()
     };
+
+    // Helper to evaluate if a session qualifies as high-intent / engaged
+    function isEngagedSession(s, events) {
+      const sEvents = (events || []).filter(e => e.session_id === s.session_id);
+      const pageViews = sEvents.filter(e => e.event_type === 'pageview').length || 1;
+      const hasResume = sEvents.some(e => e.event_type === 'resume_click');
+      const hasEmail = sEvents.some(e => e.event_type === 'contact_click');
+      const hasCad = sEvents.some(e => e.event_type === 'cad_viewer_interact');
+      const isRecruiter = !!(s.ref_tag && s.ref_tag.trim());
+
+      // Dwell calculation
+      const dwellEvents = sEvents.filter(e => e.event_type === 'page_dwell' && e.event_data?.duration_seconds);
+      let totalDwellSec = dwellEvents.reduce((acc, cur) => acc + (cur.event_data.duration_seconds || 0), 0);
+      if (totalDwellSec === 0 && sEvents.length > 1) {
+        const times = sEvents.map(e => new Date(e.created_at).getTime()).filter(t => !isNaN(t));
+        if (times.length > 1) {
+          const span = Math.round((Math.max(...times) - Math.min(...times)) / 1000);
+          if (span > 0 && span < 7200) totalDwellSec = span;
+        }
+      }
+
+      // Engaged criteria:
+      // 1. Downloaded resume, clicked email, or interacted with CAD
+      // 2. Tagged recruiter link
+      // 3. Multi-page visit (> 1 page)
+      // 4. Spent 10+ seconds on the site
+      return hasResume || hasEmail || hasCad || isRecruiter || pageViews > 1 || totalDwellSec >= 10;
+    }
 
     // Toast Notification System
     function showToast(message, isError = false) {
@@ -1357,7 +1439,9 @@
       const filtered = sessions.filter(s => {
         const isRecruiter = !!(s.ref_tag && s.ref_tag.trim());
         const devType = (s.device_type || 'Desktop').toLowerCase();
+        const isEngaged = isEngagedSession(s, events);
 
+        if (f === 'engaged' && !isEngaged) return false;
         if (f === 'recruiter' && !isRecruiter) return false;
         if (f === 'non-recruiter' && isRecruiter) return false;
         if (f === 'desktop' && !devType.includes('desktop')) return false;
@@ -1383,7 +1467,8 @@
 
       const showingEl = document.getElementById('spreadsheetShowingText');
       if (showingEl) {
-        showingEl.textContent = `Showing ${filtered.length} of ${sessions.length} visitor session${sessions.length === 1 ? '' : 's'}${q || f !== 'all' ? ' (filtered)' : ''}`;
+        const filterLabel = f === 'engaged' ? ' (🔥 Engaged Only)' : (q || f !== 'all' ? ' (filtered)' : '');
+        showingEl.textContent = `Showing ${filtered.length} of ${sessions.length} visitor session${sessions.length === 1 ? '' : 's'}${filterLabel}`;
       }
 
       if (filtered.length === 0) {
@@ -1431,23 +1516,46 @@
           ? `<span class="badge-pill badge-pill--yes">YES (${s.ref_tag})</span>`
           : `<span class="badge-pill badge-pill--no">NO</span>`;
 
-        // Activity metrics
+        // Activity & Cumulative Dwell calculation
         const sEvents = events.filter(e => e.session_id === s.session_id);
         const pageViews = sEvents.filter(e => e.event_type === 'pageview').length || 1;
-        const dwellEv = sEvents.find(e => e.event_type === 'page_dwell' && e.event_data?.duration_seconds);
-        const dwellSec = dwellEv ? dwellEv.event_data.duration_seconds : null;
-        let dwellText = dwellSec ? `${dwellSec}s dwell` : '';
 
+        // Sum all recorded page dwell durations for this session
+        const dwellEvents = sEvents.filter(e => e.event_type === 'page_dwell' && e.event_data?.duration_seconds);
+        let totalDwellSec = dwellEvents.reduce((acc, cur) => acc + (cur.event_data.duration_seconds || 0), 0);
+
+        // Fallback: If dwell events were interrupted or user navigated rapidly across pages, calculate timestamp span
+        if (totalDwellSec === 0 && sEvents.length > 1) {
+          const times = sEvents.map(e => new Date(e.created_at).getTime()).filter(t => !isNaN(t));
+          if (times.length > 1) {
+            const span = Math.round((Math.max(...times) - Math.min(...times)) / 1000);
+            if (span > 0 && span < 7200) totalDwellSec = span;
+          }
+        }
+
+        let totalTimeStr = '--';
+        if (totalDwellSec > 0) {
+          const m = Math.floor(totalDwellSec / 60);
+          const sec = totalDwellSec % 60;
+          totalTimeStr = m > 0 ? `${m}m ${sec}s` : `${sec}s`;
+        } else if (pageViews > 1) {
+          totalTimeStr = '< 10s';
+        } else {
+          totalTimeStr = '< 5s';
+        }
+
+        const isEngaged = isEngagedSession(s, events);
         const hasResume = sEvents.some(e => e.event_type === 'resume_click');
         const hasEmail = sEvents.some(e => e.event_type === 'contact_click');
         const hasCad = sEvents.some(e => e.event_type === 'cad_viewer_interact');
 
         let badgesHtml = '';
+        if (isEngaged) badgesHtml += '<span class="badge-pill badge-pill--engaged" title="Engaged session (≥10s or action)">🔥 Engaged</span> ';
         if (hasResume) badgesHtml += ' 📄 Resume';
         if (hasEmail) badgesHtml += ' ✉️ Email';
         if (hasCad) badgesHtml += ' 🌀 CAD';
 
-        const activitySummary = `${pageViews} page${pageViews === 1 ? '' : 's'}${dwellText ? ' • ' + dwellText : ''}${badgesHtml ? ' • ' + badgesHtml : ''}`;
+        const activitySummary = `${pageViews} page${pageViews === 1 ? '' : 's'}${badgesHtml ? ' • ' + badgesHtml : ''}`;
 
         tr.innerHTML = `
           <td style="text-align: center;">
@@ -1460,7 +1568,12 @@
             <span class="badge-pill badge-pill--device">${devIcon} ${devLabel}</span>
           </td>
           <td>${recruiterHtml}</td>
-          <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis;" title="${s.referrer || 'Direct'}">
+          <td>
+            <span class="cell-mono" style="font-weight: 700; color: ${totalDwellSec >= 30 ? 'var(--green-light)' : 'var(--text)'};">
+              ${totalTimeStr}
+            </span>
+          </td>
+          <td style="max-width: 140px; overflow: hidden; text-overflow: ellipsis;" title="${s.referrer || 'Direct'}">
             ${s.referrer || 'Direct'}
           </td>
           <td class="cell-mono" title="${s.session_id}">
@@ -1623,7 +1736,7 @@
       }
 
       const rows = [
-        ['Session ID', 'Date', 'Time', 'Device', 'Recruiter (Y/N)', 'Recruiter Tag', 'Referrer', 'Total Pageviews']
+        ['Session ID', 'Date', 'Time', 'Device', 'Recruiter (Y/N)', 'Recruiter Tag', 'Engaged (Y/N)', 'Total Time', 'Total Time (Seconds)', 'Referrer', 'Total Pageviews']
       ];
 
       sessions.forEach(s => {
@@ -1631,7 +1744,23 @@
         const dateStr = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : 'N/A';
         const timeStr = !isNaN(d.getTime()) ? d.toLocaleTimeString() : 'N/A';
         const isRecruiter = s.ref_tag && s.ref_tag.trim() ? 'Y' : 'N';
-        const pageViews = events.filter(e => e.session_id === s.session_id && e.event_type === 'pageview').length || 1;
+        const isEngaged = isEngagedSession(s, events) ? 'Y' : 'N';
+        const sEvents = events.filter(e => e.session_id === s.session_id);
+        const pageViews = sEvents.filter(e => e.event_type === 'pageview').length || 1;
+        const dwellEvents = sEvents.filter(e => e.event_type === 'page_dwell' && e.event_data?.duration_seconds);
+        let totalDwellSec = dwellEvents.reduce((acc, cur) => acc + (cur.event_data.duration_seconds || 0), 0);
+
+        if (totalDwellSec === 0 && sEvents.length > 1) {
+          const times = sEvents.map(e => new Date(e.created_at).getTime()).filter(t => !isNaN(t));
+          if (times.length > 1) {
+            const span = Math.round((Math.max(...times) - Math.min(...times)) / 1000);
+            if (span > 0 && span < 7200) totalDwellSec = span;
+          }
+        }
+
+        const m = Math.floor(totalDwellSec / 60);
+        const sec = totalDwellSec % 60;
+        const totalTimeStr = totalDwellSec > 0 ? (m > 0 ? `${m}m ${sec}s` : `${sec}s`) : (pageViews > 1 ? '< 10s' : '< 5s');
 
         rows.push([
           s.session_id,
@@ -1640,6 +1769,9 @@
           s.device_type || 'Desktop',
           isRecruiter,
           s.ref_tag || '',
+          isEngaged,
+          totalTimeStr,
+          totalDwellSec,
           s.referrer || 'Direct',
           pageViews
         ]);
@@ -1728,6 +1860,24 @@
           : 'Awaiting session dwell';
       }
 
+      // Filter sessions & events for Visual Charts based on Audience Mode
+      const targetSessions = state.chartAudience === 'engaged'
+        ? sessions.filter(s => isEngagedSession(s, events))
+        : sessions;
+      const targetSessionIdSet = new Set(targetSessions.map(s => s.session_id));
+      const targetEvents = events.filter(e => targetSessionIdSet.has(e.session_id));
+      const targetRawViews = targetEvents.filter(e => e.event_type === 'pageview').length;
+
+      // Update Traffic Chart Subtitle
+      const trafficChartSub = document.getElementById('trafficChartSub');
+      if (trafficChartSub) {
+        if (state.chartAudience === 'engaged') {
+          trafficChartSub.innerHTML = `Showing <strong style="color: var(--green-light);">${targetSessions.length}</strong> engaged visitor session${targetSessions.length === 1 ? '' : 's'} (≥10s or high-intent action)`;
+        } else {
+          trafficChartSub.textContent = `Daily unique visitors and overall pageviews (${sessions.length} total sessions)`;
+        }
+      }
+
       // 2. Build Traffic Over Time (Last 7 Days)
       const dateMap = {};
       for (let i = 6; i >= 0; i--) {
@@ -1738,20 +1888,20 @@
         dateMap[key] = { label, views: 0, visitors: new Set() };
       }
 
-      // Add sessions to visitor counts
-      sessions.forEach(s => {
+      // Add targeted sessions to visitor counts
+      targetSessions.forEach(s => {
         const dayKey = (s.created_at || '').split('T')[0];
         if (dateMap[dayKey]) {
           dateMap[dayKey].visitors.add(s.session_id);
-          if (rawViews === 0) dateMap[dayKey].views++;
+          if (targetRawViews === 0) dateMap[dayKey].views++;
         }
       });
 
-      // Add events to views and visitors
-      events.forEach(e => {
+      // Add targeted events to views and visitors
+      targetEvents.forEach(e => {
         const dayKey = (e.created_at || '').split('T')[0];
         if (dateMap[dayKey]) {
-          if (e.event_type === 'pageview' && rawViews > 0) dateMap[dayKey].views++;
+          if (e.event_type === 'pageview' && targetRawViews > 0) dateMap[dayKey].views++;
           if (e.session_id) dateMap[dayKey].visitors.add(e.session_id);
         }
       });
@@ -1760,25 +1910,25 @@
       const trafficViews = Object.values(dateMap).map(d => d.views);
       const trafficVisitors = Object.values(dateMap).map(d => d.visitors.size);
 
-      // 3. Build Top Pages Data
+      // 3. Build Top Pages Data from Target Events
       const pageCounts = {};
-      if (rawViews > 0) {
-        events.filter(e => e.event_type === 'pageview').forEach(e => {
+      if (targetRawViews > 0) {
+        targetEvents.filter(e => e.event_type === 'pageview').forEach(e => {
           let name = e.page_title || e.page_path || 'Home';
           name = name.replace(' — Michel Domenella', '').replace('Michel Domenella', 'Home');
           pageCounts[name] = (pageCounts[name] || 0) + 1;
         });
-      } else if (totalVisitors > 0) {
-        pageCounts['Home'] = totalVisitors;
+      } else if (targetSessions.length > 0) {
+        pageCounts['Home'] = targetSessions.length;
       }
 
       const sortedPages = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
       const pagesLabels = sortedPages.length ? sortedPages.map(p => p[0]) : ['Home'];
-      const pagesValues = sortedPages.length ? sortedPages.map(p => p[1]) : [totalVisitors];
+      const pagesValues = sortedPages.length ? sortedPages.map(p => p[1]) : [targetSessions.length];
 
-      // 4. Build Sources Data
+      // 4. Build Sources Data from Target Sessions
       const sourceCounts = {};
-      sessions.forEach(s => {
+      targetSessions.forEach(s => {
         let src = s.ref_tag ? `Recruiter: ${s.ref_tag}` : (s.referrer || 'Direct');
         sourceCounts[src] = (sourceCounts[src] || 0) + 1;
       });
@@ -1900,6 +2050,30 @@
       const btnExport = document.getElementById('btnExportCsv');
       const selectAll = document.getElementById('selectAllCheckbox');
 
+      // Table audience segmented tab switcher
+      const tableToggleBtns = document.querySelectorAll('#tableAudienceToggle .seg-btn');
+      tableToggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tableToggleBtns.forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          const filter = btn.dataset.filter || 'all';
+          state.filterType = filter;
+          if (filterSelect) filterSelect.value = filter;
+          renderSpreadsheetTable();
+        });
+      });
+
+      // Chart audience segmented tab switcher
+      const chartToggleBtns = document.querySelectorAll('#chartAudienceToggle .seg-btn');
+      chartToggleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          chartToggleBtns.forEach(b => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          state.chartAudience = btn.dataset.audience || 'all';
+          processAndRenderAnalytics(state.rawSessions, state.rawEvents);
+        });
+      });
+
       searchInput?.addEventListener('input', (e) => {
         state.searchQuery = e.target.value;
         renderSpreadsheetTable();
@@ -1907,6 +2081,9 @@
 
       filterSelect?.addEventListener('change', (e) => {
         state.filterType = e.target.value;
+        tableToggleBtns.forEach(b => {
+          b.classList.toggle('is-active', b.dataset.filter === state.filterType);
+        });
         renderSpreadsheetTable();
       });
 
