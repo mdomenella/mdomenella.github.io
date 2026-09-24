@@ -498,13 +498,13 @@
 			if (highlight) {
 				if (isMobile) {
 					var vMap = {
-						"0": { top: "0%", height: "35%" },   // ND BS (2019-2023)
-						"1": { top: "35%", height: "30%" },  // Clippard (2023-2025)
-						"2": { top: "65%", height: "35%" },  // MS EDI (2025-2027)
-						"3": { top: "24%", height: "6%" },   // Yaskawa (2022)
-						"4": { top: "62%", height: "8%" },   // P&G (2025)
-						"5": { top: "79%", height: "8%" },   // Needfinding (2026)
-						"6": { top: "88%", height: "8%" }    // Klein Tools (2026)
+						"0": { top: "0%", height: "31%" },   // ND BS (2019-2023)
+						"1": { top: "31%", height: "27%" },  // Clippard (2023-2025)
+						"2": { top: "58%", height: "42%" },  // MS EDI (2025-2027)
+						"3": { top: "20%", height: "6%" },   // Yaskawa (2022)
+						"4": { top: "58%", height: "9%" },   // P&G (2025)
+						"5": { top: "71%", height: "14%" },  // Needfinding (2026)
+						"6": { top: "85%", height: "15%" }   // Klein Tools (2026)
 					};
 					var vInfo = vMap[String(nodeIndex)] || { top: "0%", height: "10%" };
 					highlight.style.top = vInfo.top;

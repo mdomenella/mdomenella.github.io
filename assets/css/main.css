@@ -3604,22 +3604,22 @@ a.timeline-bracket {
 
 	/* Year tick vertical positions */
 	.timeline-axis__tick:nth-child(1) { top: 0% !important; left: 0 !important; }
-	.timeline-axis__tick:nth-child(2) { top: 7% !important; left: 0 !important; }
-	.timeline-axis__tick:nth-child(3) { top: 15% !important; left: 0 !important; }
-	.timeline-axis__tick:nth-child(4) { top: 24% !important; left: 0 !important; }
-	.timeline-axis__tick:nth-child(5) { top: 35% !important; left: 0 !important; }
-	.timeline-axis__tick:nth-child(6) { top: 50% !important; left: 0 !important; }
-	.timeline-axis__tick:nth-child(7) { top: 65% !important; left: 0 !important; }
-	.timeline-axis__tick:nth-child(8) { top: 82% !important; left: 0 !important; }
+	.timeline-axis__tick:nth-child(2) { top: 6% !important; left: 0 !important; }
+	.timeline-axis__tick:nth-child(3) { top: 13% !important; left: 0 !important; }
+	.timeline-axis__tick:nth-child(4) { top: 20% !important; left: 0 !important; }
+	.timeline-axis__tick:nth-child(5) { top: 27% !important; left: 0 !important; }
+	.timeline-axis__tick:nth-child(6) { top: 36% !important; left: 0 !important; }
+	.timeline-axis__tick:nth-child(7) { top: 45% !important; left: 0 !important; }
+	.timeline-axis__tick:nth-child(8) { top: 70% !important; left: 0 !important; }
 	.timeline-axis__tick:nth-child(9) { top: 100% !important; left: 0 !important; }
 
 	/* Left Side Experiences (ND, Clippard, MS EDI) */
 	.timeline-node--bottom {
 		position: absolute !important;
 		left: auto !important;
-		right: calc(50% + 14px) !important;
+		right: calc(50% + 24px) !important;
 		width: 42% !important;
-		max-width: 175px !important;
+		max-width: 165px !important;
 		text-align: right !important;
 		transform: translateY(-50%) !important;
 		align-items: flex-end !important;
@@ -3636,26 +3636,26 @@ a.timeline-bracket {
 
 	.timeline-node--bottom .timeline-stem {
 		position: absolute !important;
-		right: -14px !important;
+		right: -24px !important;
 		top: 50% !important;
 		transform: translateY(-50%) !important;
-		width: 14px !important;
+		width: 24px !important;
 		height: 1px !important;
 		margin: 0 !important;
 		background: var(--color-border) !important;
 	}
 
-	.timeline-node--1 { top: 18% !important; }
-	.timeline-node--2 { top: 42% !important; }
-	.timeline-node--3 { top: 86% !important; }
+	.timeline-node--1 { top: 15.5% !important; }
+	.timeline-node--2 { top: 44.5% !important; }
+	.timeline-node--3 { top: 79% !important; }
 
 	/* Right Side Experiences (Yaskawa, P&G, Needfinding, Klein) */
 	.timeline-node--top {
 		position: absolute !important;
-		left: calc(50% + 14px) !important;
+		left: calc(50% + 24px) !important;
 		right: auto !important;
 		width: 42% !important;
-		max-width: 175px !important;
+		max-width: 165px !important;
 		text-align: left !important;
 		transform: translateY(-50%) !important;
 		align-items: flex-start !important;
@@ -3672,10 +3672,10 @@ a.timeline-bracket {
 
 	.timeline-node--top .timeline-stem {
 		position: absolute !important;
-		left: -14px !important;
+		left: -24px !important;
 		top: 50% !important;
 		transform: translateY(-50%) !important;
-		width: 14px !important;
+		width: 24px !important;
 		height: 1px !important;
 		margin: 0 !important;
 		background: var(--color-border) !important;
@@ -3685,10 +3685,10 @@ a.timeline-bracket {
 		display: none !important;
 	}
 
-	.timeline-node--4 { top: 27% !important; }
-	.timeline-node--5 { top: 57% !important; }
-	.timeline-node--6 { top: 73% !important; }
-	.timeline-node--7 { top: 94% !important; }
+	.timeline-node--4 { top: 23% !important; }
+	.timeline-node--5 { top: 62.5% !important; }
+	.timeline-node--6 { top: 78% !important; }
+	.timeline-node--7 { top: 92.5% !important; }
 
 	/* Typography */
 	.timeline-title {
@@ -3713,7 +3713,7 @@ a.timeline-bracket {
 		bottom: 0 !important;
 		left: auto !important;
 		right: calc(50% + 2px) !important;
-		width: 6px !important;
+		width: 20px !important;
 		height: 100% !important;
 		pointer-events: none !important;
 		z-index: 2 !important;
@@ -3722,9 +3722,11 @@ a.timeline-bracket {
 	.timeline-bracket {
 		position: absolute !important;
 		right: 0 !important;
-		left: auto !important;
-		width: 5px !important;
-		border-right: 2px solid #10b981 !important;
+		left: 0 !important;
+		width: 20px !important;
+		box-sizing: border-box !important;
+		border-left: 2px solid #10b981 !important;
+		border-right: none !important;
 		border-top: 2px solid #10b981 !important;
 		border-bottom: 2px solid #10b981 !important;
 		opacity: 0 !important;
@@ -3743,9 +3745,9 @@ a.timeline-bracket {
 		display: none !important;
 	}
 
-	.timeline-bracket[data-node="0"] { top: 0% !important; height: 35% !important; }
-	.timeline-bracket[data-node="1"] { top: 35% !important; height: 30% !important; }
-	.timeline-bracket[data-node="2"] { top: 65% !important; height: 35% !important; }
+	.timeline-bracket[data-node="0"] { top: 0% !important; height: 31% !important; }
+	.timeline-bracket[data-node="1"] { top: 31% !important; height: 27% !important; }
+	.timeline-bracket[data-node="2"] { top: 58% !important; height: 42% !important; }
 
 	/* Tooltips on Mobile — Confined to Column Margins */
 	.timeline-tooltip {
@@ -3812,8 +3814,9 @@ a.timeline-bracket {
 		transform: translateY(0) !important;
 	}
 
-	/* Position P&G and Klein bubbles above the title text */
+	/* Position P&G, Needfinding, and Klein bubbles above the title text */
 	.timeline-node--5 .timeline-tooltip,
+	.timeline-node--6 .timeline-tooltip,
 	.timeline-node--7 .timeline-tooltip {
 		top: auto !important;
 		bottom: calc(100% + 5px) !important;
@@ -3822,9 +3825,17 @@ a.timeline-bracket {
 
 	.timeline-node--5.is-active .timeline-tooltip,
 	.timeline-node--5:hover .timeline-tooltip,
+	.timeline-node--6.is-active .timeline-tooltip,
+	.timeline-node--6:hover .timeline-tooltip,
 	.timeline-node--7.is-active .timeline-tooltip,
 	.timeline-node--7:hover .timeline-tooltip {
 		transform: translateY(0) !important;
+	}
+
+	.timeline-node:hover,
+	.timeline-node.is-active,
+	.timeline-node:focus-within {
+		z-index: 60 !important;
 	}
 
 	/* 4. Film Photography Intro Header & Subtitle */
