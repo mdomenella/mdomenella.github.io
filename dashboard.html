@@ -1158,6 +1158,41 @@
       return hasResume || hasEmail || hasCad || isRecruiter || pageViews > 1 || totalDwellSec >= 10;
     }
 
+    // Helper to extract local date string in YYYY-MM-DD format
+    function getLocalDateStr(dateInput) {
+      if (!dateInput) return '';
+      const d = dateInput instanceof Date ? dateInput : new Date(dateInput);
+      if (isNaN(d.getTime())) return '';
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    // Helper to format friendly relative or local time for live feed
+    function formatRelativeOrLocalTime(dateInput) {
+      const d = dateInput instanceof Date ? dateInput : new Date(dateInput);
+      if (isNaN(d.getTime())) return 'Just now';
+
+      const now = new Date();
+      const todayKey = getLocalDateStr(now);
+      const targetKey = getLocalDateStr(d);
+      const timePart = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      if (targetKey === todayKey) {
+        return timePart;
+      }
+
+      const yesterday = new Date(now);
+      yesterday.setDate(yesterday.getDate() - 1);
+      if (targetKey === getLocalDateStr(yesterday)) {
+        return `Yesterday, ${timePart}`;
+      }
+
+      const datePart = d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+      return `${datePart}, ${timePart}`;
+    }
+
     // Toast Notification System
     function showToast(message, isError = false) {
       const container = document.getElementById('toastContainer');
@@ -1452,7 +1487,8 @@
           const matchTag = (s.ref_tag || '').toLowerCase().includes(q);
           const matchDev = (s.device_type || '').toLowerCase().includes(q);
           const matchRef = (s.referrer || '').toLowerCase().includes(q);
-          const matchDate = (s.created_at || '').toLowerCase().includes(q);
+          const localDateStr = getLocalDateStr(s.created_at);
+          const matchDate = (s.created_at || '').toLowerCase().includes(q) || localDateStr.includes(q);
           if (!matchId && !matchTag && !matchDev && !matchRef && !matchDate) return false;
         }
 
@@ -1495,7 +1531,7 @@
 
         const d = new Date(s.created_at);
         const isValidDate = !isNaN(d.getTime());
-        const dateStr = isValidDate ? d.toISOString().split('T')[0] : 'N/A';
+        const dateStr = isValidDate ? getLocalDateStr(d) : 'N/A';
         const timeStr = isValidDate ? d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'N/A';
 
         // Device Icon & Badge
@@ -1741,7 +1777,7 @@
 
       sessions.forEach(s => {
         const d = new Date(s.created_at);
-        const dateStr = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : 'N/A';
+        const dateStr = !isNaN(d.getTime()) ? getLocalDateStr(d) : 'N/A';
         const timeStr = !isNaN(d.getTime()) ? d.toLocaleTimeString() : 'N/A';
         const isRecruiter = s.ref_tag && s.ref_tag.trim() ? 'Y' : 'N';
         const isEngaged = isEngagedSession(s, events) ? 'Y' : 'N';
@@ -1781,7 +1817,7 @@
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement('a');
       link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `visitors_export_${new Date().toISOString().split('T')[0]}.csv`);
+      link.setAttribute('download', `visitors_export_${getLocalDateStr(new Date())}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -1803,8 +1839,8 @@
       const totalConversions = resumeDownloads + contactClicks;
 
       // Today's visitors calculation
-      const todayStr = new Date().toISOString().split('T')[0];
-      const todayVisitors = sessions.filter(s => (s.created_at || '').startsWith(todayStr)).length;
+      const todayStr = getLocalDateStr(new Date());
+      const todayVisitors = sessions.filter(s => getLocalDateStr(s.created_at) === todayStr).length;
 
       // Pages per session
       const pagesPerSession = totalVisitors > 0 ? (totalPageviews / totalVisitors).toFixed(1) : '0.0';
@@ -1883,14 +1919,14 @@
       for (let i = 6; i >= 0; i--) {
         const d = new Date();
         d.setDate(d.getDate() - i);
-        const key = d.toISOString().split('T')[0];
+        const key = getLocalDateStr(d);
         const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         dateMap[key] = { label, views: 0, visitors: new Set() };
       }
 
       // Add targeted sessions to visitor counts
       targetSessions.forEach(s => {
-        const dayKey = (s.created_at || '').split('T')[0];
+        const dayKey = getLocalDateStr(s.created_at);
         if (dateMap[dayKey]) {
           dateMap[dayKey].visitors.add(s.session_id);
           if (targetRawViews === 0) dateMap[dayKey].views++;
@@ -1899,7 +1935,7 @@
 
       // Add targeted events to views and visitors
       targetEvents.forEach(e => {
-        const dayKey = (e.created_at || '').split('T')[0];
+        const dayKey = getLocalDateStr(e.created_at);
         if (dateMap[dayKey]) {
           if (e.event_type === 'pageview' && targetRawViews > 0) dateMap[dayKey].views++;
           if (e.session_id) dateMap[dayKey].visitors.add(e.session_id);
@@ -1958,8 +1994,7 @@
           steps.push({ text: `Arrived from ${s.referrer || 'Direct'}`, type: 'normal' });
         }
 
-        const createdDate = new Date(s.created_at);
-        const timeFormatted = isNaN(createdDate) ? 'Just now' : createdDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const timeFormatted = formatRelativeOrLocalTime(s.created_at);
 
         return {
           id: s.session_id.substring(0, 10),
