@@ -6,6 +6,13 @@
 (function () {
   'use strict';
 
+  // Disable tracking on local files, file:// protocol, and local development servers
+  const proto = window.location.protocol;
+  const host = window.location.hostname;
+  if (proto === 'file:' || host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0' || host.endsWith('.local')) {
+    return;
+  }
+
   // Configuration
   const CONFIG = {
     supabaseUrl: (window.ANALYTICS_CONFIG && window.ANALYTICS_CONFIG.supabaseUrl) || 'https://xeysfzxizzdftwzjbirp.supabase.co',
